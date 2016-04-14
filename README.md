@@ -7,13 +7,12 @@ This library does not allow you to change hadrware peripheral intefaces (e.g cha
 This library also does not support Analog to Digital Conversion (or ADC) functions as the Raspberry Pi hardware does not have an integrated ADC and we don´t want to create hardware dependant code. If you need ADC is recomended to use external libraries. 
 
 ## Implemented Arduino Functions and Libraries
-. 
 PiDuino Library aims to support the most basic official Arduino functions published in the [Arduino official web page] (https://www.arduino.cc/en/Reference/Libraries) as of April 2016. Note that Arduino API have many legacy functions that although keeped no longer used.
 
 
 ### Implemented Arduino Functions
 
-#### Digital I/O
+#### - Digital I/O
 
 | Function | Implemented (YES/NO-Comment/In Progress) |
 | ------ | ----------- |
@@ -21,7 +20,7 @@ PiDuino Library aims to support the most basic official Arduino functions publis
 | digitalWrite(pin, value) | In Progress |
 | digitalRead(pin)  | In Progress |
 
-#### Analog I/O
+#### - Analog I/O
 
 | Function | Implemented (YES/NO-Comment/In Progress) |
 | ------ | ----------- |
@@ -29,7 +28,7 @@ PiDuino Library aims to support the most basic official Arduino functions publis
 | analogRead(pin) | NO - No hardware support for RPi |
 | analogWrite() - PWM | In progress |
 
-#### Advanced I/O
+#### - Advanced I/O
 
 | Function | Implemented (YES/NO-Comment/In Progress) |
 | ------ | ----------- |
@@ -41,7 +40,7 @@ PiDuino Library aims to support the most basic official Arduino functions publis
 | pulseIn(pin, value)  | In Progress |
 | pulseIn(pin, value, timeout) | In Progress |
 
-#### Time
+#### - Time
 
 | Function | Implemented (YES/NO-Comment/In Progress) |
 | ------ | ----------- |
@@ -50,7 +49,7 @@ PiDuino Library aims to support the most basic official Arduino functions publis
 | delay(ms)  | In Progress |
 | delayMicroseconds(us)  | YES |
 
-#### Math
+#### - Math
 
 | Function | Implemented (YES/NO-Comment/In Progress) |
 | ------ | ----------- |
@@ -62,11 +61,11 @@ PiDuino Library aims to support the most basic official Arduino functions publis
 | pow(base, exponent)  | In Progress |
 | sqrt(x)  | In Progress |
 
-#### Trigonometry
+#### - Trigonometry
 
 TODO
 
-#### Random Numbers
+#### - Random Numbers
 
 | Function | Implemented (YES/NO-Comment/In Progress) |
 | ------ | ----------- |
@@ -74,11 +73,11 @@ TODO
 | random(max)  | In Progress |
 | random(min, max)  | In Progress |
 
-#### Bits and Bytes
+#### - Bits and Bytes
 
 TODO
 
-#### External Interrupts
+#### - External Interrupts
 
 | Function | Implemented (YES/NO-Comment/In Progress) |
 | ------ | ----------- |
@@ -86,14 +85,14 @@ TODO
 | detachInterrupt(interrupt)  | In Progress |
 | detachInterrupt(digitalPinToInterrupt(pin))  | In Progress |
 
-#### Interrupts
+#### - Interrupts
 
 | Function | Implemented (YES/NO-Comment/In Progress) |
 | ------ | ----------- |
 | interrupts()  | In Progress |
 | noInterrupts() | In Progress |
 
-#### Communication
+#### - Communication
 
 | Function | Implemented (YES/NO-Comment/In Progress) |
 | ------ | ----------- |
@@ -104,7 +103,7 @@ TODO
 
 ### Implemented Arduino Libraries
 
-#### Serial
+#### - Serial
 | Function | Implemented (YES/NO-Comment/In Progress) |
 | ------ | ----------- |
 | if (Serial)  | In Progress |
@@ -136,7 +135,7 @@ TODO
 | Serial.write(buf, len) | In Progress |
 | serialEvent() | In Progress |
 
-#### Wire
+#### - Wire
 | Function | Implemented (YES/NO-Comment/In Progress) |
 | ------ | ----------- |
 | Wire.begin() | YES |
@@ -154,7 +153,7 @@ TODO
 | Wire.onReceive(handler) | In Progress |
 | Wire.onRequest(handler) | In Progress |
 
-#### SPI
+#### - SPI
 
 | Function | Implemented (YES/NO-Comment/In Progress) |
 | ------ | ----------- |
