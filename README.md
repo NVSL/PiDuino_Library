@@ -10,27 +10,6 @@ This library also does not support Analog to Digital Conversion (or ADC) functio
 . 
 PiDuino Library aims to support the most basic official Arduino functions published in the [Arduino official web page] (https://www.arduino.cc/en/Reference/Libraries) as of April 2016. Note that Arduino API have many legacy functions that although keeped no longer used.
 
-| Implemented Arduino Functions | Status |
-| ------ | ----------- |
-| Digital I/O  | Testing |
-| Analog I/O (PWM only) |  In progress |
-| Advanced I/O | In progress |
-| Time | In progress |
-| Math | In progress |
-| Trigonometry| In progress |
-| Characters | In progress |
-| Random Numbers | In progress |
-| Bits and Bytes | In progress |
-| External Interrupts | In progress |
-| Interrupts | In progress |
-| Communication | Testing |
-
-| Implemented Arduino Libraries | Status |
-| ------ | ----------- |
-| Serial  | Testing |
-| Wire |  In progress |
-| SPI   | In progress |
-
 
 ### Implemented Arduino Functions
 
@@ -162,12 +141,33 @@ TODO
 | ------ | ----------- |
 | Wire.begin() | YES |
 | Wire.begin(address) | In Progress |
-| Wire.begin(address) | In Progress |
-| Wire.begin(address) | In Progress |
-| Wire.begin(address) | In Progress |
-| Wire.begin(address) | In Progress |
-| Wire.begin(address) | In Progress |
-| Wire.begin(address) | In Progress |
-| Wire.begin(address) | In Progress |
+| Wire.requestFrom(address, quantity) | In Progress |
+| Wire.requestFrom(address, quantity, stop) | In Progress |
+| Wire.beginTransmission(address) | YES |
+| Wire.endTransmission() | YES |
+| Wire.endTransmission(stop)  | NO - There is no way to send a I2C Stop to the driver |
+| Wire.write(value) | YES |
+| Wire.write(string)  | In Progress |
+| Wire.write(data, length) | YES |
+| Wire.available() | In Progress |
+| Wire.read()  | In Progress |
+| Wire.onReceive(handler) | In Progress |
+| Wire.onRequest(handler) | In Progress |
 
 #### SPI
+
+| Function | Implemented (YES/NO-Comment/In Progress) |
+| ------ | ----------- |
+| SPISettings | In Progress |
+| SPI.begin() | In Progress |
+| SPI.end()| In Progress |
+| SPI.beginTransaction(mySettings) | In Progress |
+| SPI.endTransaction() | In Progress |
+| SPI.setBitOrder(order) | In Progress |
+| SPI.setClockDivider(divider) | In Progress |
+| SPI.setDataMode(mode) | In Progress |
+| receivedVal = SPI.transfer(val) | In Progress |
+| receivedVal16 = SPI.transfer16(val16) | In Progress |
+| SPI.transfer(buffer, size) | In Progress |
+| SPI.usingInterrupt(interruptNumber) | In Progress |
+
