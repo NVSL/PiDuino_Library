@@ -2,7 +2,7 @@
 
 PiDuino Library is a C++ library that lets you write programs for Raspberry Pi as if you were writing an Arduino program. 
 
-This library **does not allow you to change hadrware peripheral intefaces (e.g change I2C pins for GPIO pins)** on real time as this library relays on the I2C, SPI, TTY(Serial) and GPIO linux drivers to interface with the pins I/Os. 
+This library **does not allow you to change hadrware peripheral intefaces (e.g change I2C pins for GPIO pins)** in real time as this library relays on the I2C, SPI, TTY(Serial) and GPIO linux drivers to interface with the pins I/Os. 
 
 This library also **does not support Analog to Digital Conversion (or ADC)** functions as the Raspberry Pi hardware does not have an integrated ADC and we don´t want to create hardware dependant code. If you need ADC is recomended to use external libraries. 
 
