@@ -143,21 +143,31 @@ TODO
 | Serial.parseInt(char skipChar) | In Progress |
 | Serial.peek() | In Progress |
 | Serial.print(val)  | In Progress |
-| Serial.available() | In Progress |
-| Serial.available() | In Progress |
-| Serial.available() | In Progress |
-| Serial.available() | In Progress |
-| Serial.available() | In Progress |
-| Serial.available() | In Progress |
-| Serial.available() | In Progress |
-| Serial.available() | In Progress |
-| Serial.available() | In Progress |
+| Serial.print(val, format)| In Progress |
+| Serial.println(val)  | In Progress |
+| Serial.println(val, format) | In Progress |
+| Serial.read() | In Progress |
+| Serial.readBytes(buffer, length)| In Progress |
+| Serial.readBytesUntil(character, buffer, length) | In Progress |
+| Serial.readString() | In Progress |
+| Serial.readStringUntil(terminator) | In Progress |
+| Serial.setTimeout(time) | In Progress |
+| Serial.write(val)  | In Progress |
+| Serial.write(str)  | In Progress |
+| Serial.write(buf, len) | In Progress |
+| serialEvent() | In Progress |
 
 #### Wire
 | Function | Implemented (YES/NO-Comment/In Progress) |
 | ------ | ----------- |
-| data   | path to data files to supply the data that will be passed into templates. |
-| engine | engine to be used for processing templates. Handlebars is the default. |
-| ext    | extension to be used for dest files. |
+| Wire.begin() | YES |
+| Wire.begin(address) | In Progress |
+| Wire.begin(address) | In Progress |
+| Wire.begin(address) | In Progress |
+| Wire.begin(address) | In Progress |
+| Wire.begin(address) | In Progress |
+| Wire.begin(address) | In Progress |
+| Wire.begin(address) | In Progress |
+| Wire.begin(address) | In Progress |
 
 #### SPI
