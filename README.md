@@ -9,7 +9,11 @@ This library also does not support Analog to Digital Conversion (or ADC) functio
 ## Implemented Arduino Functions and Libraries
 PiDuino Library aims to support the most basic official Arduino functions published in the [Arduino official web page] (https://www.arduino.cc/en/Reference/Libraries) as of April 2016. Note that Arduino API have many legacy functions that although keeped no longer used.
 
+**Implemented Arduino Functions :**
+Digital I/O, Analog I/O, Advanced I/O, Time, Math, Trigonometry, Random Numbers, Bits and Bytes, External Interrupts, Interrupts, Communication
 
+**Implemented Arduino Libraries :**
+Serial, Wire, SPI
 
 ### Implemented Arduino Functions
 
@@ -99,7 +103,7 @@ TODO
 
 | Function | Implemented (YES/NO-Comment/In Progress) |
 | ------ | ----------- |
-| Serial  | YES - See Library |
+| Serial  | YES |
 | Stream | NO - Not implemented for now |
 
 
