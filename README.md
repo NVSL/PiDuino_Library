@@ -1,13 +1,13 @@
 # PiDuino_Library
 
-PiDuino Library is a C++ library that lets you write program for Raspberry Pi as if you were writing an Arduino program. 
+PiDuino Library is a C++ library that lets you write programs for Raspberry Pi as if you were writing an Arduino program. 
 
-This library does not allow you to change hadrware peripheral intefaces (e.g change I2C pins for GPIO pins) on real time as this library relay on the I2C, SPI, TTY(Serial) and GPIO linux drivers to interface with the pins I/Os. 
+This library **does not allow you to change hadrware peripheral intefaces (e.g change I2C pins for GPIO pins)** on real time as this library relays on the I2C, SPI, TTY(Serial) and GPIO linux drivers to interface with the pins I/Os. 
 
-This library also does not support Analog to Digital Conversion (or ADC) functions as the Raspberry Pi hardware does not have an integrated ADC and we don´t want to create hardware dependant code. If you need ADC is recomended to use external libraries. 
+This library also **does not support Analog to Digital Conversion (or ADC)** functions as the Raspberry Pi hardware does not have an integrated ADC and we don´t want to create hardware dependant code. If you need ADC is recomended to use external libraries. 
 
 ## Implemented Arduino Functions and Libraries
-PiDuino Library aims to support the most basic official Arduino functions published in the [Arduino official web page] (https://www.arduino.cc/en/Reference/Libraries) as of April 2016. Note that Arduino API have many legacy functions that although keeped no longer used.
+PiDuino Library aims to support the most basic official Arduino functions published in the [Arduino official website] (https://www.arduino.cc/en/Reference/Libraries) as of April 2016. Note that Arduino API have many legacy functions that although keeped no longer used, the ported libraries and functions are only the ones published in the official website.
 
 **Implemented Arduino Functions :**
 Digital I/O, Analog I/O, Advanced I/O, Time, Math, Trigonometry, Random Numbers, Bits and Bytes, External Interrupts, Interrupts, Communication
