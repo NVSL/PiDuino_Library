@@ -10,7 +10,10 @@ This library also does not support Analog to Digital Conversion (or ADC) functio
 PiDuino Library aims to support the most basic official Arduino functions published in the [Arduino official web page] (https://www.arduino.cc/en/Reference/Libraries) as of April 2016. Note that Arduino API have many legacy functions that although keeped no longer used.
 
 
+
 ### Implemented Arduino Functions
+
+
 
 #### - Digital I/O
 
@@ -101,7 +104,10 @@ TODO
 
 
 
+
 ### Implemented Arduino Libraries
+
+
 
 #### - Serial
 | Function | Implemented (YES/NO-Comment/In Progress) |
