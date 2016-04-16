@@ -15,6 +15,11 @@ Digital I/O, Analog I/O, Advanced I/O, Time, Math, Trigonometry, Random Numbers,
 **Implemented Arduino Libraries :**
 Serial, Wire, SPI
 
+**Note: Data Type String - object: **
+will not be implemented in the first release. 
+
+
+
 ### Implemented Arduino Functions
 
 
@@ -149,19 +154,19 @@ TODO
 | Function | Implemented (YES/NO-Comment/In Progress) |
 | ------ | ----------- |
 | Wire.begin() | YES |
-| Wire.begin(address) | In Progress |
-| Wire.requestFrom(address, quantity) | In Progress |
-| Wire.requestFrom(address, quantity, stop) | In Progress |
+| Wire.begin(address) | NO/In Progress - Linux I2C Slave driver was added recently, still verifying |
+| Wire.requestFrom(address, quantity) | YES |
+| Wire.requestFrom(address, quantity, stop) | NO - There is no way to send an I2C stop msg to the driver |
 | Wire.beginTransmission(address) | YES |
 | Wire.endTransmission() | YES |
-| Wire.endTransmission(stop)  | NO - There is no way to send a I2C Stop to the driver |
+| Wire.endTransmission(stop)  | NO - There is no way to send an I2C stop msg to the driver |
 | Wire.write(value) | YES |
-| Wire.write(string)  | In Progress |
+| Wire.write(string)  | YES |
 | Wire.write(data, length) | YES |
-| Wire.available() | In Progress |
-| Wire.read()  | In Progress |
-| Wire.onReceive(handler) | In Progress |
-| Wire.onRequest(handler) | In Progress |
+| Wire.available() | YES |
+| Wire.read()  | YES |
+| Wire.onReceive(handler) | NO/In Progress - Linux I2C Slave driver was added recently, still verifying |
+| Wire.onRequest(handler) | NO/In Progress - Linux I2C Slave driver was added recently, still verifying |
 
 #### - SPI
 
