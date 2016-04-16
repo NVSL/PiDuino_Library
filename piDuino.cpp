@@ -22,7 +22,8 @@
 ////  Public methods ////
 
 //Constructor
-SerialPi::SerialPi(){
+SerialPi::SerialPi()
+{
     serialPort="/dev/ttyAMA0";
     timeOut = 1000;
 }
@@ -535,14 +536,14 @@ uint8_t WirePi::txBufferLength = 0;
 uint8_t WirePi::transmitting = 0;
 
 
-int WirePi::i2c_write_bytes(int file, uint8_t *values, size_t length)
+int WirePi::i2c_write_bytes(int file, uint8_t *txBuff, size_t numBytes)
 {
     int bytes_written = 0;
 
-    if (length == 0) {
+    if (numBytes == 0) {
         return bytes_written;
     } else {
-        bytes_written = unistd::write(file, values, length);
+        bytes_written = unistd::write(file, txBuff, numBytes);
         if ( bytes_written < 0) {
             // errno == 5 (Input/Output error) means I2C cables may not be connected properly.
             // Make noise about everything else except errno == 5. 
@@ -555,6 +556,26 @@ int WirePi::i2c_write_bytes(int file, uint8_t *values, size_t length)
     return bytes_written;
 }
 
+int WirePi::i2c_read_bytes(int file, uint8_t *rxBuff, size_t numBytes)
+{
+    int bytes_read = 0;
+
+    if (numBytes == 0) {
+        return bytes_read;
+    } else {
+        bytes_read = unistd::read(file, rxBuff, numBytes);
+        if ( bytes_read < 0) {
+            // errno == 5 (Input/Output error) means I2C cables may not be connected properly.
+            // Make noise about everything else except errno == 5. 
+            if (errno != 5 ) {
+                fprintf(stderr, "%s(): i2c read error: %s \n",__func__, strerror (errno));
+            }
+        }
+    }
+
+    return bytes_read;
+}
+
 ////  Public methods ////
 
 //Constructor
@@ -563,7 +584,7 @@ WirePi::WirePi()
     fd = -1;
 }
 
-//Initiate the Wire library
+// Initialize the Wire library
 void WirePi::begin()
 {
 
@@ -609,6 +630,43 @@ void WirePi::begin()
 
 }
 
+// Initialize the Wire library with a slave address
+/*
+void WirePi::begin(uint8_t address) 
+{
+    // TODO, Still reading documentation for linux new I2c slave support
+}
+*/
+
+uint8_t WirePi::requestFrom(uint8_t address, uint8_t quantity)
+{
+
+    if (fd < 0) {
+        fprintf(stderr, "%s(): Initialize I2C first with Wire.begin() \n", __func__);
+        exit(1);
+    }
+
+    if (ioctl(fd, I2C_SLAVE, address) < 0) {
+        fprintf(stderr, "%s(): ioctl error: %s\n",
+            __func__, strerror (errno));
+        exit(1);
+    }
+
+    // clamp to buffer length
+    if(quantity > BUFFER_LENGTH){
+        quantity = BUFFER_LENGTH;
+    }
+
+    // perform blocking read into buffer
+    uint8_t read = i2c_read_bytes(fd, rxBuffer, quantity);
+    // set rx buffer iterator vars
+    rxBufferIndex = 0;
+    rxBufferLength = read;
+
+    return read;
+}
+
+
 //Begin a transmission to the I2C slave device with the given address
 void WirePi::beginTransmission(uint8_t address)
 {
@@ -632,14 +690,14 @@ void WirePi::beginTransmission(uint8_t address)
 
 }
 
-//Writes data to the I2C, returns bytes written.
+// Writes data to the I2C, returns bytes written.
 size_t WirePi::write(uint8_t data)
 {
 
     if(transmitting) {
         // in master transmitter mode
         // don't bother if buffer is full
-        if(txBufferLength >= BUFFER_LENGTH){
+        if (txBufferLength >= BUFFER_LENGTH) {
           return 0;
         }
 
@@ -658,25 +716,62 @@ size_t WirePi::write(uint8_t data)
 
 }
 
-//Writes data to the I2C, returns bytes written. 
+// Writes data to the I2C in form of string, returns bytes written. 
+size_t WirePi::write(const char *str)
+{
+    size_t byteswritten = 0;
+
+    for (size_t i = 0; i < strlen(str) ; i++) {
+        // If transmitting data >= BUFFER_LENGTH, then break.
+        if (write(str[i]) == 0) {
+            break;
+        }
+        byteswritten++;
+    }
+
+    return byteswritten;
+}
+
+
+// Writes data to the I2C, returns bytes written. 
 size_t WirePi::write(uint8_t *data, size_t quantity)
 {
 
-    size_t ret = 0;
+    size_t byteswritten = 0;
 
     if (transmitting) {
         // in master transmitter mode
         for(size_t i = 0; i < quantity; ++i){
             write(data[i]);
         }
-        ret = quantity;
+        byteswritten = quantity;
     } else {
         // in slave send mode
         // reply to master
-        ret = i2c_write_bytes(fd, data, quantity);
+        byteswritten = i2c_write_bytes(fd, data, quantity);
     }
     
-    return ret;
+    return byteswritten;
+}
+
+
+int WirePi::available(void)
+{
+  return rxBufferLength - rxBufferIndex;
+}
+
+
+int WirePi::read(void)
+{
+  int value = -1;
+  
+  // get each successive byte on each call
+  if (rxBufferIndex < rxBufferLength) {
+    value = rxBuffer[rxBufferIndex];
+    ++rxBufferIndex;
+  }
+
+  return value;
 }
 
 
@@ -698,34 +793,6 @@ uint8_t WirePi::endTransmission()
 
     return ret;
 }
-
-//Used by the master to request bytes from a slave device
-void WirePi::requestFrom(unsigned char address,int quantity)
-{
-    // TODO, set I2C addres here
-    // Then create an Available function ???
-}
-
-//Reads a byte that was transmitted from a slave device to a master after a call to WirePi::requestFrom()
-unsigned char WirePi::read()
-{
-
-    if (fd < 0) {
-        fprintf(stderr, "%s(): Initialize I2C first with Wire.begin() \n", __func__);
-        exit(1);
-    }
-
-    /*
-    union i2c_smbus_data data;
-    if (i2c_smbus_access(fd,I2C_SMBUS_READ,0,I2C_SMBUS_BYTE,&data)) {
-        fprintf(stderr, "%s(): I2C error: %s\n", __func__, strerror (errno));
-        return -1;
-    } else {
-        return (unsigned char) data.byte;
-    }
-    */
-}
-
 
 
 /////////////////////////////////////////////
