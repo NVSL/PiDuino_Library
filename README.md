@@ -185,3 +185,11 @@ TODO
 | SPI.transfer(buffer, size) | In Progress |
 | SPI.usingInterrupt(interruptNumber) | In Progress |
 
+
+---------------------------------------------------
+
+## TODO'S
+
+* Make a I2C begin(I2Cnumber) to let developers choose any i2c-x number. 
+* Check Linux i2c-slave. 
+
