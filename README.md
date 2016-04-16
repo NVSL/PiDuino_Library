@@ -15,8 +15,10 @@ Digital I/O, Analog I/O, Advanced I/O, Time, Math, Trigonometry, Random Numbers,
 **Implemented Arduino Libraries :**
 Serial, Wire, SPI
 
-**Note: Data Type String - object: **
+**Notes:**
+* Data Type String - object:
 will not be implemented in the first release. 
+* **B** for binary representation (e.g B10100001) conflicts with some termios.h definitions so use **0b** instead. 
 
 
 
@@ -192,4 +194,6 @@ TODO
 
 * Make a I2C begin(I2Cnumber) to let developers choose any i2c-x number. 
 * Check Linux i2c-slave. 
+* Maybe only add B(8 bits) only and that way prevent conflicts with termios.h
+* Defintily separate files and make it C compatible (At the end)
 
