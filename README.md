@@ -196,4 +196,5 @@ TODO
 * Check Linux i2c-slave. 
 * Maybe only add B(8 bits) only and that way prevent conflicts with termios.h
 * Defintily separate files and make it C compatible (At the end)
+* Make an Arduino.h header containing piDuino.h so developers don't need to change too much code. 
 
