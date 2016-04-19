@@ -192,9 +192,11 @@ TODO
 
 ## TODO'S
 
-* Make a I2C begin(I2Cnumber) to let developers choose any i2c-x number. 
+* Make a SPI and I2C begin("/dev/i2c-x") to let developers choose any i2c-x number. 
 * Check Linux i2c-slave. 
 * Maybe only add B(8 bits) only and that way prevent conflicts with termios.h
 * Defintily separate files and make it C compatible (At the end)
 * Make an Arduino.h header containing piDuino.h so developers don't need to change too much code. 
+* Add arduino String object.
+* Maybe add a SPISettings(..., bitsPerWord, CS(High?low)) and their bit routines config. to SPI. For bitPerWord transfer len will need to be multiplied by (bitsPerWord/8)
 
