@@ -6,7 +6,7 @@
 *   (https://www.cooking-hacks.com/documentation/tutorials/raspberry-pi-to-arduino-shields-connection-bridge/)
 *
 *   version: 1.0.0
-*   author: Anonymous
+*   author: Jorge Garza (jgarzagu@gmail.com)
 *   
 */
 
@@ -588,28 +588,43 @@ WirePi::WirePi()
 void WirePi::begin()
 {
 
-    FILE *fp;
+    FILE *fn, *fp;
     char filename[20];
     char path[1024];
-    char i2cDevice[1024] = "";
+    char i2cDevice[32] = "";
+
+    // Process the command below to search for i2c-1 device driver excistance
+    fn = popen("/bin/ls /dev/ | /bin/grep i2c-1" , "r");
+    if (fn == NULL) {
+        fprintf(stderr, "%s(): Failed to run command \"/bin/ls /dev/ | /bin/grep i2c-1\"\n",__func__);
+        exit(1);
+    }
     
-    // Open the command for reading and search for i2c-x devices, 
-    // where x = 0 or 1 depending on the raspberry Pi version.
+    // Process the command below to search for i2c-x devices drivers excistance, 
+    // where x = 0, 1, etc
     fp = popen("/bin/ls /dev/ | /bin/grep i2c-" , "r");
-        if (fp == NULL) {
+    if (fp == NULL) {
         fprintf(stderr, "%s(): Failed to run command \"/bin/ls /dev/ | /bin/grep i2c-\"\n",__func__);
         exit(1);
     }
 
-    // Get first i2c-x device
-    while (fgets(path, sizeof(path)-1, fp) != NULL) {
-        snprintf(i2cDevice, 1024, "%s", path);
-        break;
+
+    // If i2c-1 exists (RPI main i2c) then set it to open, 
+    // else set any other existant i2c-x like i2c-0 for old RPI revisions 
+    if (fgets(path, sizeof(path)-1, fn) != NULL) {
+        // Set i2c-1 device
+        snprintf(i2cDevice, 32, "i2c-1", path);
+    } else {
+        // Set i2c-x device
+        while (fgets(path, sizeof(path)-1, fp) != NULL) {
+            snprintf(i2cDevice, 32, "%s", path);
+            break;
+        }
     }
 
-    // If I2c device driver is not enabled or installed, then exit. 
+    // If no I2C device driver is enabled or installed then exit. 
     if(strcmp(i2cDevice,"") == 0) {
-        fprintf(stderr, "%s(): Filed to locate a \"i2c-x\" device driver in /dev/. \
+        fprintf(stderr, "%s(): Filed to locate any \"i2c-x\" device driver in /dev/. \
             please install or enable a i2c interface in your board \n",__func__);
         exit(1);
     }
@@ -795,45 +810,191 @@ uint8_t WirePi::endTransmission()
 }
 
 
+
+
 /////////////////////////////////////////////
 //          SPIPi class (SPI)             //
 ////////////////////////////////////////////
 
+SPISettings SPISET;
+
+////  Private methods ////
+
+// Transfers SPI data, recieved data is stored back in the data buffer
+void SPIPi::spi_transfer_bytes(int file, uint8_t *data, size_t numBytes) 
+{
+    struct spi_ioc_transfer spi;
+    int ret;
+
+    memset (&spi, 0, sizeof(spi));
+
+    spi.tx_buf        = (unsigned long)data;
+    spi.rx_buf        = (unsigned long)data;
+    spi.len           = numBytes;
+
+    if (ioctl (file, SPI_IOC_MESSAGE(1), &spi) < 0) {
+        fprintf(stderr, "%s(): spi transfer error: %s \n",__func__, strerror (errno));
+    }
+}
+
 ////  Public methods ////
 
 
- SPIPi::SPIPi(){
-	 
- }
+SPIPi::SPIPi()
+{
+    fd = -1;
+}
 
-void SPIPi::begin(){
+void SPIPi::begin()
+{
+    FILE *fp;
+    char filename[20];
+    char path[1024];
+    char spiDevice[32] = "";
+    uint8_t bitsPerWord = 8;
+
+    // Process the command below to search for i2c-1 device driver excistance
+    fp = popen("/bin/ls /dev/ | /bin/grep spidev" , "r");
+    if (fp == NULL) {
+        fprintf(stderr, "%s(): Failed to run command \"/bin/ls /dev/ | /bin/grep spidev\"\n",__func__);
+        exit(1);
+    }
+
+
+    // If any spidevX.X exits, then set to open it.
+    // If there are two or more (e.g spidev0.0 and spidev 0.1) 
+    // then the one with the lowest number (spidev0.0) will be set
+    while (fgets(path, sizeof(path)-1, fp) != NULL) {
+        snprintf(spiDevice, 32, "%s", path);
+        break;
+    }
+
+    // If no SPI device driver is enabled or installed then exit. 
+    if(strcmp(spiDevice,"") == 0) {
+        fprintf(stderr, "%s(): Filed to locate any \"spidevX.X\" device driver in /dev/. \
+            please install or enable a spi interface in your board \n",__func__);
+        exit(1);
+    }
+
+    // Open /dev/spidevX.X device 
+    snprintf(filename, 15, "/dev/%s", spiDevice);
+    fd = open(filename, O_RDWR);
+    if (fd < 0) {
+        fprintf(stderr, "%s(): Error openning SPI channel %s: %s\n",__func__, filename, strerror (errno));
+        exit(1);
+    }
+
+    // Set bits per word to 8 always
+    if (ioctl(fd, SPI_IOC_WR_BITS_PER_WORD, &bitsPerWord) < 0) {
+        fprintf(stderr, "%s(): ioctl error: %s\n",
+            __func__, strerror (errno));
+        exit(1);
+    }
 
 }
 
-void SPIPi::end(){  
+void SPIPi::end()
+{  
+    fd = -1;
+}
+
+void SPIPi::beginTransaction(SPISettings settings)
+{
+
+    if (fd < 0) {
+        fprintf(stderr, "%s(): Initialize SPI first with SPI.begin() \n", __func__);
+        exit(1);
+    }
+
+    // Set SPI mode (0,1,2,3)
+    if (ioctl(fd, SPI_IOC_WR_MODE, &SPISET.spiDataMode) < 0) {
+        fprintf(stderr, "%s(): ioctl error: %s\n",
+            __func__, strerror (errno));
+        exit(1);
+    }
+
+    // Set SPI bit order (LSB/MSB)
+    if (ioctl(fd, SPI_IOC_WR_LSB_FIRST, &SPISET.spiBitOrder) < 0) {
+        fprintf(stderr, "%s(): ioctl error: %s\n",
+            __func__, strerror (errno));
+        exit(1);
+    }
+
+    // Set max hz speed
+    if (ioctl(fd, SPI_IOC_WR_MAX_SPEED_HZ, &SPISET.spiClock) < 0) {
+        fprintf(stderr, "%s(): ioctl error: %s\n",
+            __func__, strerror (errno));
+        exit(1);
+    }
 
 }
 
-void SPIPi::setBitOrder(uint8_t order){
-    // BCM2835_SPI_BIT_ORDER_MSBFIRST is the only one suported by SPI0
+void SPIPi::endTransaction()
+{
+    // Do Nothing
 }
 
-// defaults to 0, which means a divider of 65536.
-// The divisor must be a power of 2. Odd numbers
-// rounded down. The maximum SPI clock rate is
-// of the APB clock
-void SPIPi::setClockDivider(uint16_t divider){
+void SPIPi::setBitOrder(uint8_t bitOrder)
+{
+    if (fd < 0) {
+        fprintf(stderr, "%s(): Initialize SPI first with SPI.begin() \n", __func__);
+        exit(1);
+    }
 
+    // Set SPI bit order (LSB/MSB)
+    if (ioctl(fd, SPI_IOC_WR_LSB_FIRST, &bitOrder) < 0) {
+        fprintf(stderr, "%s(): ioctl error: %s\n",
+            __func__, strerror (errno));
+        exit(1);
+    }
 }
 
-void SPIPi::setDataMode(uint8_t mode){
+void SPIPi::setClockDivider(uint8_t clockDiv)
+{
+    if (fd < 0) {
+        fprintf(stderr, "%s(): Initialize SPI first with SPI.begin() \n", __func__);
+        exit(1);
+    }
 
+    // Set max hz speed
+    if (ioctl(fd, SPI_IOC_WR_MAX_SPEED_HZ, &clockDiv) < 0) {
+        fprintf(stderr, "%s(): ioctl error: %s\n",
+            __func__, strerror (errno));
+        exit(1);
+    }
 }
 
-// Writes (and reads) a single byte to SPI
-uint8_t SPIPi::transfer(uint8_t value){
-    uint8_t ret = 0;
-    return ret;
+void SPIPi::setDataMode(uint8_t dataMode)
+{
+    if (fd < 0) {
+        fprintf(stderr, "%s(): Initialize SPI first with SPI.begin() \n", __func__);
+        exit(1);
+    }
+
+    // Set SPI mode (0,1,2,3)
+    if (ioctl(fd, SPI_IOC_WR_MODE, &dataMode) < 0) {
+        fprintf(stderr, "%s(): ioctl error: %s\n",
+            __func__, strerror (errno));
+        exit(1);
+    }
+}
+
+uint8_t SPIPi::transfer(uint8_t data)
+{
+    uint8_t transferData;
+    transferData = data;
+    spi_transfer_bytes(fd, &transferData, 1);
+    return transferData;
+}
+
+uint16_t SPIPi::transfer16(uint16_t data)
+{
+    // TODO
+}
+
+void SPIPi::transfer(void *buf, size_t count)
+{
+   spi_transfer_bytes(fd, (uint8_t *)buf, count);
 }
 
 

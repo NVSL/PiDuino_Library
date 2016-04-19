@@ -6,7 +6,7 @@
 *   (https://www.cooking-hacks.com/documentation/tutorials/raspberry-pi-to-arduino-shields-connection-bridge/)
 *
 *   version: 1.0.0
-*   author: Anonymous
+*   author: Jorge Garza (jgarzagu@gmail.com)
 *   
 */
 
@@ -39,6 +39,16 @@
 #include <stdarg.h>
 #include <linux/types.h>
 #include <linux/i2c.h>
+#include <linux/spi/spidev.h>
+
+
+// Remove some PROGMEM space macros if posible
+#define PROGMEM
+#define pgm_read_byte(addr) (*(const unsigned char *)(addr))
+#define pgm_read_word(addr) (*(const unsigned short *)(addr))
+#define pgm_read_dword(addr) (*(const unsigned long *)(addr))
+#define pgm_read_float(addr) (*(const float *)(addr))
+#define pgm_read_ptr(addr) (*(const void *)(addr))
 
 
 namespace unistd {
@@ -133,7 +143,7 @@ public:
 #define BUFFER_LENGTH 32
 
 
-class WirePi{
+class WirePi {
 	private:
 		int fd;
         static uint8_t rxBuffer[];
@@ -170,19 +180,55 @@ class WirePi{
 //          SPIPi class (SPI)             //
 ////////////////////////////////////////////
 
+#ifndef LSBFIRST
+#define LSBFIRST 1
+#endif
+#ifndef MSBFIRST
+#define MSBFIRST 0
+#endif
 
-class SPIPi{
+#define SPI_MODE0 SPI_MODE_0 
+#define SPI_MODE1 SPI_MODE_1
+#define SPI_MODE2 SPI_MODE_2
+#define SPI_MODE3 SPI_MODE_3
+
+class SPISettings {
+	private:
+		uint32_t spiClock;
+		uint8_t spiBitOrder;
+		uint8_t spiDataMode;
+	public:
+		SPISettings() {
+			spiClock = 4000000;
+			spiBitOrder = MSBFIRST;
+			spiDataMode = SPI_MODE0;
+		}
+
+		SPISettings(uint32_t clock, uint8_t bitOrder, uint8_t dataMode) {
+			spiClock = clock;
+			spiBitOrder = bitOrder;
+			spiDataMode = dataMode;
+		}
+
+	friend class SPIPi;
+};
+
+class SPIPi {
+	private:
+		int fd;
+		void spi_transfer_bytes(int file, uint8_t *data, size_t numBytes);
 	public:
 		SPIPi();
   		void begin();
     	void end();
-    	void setBitOrder(uint8_t order);
- 		void setClockDivider(uint16_t divider);
-		void setDataMode(uint8_t mode);
- 		void chipSelect(uint8_t cs);
-		void setChipSelectPolarity(uint8_t cs, uint8_t active);
- 		uint8_t transfer(uint8_t value);
- 		void transfernb(char* tbuf, char* rbuf, uint32_t len);
+    	void beginTransaction(SPISettings settings);
+    	void endTransaction();
+    	void setBitOrder(uint8_t bitOrder);
+ 		void setClockDivider(uint8_t clockDiv);
+		void setDataMode(uint8_t dataMode);
+ 		uint8_t transfer(uint8_t data);
+ 		uint16_t transfer16(uint16_t data);
+ 		void transfer(void *buf, size_t count);
 };
 
 // Some useful arduino functions
