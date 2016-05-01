@@ -174,17 +174,17 @@ TODO
 
 | Function | Implemented (YES/NO-Comment/In Progress) |
 | ------ | ----------- |
-| SPISettings | In Progress |
-| SPI.begin() | In Progress |
-| SPI.end()| In Progress |
-| SPI.beginTransaction(mySettings) | In Progress |
-| SPI.endTransaction() | In Progress |
-| SPI.setBitOrder(order) | In Progress |
-| SPI.setClockDivider(divider) | In Progress |
-| SPI.setDataMode(mode) | In Progress |
-| receivedVal = SPI.transfer(val) | In Progress |
-| receivedVal16 = SPI.transfer16(val16) | In Progress |
-| SPI.transfer(buffer, size) | In Progress |
+| SPISettings | YES |
+| SPI.begin() | YES |
+| SPI.end()| YES |
+| SPI.beginTransaction(mySettings) | YES |
+| SPI.endTransaction() | YES |
+| SPI.setBitOrder(order) | YES |
+| SPI.setClockDivider(divider) | YES - Sets clock or if you use dividers (e.g SPI_CLOCK_DIV4) then sets clock at the divider speed for a 16Mhz Arduino microcontroller |
+| SPI.setDataMode(mode) | YES |
+| receivedVal = SPI.transfer(val) | YES |
+| receivedVal16 = SPI.transfer16(val16) | NO - Is almost depreceated and could be fixed better adding a bitsPerWord in settings that includes 16 bits and 32 bits |
+| SPI.transfer(buffer, size) | YES |
 | SPI.usingInterrupt(interruptNumber) | In Progress |
 
 
