@@ -87,17 +87,19 @@ will not be implemented in the first release.
 
 | Function | Implemented (YES/NO-Comment/In Progress) |
 | ------ | ----------- |
-|  | In Progress |
-|  | In Progress |
-|  | In Progress |
-|  | In Progress |
-|  | In Progress |
-|  | In Progress |
-|  | In Progress |
-|  | In Progress |
-|  | In Progress |
-|  | In Progress |
-|  | In Progress |
+| isAlphaNumeric(thisChar) | In Progress |
+| isAlpha(thisChar) | In Progress |
+| isAscii(thisChar) | In Progress |
+| isWhitespace(thisChar) | In Progress |
+| isControl(thisChar) | In Progress |
+| isDigit(thisChar) | In Progress |
+| isGraph(thisChar) | In Progress |
+| isLowerCase(thisChar) | In Progress |
+| isPrintable(thisChar) | In Progress |
+| isPunct(thisChar) | In Progress |
+| isSpace(thisChar) | In Progress |
+| isUpperCase(thisChar) | In Progress |
+| isHexadecimalDigit(thisChar) | In Progress |
 
 #### - Random Numbers
 
