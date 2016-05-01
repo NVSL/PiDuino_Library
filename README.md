@@ -77,7 +77,27 @@ will not be implemented in the first release.
 
 #### - Trigonometry
 
-TODO
+| Function | Implemented (YES/NO-Comment/In Progress) |
+| ------ | ----------- |
+| sin(rad) | In Progress |
+| cos(rad) | In Progress |
+| tan(rad) | In Progress |
+
+#### - Characters
+
+| Function | Implemented (YES/NO-Comment/In Progress) |
+| ------ | ----------- |
+|  | In Progress |
+|  | In Progress |
+|  | In Progress |
+|  | In Progress |
+|  | In Progress |
+|  | In Progress |
+|  | In Progress |
+|  | In Progress |
+|  | In Progress |
+|  | In Progress |
+|  | In Progress |
 
 #### - Random Numbers
 
@@ -89,7 +109,15 @@ TODO
 
 #### - Bits and Bytes
 
-TODO
+| Function | Implemented (YES/NO-Comment/In Progress) |
+| ------ | ----------- |
+| lowByte(x) | In Progress |
+| highByte(x) | In Progress |
+| bitRead(x, n) | In Progress |
+| bitWrite(x, n, b) | In Progress |
+| bitSet(x, n) | In Progress |
+| bitClear(x, n) | In Progress |
+| bit(n) | In Progress |
 
 #### - External Interrupts
 
