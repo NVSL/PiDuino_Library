@@ -894,7 +894,7 @@ void SPIPi::begin()
 }
 
 void SPIPi::end()
-{  
+{
     fd = -1;
 }
 
@@ -949,7 +949,7 @@ void SPIPi::setBitOrder(uint8_t bitOrder)
     }
 }
 
-void SPIPi::setClockDivider(uint8_t clockDiv)
+void SPIPi::setClockDivider(uint32_t clockDiv)
 {
     if (fd < 0) {
         fprintf(stderr, "%s(): Initialize SPI first with SPI.begin() \n", __func__);

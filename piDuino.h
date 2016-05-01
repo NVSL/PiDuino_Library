@@ -187,10 +187,20 @@ class WirePi {
 #define MSBFIRST 0
 #endif
 
+// SPI Modes 
 #define SPI_MODE0 SPI_MODE_0 
 #define SPI_MODE1 SPI_MODE_1
 #define SPI_MODE2 SPI_MODE_2
 #define SPI_MODE3 SPI_MODE_3
+
+// SPI Speed taking a 16 Mhz arduino clock speed
+#define SPI_CLOCK_DIV2 8000000
+#define SPI_CLOCK_DIV4 4000000
+#define SPI_CLOCK_DIV8 2000000
+#define SPI_CLOCK_DIV16 1000000
+#define SPI_CLOCK_DIV32 500000
+#define SPI_CLOCK_DIV64 250000
+#define SPI_CLOCK_DIV128 125000
 
 class SPISettings {
 	private:
@@ -224,7 +234,7 @@ class SPIPi {
     	void beginTransaction(SPISettings settings);
     	void endTransaction();
     	void setBitOrder(uint8_t bitOrder);
- 		void setClockDivider(uint8_t clockDiv);
+ 		void setClockDivider(uint32_t clockDiv);
 		void setDataMode(uint8_t dataMode);
  		uint8_t transfer(uint8_t data);
  		uint16_t transfer16(uint16_t data);
