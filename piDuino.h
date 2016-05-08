@@ -85,34 +85,66 @@ typedef unsigned char byte;
 //          SerialPi class (UART)         //
 ////////////////////////////////////////////
 
+// Defines for setting data, parity, and stop bits
+// e.g SERIAL_ABC
+// A= data (5 bits, 6 bits, 7 bits, 8 bits)
+// B= parity (None, Even, Odd)
+// C= stop bits (1 bit, 2 bits) 
+#define SERIAL_5N1 0x00
+#define SERIAL_6N1 0x02
+#define SERIAL_7N1 0x04
+#define SERIAL_8N1 0x06 // default
+#define SERIAL_5N2 0x08
+#define SERIAL_6N2 0x0A
+#define SERIAL_7N2 0x0C
+#define SERIAL_8N2 0x0E
+#define SERIAL_5E1 0x20
+#define SERIAL_6E1 0x22
+#define SERIAL_7E1 0x24
+#define SERIAL_8E1 0x26
+#define SERIAL_5E2 0x28
+#define SERIAL_6E2 0x2A
+#define SERIAL_7E2 0x2C
+#define SERIAL_8E2 0x2E
+#define SERIAL_5O1 0x30
+#define SERIAL_6O1 0x32
+#define SERIAL_7O1 0x34
+#define SERIAL_8O1 0x36
+#define SERIAL_5O2 0x38
+#define SERIAL_6O2 0x3A
+#define SERIAL_7O2 0x3C
+#define SERIAL_8O2 0x3E
+
 
 class SerialPi {
 
 private:
-	int sd,status;
-	const char *serialPort;
+	int sd;
 	unsigned char c;
-	struct termios options;
-	int speed;
+	const char *serialPort;
 	long timeOut;
 	timespec time1, time2;
 	timespec timeDiff(timespec start, timespec end);
+	int timeDiffmillis(timespec start, timespec end);
 	char * int2bin(int i);
-	char * int2hex(int i);
-	char * int2oct(int i);
 
 public:
 
 	SerialPi();
-	void begin(int serialSpeed);
+	void begin(int baud);
+	void begin(int baud, unsigned char config);
 	int available();
-	char read();
-	int readBytes(char message[], int size);
-	int readBytesUntil(char character,char buffer[],int length);
+	int availableForWrite();
 	bool find(const char *target);
-	bool findUntil(const char *target, const char *terminal);
+	bool findUntil(const char *target, const char *terminator);
+	void flush();
+
 	long parseInt();
 	float parseFloat();
+
+	int read();
+	int readBytes(char message[], int size);
+	int readBytesUntil(char character,char buffer[],int length);
 	char peek();
 	void print(const char *message);
 	void print(char message);
@@ -125,7 +157,6 @@ public:
 	int write(unsigned char message);
 	int write(const char *message);
 	int write (char *message, int size);
-	void flush();
 	void setTimeout(long millis);
 	void end();
 };
@@ -162,6 +193,7 @@ class WirePi {
 	public:
 		WirePi();
 		void begin();
+		void end();
 		uint8_t  requestFrom(uint8_t address, uint8_t quantity);
 		void beginTransmission(uint8_t address);
 		uint8_t endTransmission();		

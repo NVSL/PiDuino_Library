@@ -24,37 +24,60 @@
 //Constructor
 SerialPi::SerialPi()
 {
+    // Default serial driver and timeout
     serialPort="/dev/ttyAMA0";
     timeOut = 1000;
+    sd = -1;
 }
 
-//Sets the data rate in bits per second (baud) for serial data transmission
-void SerialPi::begin(int serialSpeed)
+void SerialPi::begin(int baud)
+{
+    begin(baud, SERIAL_8N1);
+}
+
+// Sets the data rate in bits per second (baud) for serial data transmission
+void SerialPi::begin(int baud, unsigned char config)
 {
 
-	switch(serialSpeed){
-		case     50:	speed =     B50 ; break ;
-		case     75:	speed =     B75 ; break ;
-		case    110:	speed =    B110 ; break ;
-		case    134:	speed =    B134 ; break ;
-		case    150:	speed =    B150 ; break ;
-		case    200:	speed =    B200 ; break ;
-		case    300:	speed =    B300 ; break ;
-		case    600:	speed =    B600 ; break ;
-		case   1200:	speed =   B1200 ; break ;
-		case   1800:	speed =   B1800 ; break ;
-		case   2400:	speed =   B2400 ; break ;
-		case   9600:	speed =   B9600 ; break ;
-		case  19200:	speed =  B19200 ; break ;
-		case  38400:	speed =  B38400 ; break ;
-		case  57600:	speed =  B57600 ; break ;
-		case 115200:	speed = B115200 ; break ;
-		default:	speed = B230400 ; break ;
-			
+    int speed;
+    int DataSize, ParityEN, Parity, StopBits;
+    struct termios options;
+
+	switch (baud) {
+		case      50:	speed =      B50 ; break ;
+		case      75:	speed =      B75 ; break ;
+		case     110:	speed =     B110 ; break ;
+		case     134:	speed =     B134 ; break ;
+		case     150:	speed =     B150 ; break ;
+		case     200:	speed =     B200 ; break ;
+		case     300:	speed =     B300 ; break ;
+		case     600:	speed =     B600 ; break ;
+		case    1200:	speed =    B1200 ; break ;
+		case    1800:	speed =    B1800 ; break ;
+		case    2400:	speed =    B2400 ; break ;
+		case    9600:	speed =    B9600 ; break ;
+		case   19200:	speed =   B19200 ; break ;
+		case   38400:	speed =   B38400 ; break ;
+		case   57600:	speed =   B57600 ; break ;
+		case  115200:	speed =  B115200 ; break ;
+        case  230400:   speed =  B230400 ; break ;
+        case  460800:   speed =  B460800 ; break ;
+        case  500000:   speed =  B500000 ; break ;
+        case  576000:   speed =  B576000 ; break ;
+        case  921600:   speed =  B921600 ; break ;
+        case 1000000:   speed = B1000000 ; break ;
+        case 1152000:   speed = B1152000 ; break ;
+        case 1500000:   speed = B1500000 ; break ;
+        case 2000000:   speed = B2000000 ; break ;
+        case 2500000:   speed = B2500000 ; break ;
+        case 3000000:   speed = B3000000 ; break ;
+        case 3500000:   speed = B3500000 ; break ;
+        case 4000000:   speed = B4000000 ; break ;
+		default:	    speed =   B9600 ; break ;
 	}
 
 
-	if ((sd = open(serialPort, O_RDWR | O_NOCTTY | O_NDELAY | O_NONBLOCK)) == -1){
+	if ((sd = open(serialPort, O_RDWR | O_NOCTTY | O_NDELAY | O_NONBLOCK)) == -1) {
 		fprintf(stderr,"Unable to open the serial port %s - \n", serialPort);
 		exit(-1);
 	}
@@ -66,288 +89,139 @@ void SerialPi::begin(int serialSpeed)
 	cfsetispeed (&options, speed);
 	cfsetospeed (&options, speed);
 
-	options.c_cflag |= (CLOCAL | CREAD);
-	options.c_cflag &= ~PARENB;
-	options.c_cflag &= ~CSTOPB;
-	options.c_cflag &= ~CSIZE;
-	options.c_cflag |= CS8;
+    switch (config) {
+        case SERIAL_5N1: DataSize = CS5; ParityEN = 0; Parity = 0; StopBits = 0; break;
+        case SERIAL_6N1: DataSize = CS6; ParityEN = 0; Parity = 0; StopBits = 0; break;
+        case SERIAL_7N1: DataSize = CS7; ParityEN = 0; Parity = 0; StopBits = 0; break;
+        case SERIAL_8N1: DataSize = CS8; ParityEN = 0; Parity = 0; StopBits = 0; break;
+        case SERIAL_5N2: DataSize = CS5; ParityEN = 0; Parity = 0; StopBits = 1; break;
+        case SERIAL_6N2: DataSize = CS6; ParityEN = 0; Parity = 0; StopBits = 1; break;
+        case SERIAL_7N2: DataSize = CS7; ParityEN = 0; Parity = 0; StopBits = 1; break;
+        case SERIAL_8N2: DataSize = CS8; ParityEN = 0; Parity = 0; StopBits = 1; break;
+        case SERIAL_5E1: DataSize = CS5; ParityEN = 1; Parity = 0; StopBits = 0; break;
+        case SERIAL_6E1: DataSize = CS6; ParityEN = 1; Parity = 0; StopBits = 0; break;
+        case SERIAL_7E1: DataSize = CS7; ParityEN = 1; Parity = 0; StopBits = 0; break;
+        case SERIAL_8E1: DataSize = CS8; ParityEN = 1; Parity = 0; StopBits = 0; break;
+        case SERIAL_5E2: DataSize = CS5; ParityEN = 1; Parity = 0; StopBits = 1; break;
+        case SERIAL_6E2: DataSize = CS6; ParityEN = 1; Parity = 0; StopBits = 1; break;
+        case SERIAL_7E2: DataSize = CS7; ParityEN = 1; Parity = 0; StopBits = 1; break;
+        case SERIAL_8E2: DataSize = CS8; ParityEN = 1; Parity = 0; StopBits = 1; break;
+        case SERIAL_5O1: DataSize = CS5; ParityEN = 1; Parity = 1; StopBits = 0; break;
+        case SERIAL_6O1: DataSize = CS6; ParityEN = 1; Parity = 1; StopBits = 0; break;
+        case SERIAL_7O1: DataSize = CS7; ParityEN = 1; Parity = 1; StopBits = 0; break;
+        case SERIAL_8O1: DataSize = CS8; ParityEN = 1; Parity = 1; StopBits = 0; break;
+        case SERIAL_5O2: DataSize = CS5; ParityEN = 1; Parity = 1; StopBits = 1; break;
+        case SERIAL_6O2: DataSize = CS6; ParityEN = 1; Parity = 1; StopBits = 1; break;
+        case SERIAL_7O2: DataSize = CS7; ParityEN = 1; Parity = 1; StopBits = 1; break;
+        case SERIAL_8O2: DataSize = CS8; ParityEN = 1; Parity = 1; StopBits = 1; break;
+        default: DataSize = CS8; ParityEN = 0; Parity = 0; StopBits = 0; break; // SERIAL_8N1
+    }
+
+    options.c_cflag |= (CLOCAL | CREAD);
+    options.c_cflag &=  ~CSIZE;                                             // Enable set data size
+    options.c_cflag |= DataSize;                                            // Data size
+    (ParityEN) ? options.c_cflag |= PARENB : options.c_cflag &= ~PARENB;    // Parity enable ? YES : NO
+    (Parity) ? options.c_cflag |= PARODD : options.c_cflag &= ~PARODD;      // Parity ? Odd : Even
+    (StopBits) ? options.c_cflag |= CSTOPB : options.c_cflag &= ~CSTOPB;    // Stop bits ? 2 bits: 1 bit
 	options.c_lflag &= ~(ICANON | ECHO | ECHOE | ISIG);
 	options.c_oflag &= ~OPOST;
 
 	tcsetattr (sd, TCSANOW, &options);
-
-	ioctl (sd, TIOCMGET, &status);
-
-	status |= TIOCM_DTR;
-	status |= TIOCM_RTS;
-
-	ioctl (sd, TIOCMSET, &status);
-	
-	unistd::usleep (10000);
     
 }
 
-//Prints data to the serial port as human-readable ASCII text.
-void SerialPi::print(const char *message)
+// Disables serial communication
+void SerialPi::end() 
 {
-    unistd::write(sd,message,strlen(message));
+    unistd::close(sd);
+    sd = -1;
 }
 
-//Prints data to the serial port as human-readable ASCII text.
-void SerialPi::print (char message)
-{
-	unistd::write(sd,&message,1);
-}
-
-/*Prints data to the serial port as human-readable ASCII text.
- * It can print the message in many format representations such as:
- * Binary, Octal, Decimal, Hexadecimal and as a BYTE. */
-void SerialPi::print(unsigned char i,Representation rep)
-{
-    char * message;
-    switch(rep){
-
-        case BIN:
-            message = int2bin(i);
-            unistd::write(sd,message,strlen(message));
-            break;
-        case OCT:
-            message = int2oct(i);
-            unistd::write(sd,message,strlen(message));
-            break;
-        case DEC:
-            sprintf(message,"%d",i);
-            unistd::write(sd,message,strlen(message));
-            break;
-        case HEX:
-            message = int2hex(i);
-            unistd::write(sd,message,strlen(message));
-            break;
-        case BYTE:
-            unistd::write(sd,&i,1);
-            break;
-
-    }
-}
-
-/* Prints data to the serial port as human-readable ASCII text.
- * precission is used to limit the number of decimals.
- */
-void SerialPi::print(float f, int precission)
-{
-	/*
-    const char *str1="%.";
-    char * str2;
-    char * str3;
-    char * message;
-    sprintf(str2,"%df",precission);
-    asprintf(&str3,"%s%s",str1,str2);
-    sprintf(message,str3,f);
-	*/
-	char message[10];
-	sprintf(message, "%.1f", f );
-    unistd::write(sd,message,strlen(message));
-}
-
-/* Prints data to the serial port as human-readable ASCII text followed
- * by a carriage retrun character '\r' and a newline character '\n' */
-void SerialPi::println(const char *message)
-{
-	const char *newline="\r\n";
-	char * msg = NULL;
-	asprintf(&msg,"%s%s",message,newline);
-    unistd::write(sd,msg,strlen(msg));
-}
-
-/* Prints data to the serial port as human-readable ASCII text followed
- * by a carriage retrun character '\r' and a newline character '\n' */
-void SerialPi::println(char message)
-{
-	const char *newline="\r\n";
-	char * msg = NULL;
-	asprintf(&msg,"%s%s",&message,newline);
-    unistd::write(sd,msg,strlen(msg));
-}
-
-/* Prints data to the serial port as human-readable ASCII text followed
- * by a carriage retrun character '\r' and a newline character '\n' */
-void SerialPi::println(int i, Representation rep)
-{
-    char * message;
-    switch(rep){
-
-        case BIN:
-            message = int2bin(i);
-            break;
-        case OCT:
-            message = int2oct(i);
-            break;
-        case DEC:
-            sprintf(message,"%d",i);
-            break;
-        case HEX:
-            message = int2hex(i);
-            break;
-
-    }
-
-    const char *newline="\r\n";
-    char * msg = NULL;
-    asprintf(&msg,"%s%s",message,newline);
-    unistd::write(sd,msg,strlen(msg));
-}
-
-/* Prints data to the serial port as human-readable ASCII text followed
- * by a carriage retrun character '\r' and a newline character '\n' */
-void SerialPi::println(float f, int precission)
-{
-    const char *str1="%.";
-    char * str2;
-    char * str3;
-    char * message;
-    sprintf(str2,"%df",precission);
-    asprintf(&str3,"%s%s",str1,str2);
-    sprintf(message,str3,f);
-
-    const char *newline="\r\n";
-    char * msg = NULL;
-    asprintf(&msg,"%s%s",message,newline);
-    unistd::write(sd,msg,strlen(msg));
-}
-
-/* Writes binary data to the serial port. This data is sent as a byte 
- * Returns: number of bytes written */
-int SerialPi::write(unsigned char message)
-{
-	unistd::write(sd,&message,1);
-	return 1;
-}
-
-/* Writes binary data to the serial port. This data is sent as a series
- * of bytes
- * Returns: number of bytes written */
-int SerialPi::write(const char *message)
-{
-	int len = strlen(message);
-	unistd::write(sd,&message,len);
-	return len;
-}
-
-/* Writes binary data to the serial port. This data is sent as a series
- * of bytes placed in an buffer. It needs the length of the buffer
- * Returns: number of bytes written */
-int SerialPi::write(char *message, int size)
-{
-	unistd::write(sd,message,size);
-	return size;
-}
-
-/* Get the numberof bytes (characters) available for reading from 
- * the serial port.
- * Return: number of bytes avalable to read */
+// Get the numberof bytes (characters) available for reading from 
+// the serial port.
+// Return: number of bytes avalable to read 
 int SerialPi::available()
 {
     int nbytes = 0;
     if (ioctl(sd, FIONREAD, &nbytes) < 0)  {
-		fprintf(stderr, "Failed to get byte count on serial.\n");
+        fprintf(stderr, "%s(): serial get available bytes error: %s \n",__func__, strerror (errno));
         exit(-1);
     }
     return nbytes;
 }
 
-/* Reads 1 byte of incoming serial data
- * Returns: first byte of incoming serial data available */
-char SerialPi::read() 
+// Arduino uses buffers to send/recieve data and in arduino this
+// function returns the available bytes in the tx serial buffer to write to.
+// For Piduino we don't use buffers so this function is not necessary. 
+// 63 is what you normaly get in an Arduino Uno with an empty tx Serial buffer. 
+int SerialPi::availableForWrite ()
 {
-	unistd::read(sd,&c,1);
-    return c;
+    return 63;
 }
-
-/* Reads characters from th serial port into a buffer. The function 
- * terminates if the determined length has been read, or it times out
- * Returns: number of bytes readed */
-int SerialPi::readBytes(char message[], int size)
-{
-    clock_gettime(CLOCK_PROCESS_CPUTIME_ID, &time1);
-    int count;
-    for (count=0;count<size;count++) {
-    	if (available()) unistd::read(sd,&message[count],1);
-    	clock_gettime(CLOCK_PROCESS_CPUTIME_ID, &time2);
-    	timespec t = timeDiff(time1,time2);
-    	if ((t.tv_nsec/1000)>timeOut) break;
-    }
-    return count;
-}
-
-/* Reads characters from the serial buffer into an array. 
- * The function terminates if the terminator character is detected,
- * the determined length has been read, or it times out.
- * Returns: number of characters read into the buffer. */
-int SerialPi::readBytesUntil(char character,char buffer[],int length)
-{
-    char lastReaded = character +1; //Just to make lastReaded != character
-    int count=0;
-    clock_gettime(CLOCK_PROCESS_CPUTIME_ID, &time1);
-    while (count != length && lastReaded != character) {
-        if (available()) unistd::read(sd,&buffer[count],1);
-        lastReaded = buffer[count];
-        count ++;
-        clock_gettime(CLOCK_PROCESS_CPUTIME_ID, &time2);
-        timespec t = timeDiff(time1,time2);
-        if ((t.tv_nsec/1000)>timeOut) break;
-    }
-
-    return count;
-}
-
 
 bool SerialPi::find(const char *target)
 {
     findUntil(target,NULL);
 }
 
-/* Reads data from the serial buffer until a target string of given length
- * or terminator string is found.
- * Returns: true if the target string is found, false if it times out */
-bool SerialPi::findUntil(const char *target, const char *terminal)
+// Reads data from the serial buffer until a target string of given length,
+// terminator string is found or times out.
+// Returns: true if target string is found, false if times out or terminator is found.
+bool SerialPi::findUntil(const char *target, const char *terminator)
 {
     int index = 0;
     int termIndex = 0;
-    int targetLen = strlen(target);
-    int termLen = strlen(terminal);
+    int targetLen;
+    int termLen;
     char readed;
-    timespec t;
+    int t;
 
-    clock_gettime(CLOCK_PROCESS_CPUTIME_ID, &time1);
-
-    if( *target == 0)
+    if (target == NULL || *target == '\0') {
         return true;   // return true if target is a null string
+    } 
+    targetLen = strlen(target);
 
-    do{
-        if(available()){
+    if (terminator == NULL) {
+        termLen = 0;
+    } else {
+        termLen =  strlen(terminator);
+    }
+
+    clock_gettime(CLOCK_REALTIME, &time1);
+
+    do {
+        if (available()) {
             unistd::read(sd,&readed,1);
-            if(readed != target[index])
+            if (readed != target[index])
             index = 0; // reset index if any char does not match
 
-            if( readed == target[index]){
-                if(++index >= targetLen){ // return true if all chars in the target match
+            if (readed == target[index]) {
+                // return true if all chars in the target match
+                if (++index >= targetLen) { 
                     return true;
                 }
             }
 
-            if(termLen > 0 && c == terminal[termIndex]){
-                if(++termIndex >= termLen) return false; // return false if terminate string found before target string
-            }else{ 
+            if (termLen > 0 && readed == terminator[termIndex]) {
+                // return false if terminate string found before target string
+                if(++termIndex >= termLen) return false; 
+            } else { 
                 termIndex = 0;
             }
         }
 
-        clock_gettime(CLOCK_PROCESS_CPUTIME_ID, &time2);
-        t = timeDiff(time1,time2);
+        clock_gettime(CLOCK_REALTIME, &time2);
+        t = timeDiffmillis(time1, time2);
 
-    } while((t.tv_nsec/1000)<=timeOut);
+    } while(t <= timeOut);
 
     return false;
+}
+
+// Remove any data remaining on the serial buffer
+void SerialPi::flush()
+{
+    tcflush(sd,TCIOFLUSH);
 }
 
 /* returns the first valid (long) integer value from the current position.
@@ -419,7 +293,188 @@ float SerialPi::parseFloat()
     else
         return value;
 
+}
 
+// Prints data to the serial port as human-readable ASCII text.
+void SerialPi::print(const char *message)
+{
+    unistd::write(sd,message,strlen(message));
+}
+
+// Prints data to the serial port as human-readable ASCII text.
+void SerialPi::print (char message)
+{
+	unistd::write(sd,&message,1);
+}
+
+/*Prints data to the serial port as human-readable ASCII text.
+ * It can print the message in many format representations such as:
+ * Binary, Octal, Decimal, Hexadecimal and as a BYTE. */
+void SerialPi::print(unsigned char i,Representation rep)
+{
+    char * message;
+    switch(rep){
+
+        case BIN:
+            message = int2bin(i);
+            break;
+        case OCT:
+            asprintf(&message,"%o",i);
+            break;
+        case DEC:
+            asprintf(&message,"%d",i);
+            break;
+        case HEX:
+            asprintf(&message,"%X",i);
+            break;
+    }
+
+    unistd::write(sd,message,strlen(message));
+}
+
+/* Prints data to the serial port as human-readable ASCII text.
+ * precission is used to limit the number of decimals.
+ */
+ //TODO change precision
+void SerialPi::print(float f, int precission)
+{
+	char * message;
+	asprintf(&message, "%.1f", f );
+    unistd::write(sd,message,strlen(message));
+}
+
+/* Prints data to the serial port as human-readable ASCII text followed
+ * by a carriage retrun character '\r' and a newline character '\n' */
+void SerialPi::println(const char *message)
+{
+	char * msg;
+	asprintf(&msg,"%s\r\n",message);
+    unistd::write(sd,msg,strlen(msg));
+}
+
+/* Prints data to the serial port as human-readable ASCII text followed
+ * by a carriage retrun character '\r' and a newline character '\n' */
+void SerialPi::println(char message)
+{
+	char * msg;
+	asprintf(&msg,"%c\r\n",message);
+    unistd::write(sd,msg,strlen(msg));
+}
+
+/* Prints data to the serial port as human-readable ASCII text followed
+ * by a carriage retrun character '\r' and a newline character '\n' */
+void SerialPi::println(int i, Representation rep)
+{
+    char * message;
+
+    switch(rep){
+
+        case BIN:
+            message = int2bin(i);
+            break;
+        case OCT:
+            asprintf(&message,"%o",i);
+            break;
+        case DEC:
+            asprintf(&message,"%d",i);
+            break;
+        case HEX:
+            asprintf(&message,"%x",i);
+            break;
+    }
+
+    char * msg;
+    asprintf(&msg,"%s\r\n",message);
+    unistd::write(sd,msg,strlen(msg));
+}
+
+/* Prints data to the serial port as human-readable ASCII text followed
+ * by a carriage retrun character '\r' and a newline character '\n' */
+void SerialPi::println(float f, int precission)
+{
+    const char *str1="%.";
+    char * str2;
+    char * str3;
+    char * message;
+    sprintf(str2,"%df",precission);
+    asprintf(&str3,"%s%s",str1,str2);
+    sprintf(message,str3,f);
+
+    char * msg = NULL;
+    asprintf(&msg,"%s\r\n",message);
+    unistd::write(sd,msg,strlen(msg));
+}
+
+/* Writes binary data to the serial port. This data is sent as a byte 
+ * Returns: number of bytes written */
+int SerialPi::write(unsigned char message)
+{
+	unistd::write(sd,&message,1);
+	return 1;
+}
+
+/* Writes binary data to the serial port. This data is sent as a series
+ * of bytes
+ * Returns: number of bytes written */
+int SerialPi::write(const char *message)
+{
+	int len = strlen(message);
+	unistd::write(sd,&message,len);
+	return len;
+}
+
+/* Writes binary data to the serial port. This data is sent as a series
+ * of bytes placed in an buffer. It needs the length of the buffer
+ * Returns: number of bytes written */
+int SerialPi::write(char *message, int size)
+{
+	unistd::write(sd,message,size);
+	return size;
+}
+
+/* Reads 1 byte of incoming serial data
+ * Returns: first byte of incoming serial data available */
+int SerialPi::read() 
+{
+	unistd::read(sd,&c,1);
+    return c;
+}
+
+/* Reads characters from th serial port into a buffer. The function 
+ * terminates if the determined length has been read, or it times out
+ * Returns: number of bytes readed */
+int SerialPi::readBytes(char message[], int size)
+{
+    clock_gettime(CLOCK_PROCESS_CPUTIME_ID, &time1);
+    int count;
+    for (count=0;count<size;count++) {
+    	if (available()) unistd::read(sd,&message[count],1);
+    	clock_gettime(CLOCK_PROCESS_CPUTIME_ID, &time2);
+    	timespec t = timeDiff(time1,time2);
+    	if ((t.tv_nsec/1000)>timeOut) break;
+    }
+    return count;
+}
+
+/* Reads characters from the serial buffer into an array. 
+ * The function terminates if the terminator character is detected,
+ * the determined length has been read, or it times out.
+ * Returns: number of characters read into the buffer. */
+int SerialPi::readBytesUntil(char character,char buffer[],int length)
+{
+    char lastReaded = character +1; //Just to make lastReaded != character
+    int count=0;
+    clock_gettime(CLOCK_PROCESS_CPUTIME_ID, &time1);
+    while (count != length && lastReaded != character) {
+        if (available()) unistd::read(sd,&buffer[count],1);
+        lastReaded = buffer[count];
+        count ++;
+        clock_gettime(CLOCK_PROCESS_CPUTIME_ID, &time2);
+        timespec t = timeDiff(time1,time2);
+        if ((t.tv_nsec/1000)>timeOut) break;
+    }
+
+    return count;
 }
 
 // Returns the next byte (character) of incoming serial data without removing it from the internal serial buffer.
@@ -433,23 +488,11 @@ char SerialPi::peek()
     return c;
 }
 
-// Remove any data remaining on the serial buffer
-void SerialPi::flush()
-{
-    while (available()) {
-        unistd::read(sd,&c,1);
-    }
-}
-
 /* Sets the maximum milliseconds to wait for serial data when using SerialPi::readBytes()
  * The default value is set to 1000 */
-void SerialPi::setTimeout(long millis){
+void SerialPi::setTimeout(long millis)
+{
 	timeOut = millis;
-}
-
-//Disables serial communication
-void SerialPi::end(){
-	unistd::close(sd);
 }
 
 
@@ -457,7 +500,8 @@ void SerialPi::end(){
 
 
 //Returns a timespec struct with the time elapsed between start and end timespecs
-timespec SerialPi::timeDiff(timespec start, timespec end){
+timespec SerialPi::timeDiff(timespec start, timespec end)
+{
 	timespec temp;
 	if ((end.tv_nsec-start.tv_nsec)<0) {
 		temp.tv_sec = end.tv_sec-start.tv_sec-1;
@@ -469,8 +513,15 @@ timespec SerialPi::timeDiff(timespec start, timespec end){
 	return temp;
 }
 
+// Returns the difference of two times in miiliseconds
+int SerialPi::timeDiffmillis(timespec start, timespec end)
+{
+    return (int) ((end.tv_sec - start.tv_sec) * 1e3 + (end.tv_nsec - start.tv_nsec) * 1e-6);
+}
+
 //Returns a binary representation of the integer passed as argument
-char * SerialPi::int2bin(int i){
+char * SerialPi::int2bin(int i)
+{
 	size_t bits = sizeof(int) * CHAR_BIT;
     char * str = (char *)malloc(bits + 1);
     int firstCeros = 0;
@@ -497,24 +548,6 @@ char * SerialPi::int2bin(int i){
     }
 
     return str_noceros;
-}
-
-//Returns an hexadecimal representation of the integer passed as argument
-char * SerialPi::int2hex(int i){
-	char buffer[32];
-    sprintf(buffer,"%x",i);
-    char * hex = (char *)malloc(strlen(buffer)+1);
-    strcpy(hex,buffer);
-    return hex;
-}
-
-//Returns an octal representation of the integer passed as argument
-char * SerialPi::int2oct(int i){
-    char buffer[32];
-    sprintf(buffer,"%o",i);
-    char * oct = (char *)malloc(strlen(buffer)+1);
-    strcpy(oct,buffer);
-    return oct;	
 }
 
 
@@ -643,6 +676,12 @@ void WirePi::begin()
     txBufferIndex = 0;
     txBufferLength = 0;
 
+}
+
+void WirePi::end()
+{
+    unistd::close(fd);
+    fd = -1;
 }
 
 // Initialize the Wire library with a slave address
@@ -853,7 +892,7 @@ void SPIPi::begin()
     char spiDevice[32] = "";
     uint8_t bitsPerWord = 8;
 
-    // Process the command below to search for i2c-1 device driver excistance
+    // Process the command below to search for spidev device driver excistance
     fp = popen("/bin/ls /dev/ | /bin/grep spidev" , "r");
     if (fp == NULL) {
         fprintf(stderr, "%s(): Failed to run command \"/bin/ls /dev/ | /bin/grep spidev\"\n",__func__);
@@ -895,6 +934,7 @@ void SPIPi::begin()
 
 void SPIPi::end()
 {
+    unistd::close(fd);
     fd = -1;
 }
 
