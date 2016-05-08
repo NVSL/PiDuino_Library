@@ -154,15 +154,14 @@ will not be implemented in the first release.
 | Function | Implemented (YES/NO-Comment/In Progress) |
 | ------ | ----------- |
 | if (Serial)  | In Progress |
-| Serial.available() | In Progress |
-| Serial.availableForWrite() | In Progress |
-| Serial.begin(speed) | In Progress |
-| Serial.available() | In Progress |
-| Serial.begin(speed, config)| In Progress |
-| Serial.end() | In Progress |
-| Serial.find(target) | In Progress |
-| Serial.findUntil(target, terminal) | In Progress |
-| Serial.flush() | In Progress |
+| Serial.available() | YES |
+| Serial.availableForWrite() | YES |
+| Serial.begin(speed) | YES |
+| Serial.begin(speed, config)| YES |
+| Serial.end() | YES |
+| Serial.find(target) | YES |
+| Serial.findUntil(target, terminal) | YES |
+| Serial.flush() | YES |
 | Serial.parseFloat() | In Progress |
 | Serial.parseInt() | In Progress |
 | Serial.parseInt(char skipChar) | In Progress |
@@ -176,7 +175,7 @@ will not be implemented in the first release.
 | Serial.readBytesUntil(character, buffer, length) | In Progress |
 | Serial.readString() | In Progress |
 | Serial.readStringUntil(terminator) | In Progress |
-| Serial.setTimeout(time) | In Progress |
+| Serial.setTimeout(time) | YES |
 | Serial.write(val)  | In Progress |
 | Serial.write(str)  | In Progress |
 | Serial.write(buf, len) | In Progress |
