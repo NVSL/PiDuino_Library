@@ -162,14 +162,14 @@ will not be implemented in the first release.
 | Serial.find(target) | YES |
 | Serial.findUntil(target, terminal) | YES |
 | Serial.flush() | YES |
-| Serial.parseFloat() | In Progress |
-| Serial.parseInt() | In Progress |
-| Serial.parseInt(char skipChar) | In Progress |
-| Serial.peek() | In Progress |
-| Serial.print(val)  | In Progress |
-| Serial.print(val, format)| In Progress |
-| Serial.println(val)  | In Progress |
-| Serial.println(val, format) | In Progress |
+| Serial.parseFloat() | YES |
+| Serial.parseInt() | YES |
+| Serial.parseInt(char skipChar) | YES |
+| Serial.peek() | YES |
+| Serial.print(val)  | YES |
+| Serial.print(val, format)| YES |
+| Serial.println(val)  | YES |
+| Serial.println(val, format) | YES |
 | Serial.read() | In Progress |
 | Serial.readBytes(buffer, length)| In Progress |
 | Serial.readBytesUntil(character, buffer, length) | In Progress |
@@ -228,4 +228,6 @@ will not be implemented in the first release.
 * Make an Arduino.h header containing piDuino.h so developers don't need to change too much code. 
 * Add arduino String object.
 * Maybe add a SPISettings(..., bitsPerWord, CS(High?low)) and their bit routines config. to SPI. For bitPerWord transfer len will need to be multiplied by (bitsPerWord/8)
+* Add string, String, (arg, ...) to prints.
+* Check/DO printFloat()
 
