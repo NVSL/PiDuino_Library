@@ -115,18 +115,21 @@ typedef unsigned char byte;
 #define SERIAL_7O2 0x3C
 #define SERIAL_8O2 0x3E
 
+// A char not found in a valid ASCII numeric field
+#define NO_IGNORE_CHAR  '\x01' 
 
 class SerialPi {
 
 private:
 	int sd;
-	unsigned char c;
+	FILE * sd_file;
 	const char *serialPort;
 	long timeOut;
-	timespec time1, time2;
 	timespec timeDiff(timespec start, timespec end);
+	int timedPeek();
+	int peekNextDigit(bool detectDecimal);
 	int timeDiffmillis(timespec start, timespec end);
-	char * int2bin(int i);
+	char * int2bin(int n);
 
 public:
 
@@ -138,22 +141,29 @@ public:
 	bool find(const char *target);
 	bool findUntil(const char *target, const char *terminator);
 	void flush();
-
-	long parseInt();
+	long parseInt() { return parseInt(NO_IGNORE_CHAR); };
+	long parseInt(char ignore);
 	float parseFloat();
+	int peek();
+
+
+	size_t print(const char str[]);
+	size_t print(char c);
+	size_t print(unsigned char b, int base);
+	size_t print(int n, int base);
+	size_t print(unsigned int n, int base);
+	size_t println(void);
+	size_t println(const char c[]);
+	size_t println(char c);
+	size_t println(unsigned char b, int base);
+	size_t println(int num, int base);
+	size_t println(unsigned int num, int base);
+
 
 	int read();
 	int readBytes(char message[], int size);
 	int readBytesUntil(char character,char buffer[],int length);
-	char peek();
-	void print(const char *message);
-	void print(char message);
-	void print(unsigned char i,Representation rep);
-	void print(float f, int precission);
-	void println(const char *message);
-	void println(char message);
-	void println(int i, Representation rep);
-	void println(float f, int precission);
+
 	int write(unsigned char message);
 	int write(const char *message);
 	int write (char *message, int size);
