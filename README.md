@@ -153,7 +153,7 @@ will not be implemented in the first release.
 #### - Serial
 | Function | Implemented (YES/NO-Comment/In Progress) |
 | ------ | ----------- |
-| if (Serial)  | In Progress |
+| if (Serial)  | YES |
 | Serial.available() | YES |
 | Serial.availableForWrite() | YES |
 | Serial.begin(speed) | YES |
@@ -170,15 +170,15 @@ will not be implemented in the first release.
 | Serial.print(val, format)| YES |
 | Serial.println(val)  | YES |
 | Serial.println(val, format) | YES |
-| Serial.read() | In Progress |
-| Serial.readBytes(buffer, length)| In Progress |
-| Serial.readBytesUntil(character, buffer, length) | In Progress |
-| Serial.readString() | In Progress |
-| Serial.readStringUntil(terminator) | In Progress |
+| Serial.read() | YES |
+| Serial.readBytes(buffer, length)| YES |
+| Serial.readBytesUntil(character, buffer, length) | YES |
+| Serial.readString() | In Progress - Needs String which haven't been implemented yet |
+| Serial.readStringUntil(terminator) | In Progress - Needs String which haven't been implemented yet |
 | Serial.setTimeout(time) | YES |
-| Serial.write(val)  | In Progress |
-| Serial.write(str)  | In Progress |
-| Serial.write(buf, len) | In Progress |
+| Serial.write(val)  | YES |
+| Serial.write(str)  | YES |
+| Serial.write(buf, len) | YES |
 | serialEvent() | In Progress |
 
 #### - Wire
