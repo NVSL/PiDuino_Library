@@ -472,88 +472,131 @@ void SerialPi::println(float f, int precission)
 }
 */
 
+//------- END PRINTS --------//
 
-/* Writes binary data to the serial port. This data is sent as a byte 
- * Returns: number of bytes written */
-int SerialPi::write(unsigned char message)
-{
-	unistd::write(sd,&message,1);
-	return 1;
-}
 
-/* Writes binary data to the serial port. This data is sent as a series
- * of bytes
- * Returns: number of bytes written */
-int SerialPi::write(const char *message)
-{
-	int len = strlen(message);
-	unistd::write(sd,&message,len);
-	return len;
-}
-
-/* Writes binary data to the serial port. This data is sent as a series
- * of bytes placed in an buffer. It needs the length of the buffer
- * Returns: number of bytes written */
-int SerialPi::write(char *message, int size)
-{
-	unistd::write(sd,message,size);
-	return size;
-}
-
-/* Reads 1 byte of incoming serial data
- * Returns: first byte of incoming serial data available */
+// Reads 1 byte of incoming serial data
+// Returns: first byte of incoming serial data available
 int SerialPi::read() 
 {
-    char c;
-	unistd::read(sd,&c,1);
+    int8_t c;
+    unistd::read(sd,&c,1);
     return c;
 }
 
-/* Reads characters from th serial port into a buffer. The function 
- * terminates if the determined length has been read, or it times out
- * Returns: number of bytes readed */
-int SerialPi::readBytes(char message[], int size)
+// Reads characters from th serial port into a buffer. The function 
+// terminates if the determined length has been read, or it times out
+// Returns: number of bytes readed
+size_t SerialPi::readBytes(char buffer[], size_t length)
 {
     timespec time1, time2;
-    clock_gettime(CLOCK_PROCESS_CPUTIME_ID, &time1);
-    int count;
-    for (count=0;count<size;count++) {
-    	if (available()) unistd::read(sd,&message[count],1);
-    	clock_gettime(CLOCK_PROCESS_CPUTIME_ID, &time2);
-    	timespec t = timeDiff(time1,time2);
-    	if ((t.tv_nsec/1000)>timeOut) break;
+    clock_gettime(CLOCK_REALTIME, &time1);
+    int count = 0;
+    while (count < length) {
+        if (available()) {
+            unistd::read(sd,&buffer[count],1);
+            count ++;
+        }
+        clock_gettime(CLOCK_REALTIME, &time2);
+        if (timeDiffmillis(time1,time2) > timeOut) break;
     }
     return count;
 }
 
-/* Reads characters from the serial buffer into an array. 
- * The function terminates if the terminator character is detected,
- * the determined length has been read, or it times out.
- * Returns: number of characters read into the buffer. */
-int SerialPi::readBytesUntil(char character,char buffer[],int length)
+// Reads characters from the serial buffer into an array. 
+// The function terminates if the terminator character is detected,
+// the determined length has been read, or it times out.
+// Returns: number of characters read into the buffer.
+size_t  SerialPi::readBytesUntil(char terminator, char buffer[], size_t length)
 {
     timespec time1, time2;
-    char lastReaded = character +1; //Just to make lastReaded != character
-    int count=0;
-    clock_gettime(CLOCK_PROCESS_CPUTIME_ID, &time1);
-    while (count != length && lastReaded != character) {
-        if (available()) unistd::read(sd,&buffer[count],1);
-        lastReaded = buffer[count];
-        count ++;
-        clock_gettime(CLOCK_PROCESS_CPUTIME_ID, &time2);
-        timespec t = timeDiff(time1,time2);
-        if ((t.tv_nsec/1000)>timeOut) break;
+    clock_gettime(CLOCK_REALTIME, &time1);
+    int count = 0;
+    char c;
+    while (count < length) {
+        if (available()) {
+            unistd::read(sd,&c,1);
+            if (c == terminator) break;
+            buffer[count] = c;
+            count ++;
+        }
+        clock_gettime(CLOCK_REALTIME, &time2);
+        if (timeDiffmillis(time1,time2) > timeOut) break;
     }
+    return count;
+}
 
+/* TODO: Implement String first
+// Read a string until timeout or null char detected
+String Stream::readString()
+{
+    timespec time1, time2;
+    clock_gettime(CLOCK_REALTIME, &time1);
+    int count = 0;
+    while (count < length) {
+        if (available()) {
+            unistd::read(sd,&buffer[count],1);
+            count ++;
+        }
+        clock_gettime(CLOCK_REALTIME, &time2);
+        if (timeDiffmillis(time1,time2) > timeOut) break;
+    }
     return count;
 }
 
 
-/* Sets the maximum milliseconds to wait for serial data when using SerialPi::readBytes()
- * The default value is set to 1000 */
+// Read a string until timeout, null char detected or terminator detected
+String Stream::readStringUntil(char terminator)
+{
+    timespec time1, time2;
+    clock_gettime(CLOCK_REALTIME, &time1);
+    int count = 0;
+    char c;
+    while (count < length) {
+        if (available()) {
+            unistd::read(sd,&c,1);
+            if (c == terminator) break;
+            buffer[count] = c;
+            count ++;
+        }
+        clock_gettime(CLOCK_REALTIME, &time2);
+        if (timeDiffmillis(time1,time2) > timeOut) break;
+    }
+    return count;
+}
+*/
+
+// Sets the maximum milliseconds to wait for serial data when using 
+// readBytes(), readBytesUntil(), parseInt(), parseFloat(), findUnitl(), ...
+// The default value is set to 1000 
 void SerialPi::setTimeout(long millis)
 {
-	timeOut = millis;
+    timeOut = millis;
+}
+
+// Writes binary data to the serial port. This data is sent as a byte 
+// Returns: number of bytes written
+size_t SerialPi::write(uint8_t c)
+{
+	unistd::write(sd,&c,1);
+	return 1;
+}
+
+// Writes binary data to the serial port. This data is sent as a series
+// of bytes
+// Returns: number of bytes written
+size_t SerialPi::write(const char *str)
+{
+    if (str == NULL) return 0;
+	return unistd::write(sd,str,strlen(str));
+}
+
+// Writes binary data to the serial port. This data is sent as a series
+// of bytes placed in an buffer. It needs the length of the buffer
+// Returns: number of bytes written 
+size_t SerialPi::write(char *buffer, size_t size)
+{
+	return unistd::write(sd,buffer,size);
 }
 
 
@@ -589,20 +632,6 @@ int SerialPi::peekNextDigit(bool detectDecimal)
 
         getc(sd_file);  // discard non-numeric
     }
-}
-
-//Returns a timespec struct with the time elapsed between start and end timespecs
-timespec SerialPi::timeDiff(timespec start, timespec end)
-{
-	timespec temp;
-	if ((end.tv_nsec-start.tv_nsec)<0) {
-		temp.tv_sec = end.tv_sec-start.tv_sec-1;
-		temp.tv_nsec = 1000000000+end.tv_nsec-start.tv_nsec;
-	} else {
-		temp.tv_sec = end.tv_sec-start.tv_sec;
-		temp.tv_nsec = end.tv_nsec-start.tv_nsec;
-	}
-	return temp;
 }
 
 // Returns the difference of two times in miiliseconds

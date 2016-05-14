@@ -132,10 +132,10 @@ private:
 	char * int2bin(int n);
 
 public:
-
 	SerialPi();
 	void begin(int baud);
 	void begin(int baud, unsigned char config);
+	void end();
 	int available();
 	int availableForWrite();
 	bool find(const char *target);
@@ -145,8 +145,6 @@ public:
 	long parseInt(char ignore);
 	float parseFloat();
 	int peek();
-
-
 	size_t print(const char str[]);
 	size_t print(char c);
 	size_t print(unsigned char b, int base);
@@ -158,17 +156,15 @@ public:
 	size_t println(unsigned char b, int base);
 	size_t println(int num, int base);
 	size_t println(unsigned int num, int base);
-
-
 	int read();
-	int readBytes(char message[], int size);
-	int readBytesUntil(char character,char buffer[],int length);
-
-	int write(unsigned char message);
-	int write(const char *message);
-	int write (char *message, int size);
+	size_t readBytes(char buffer[], size_t length);
+	size_t readBytesUntil(char terminator, char buffer[], size_t length);
 	void setTimeout(long millis);
-	void end();
+	size_t write(uint8_t c);
+	size_t write(const char *str);
+	size_t write(char *buffer, size_t size);
+	operator bool() { return (sd == -1) ? false : true; }
+	
 };
 
 
