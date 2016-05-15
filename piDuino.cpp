@@ -635,9 +635,9 @@ int SerialPi::peekNextDigit(bool detectDecimal)
 }
 
 // Returns the difference of two times in miiliseconds
-int SerialPi::timeDiffmillis(timespec start, timespec end)
+long SerialPi::timeDiffmillis(timespec start, timespec end)
 {
-    return (int) ((end.tv_sec - start.tv_sec) * 1e3 + (end.tv_nsec - start.tv_nsec) * 1e-6);
+    return (long) ((end.tv_sec - start.tv_sec) * 1e3 + (end.tv_nsec - start.tv_nsec) * 1e-6);
 }
 
 // Returns a binary representation of the integer passed as argument
@@ -1170,34 +1170,49 @@ void SPIPi::transfer(void *buf, size_t count)
 //          Time                          //
 ////////////////////////////////////////////
 
+// Gets a timestamp when the program starts
+TimeElapsed::TimeElapsed() {
+    clock_gettime(CLOCK_REALTIME, &timestamp);
+}
+
+// Returns the difference of two times in miiliseconds
+unsigned long timeDiffmillis(timespec start, timespec end)
+{
+    return (unsigned long) ((end.tv_sec - start.tv_sec) * 1e3 + (end.tv_nsec - start.tv_nsec) * 1e-6);
+}
+
+// Returns the difference of two times in miiliseconds
+unsigned long timeDiffmicros(timespec start, timespec end)
+{
+    return (unsigned long) ((end.tv_sec - start.tv_sec) * 1e6 + (end.tv_nsec - start.tv_nsec) * 1e-3);
+}
+
+// Returns the time in millseconds since the program started.
+unsigned long millis(void) 
+{
+    struct timespec timenow;
+    clock_gettime(CLOCK_REALTIME, &timenow);
+    return timeDiffmillis(ProgramStart.timestamp, timenow);
+}
+
+// Returns the time in microseconds since the program started.
+unsigned long micros(void)
+{
+    struct timespec timenow;
+    clock_gettime(CLOCK_REALTIME, &timenow);
+    return timeDiffmicros(ProgramStart.timestamp, timenow);
+}
+
 // Sleep the specified milliseconds
-void delay(long millis)
+void delay(unsigned long millis)
 {
     unistd::usleep(millis*1000);
 }
 
-void delayMicroseconds(long micros)
+// Sleep the specified microseconds
+void delayMicroseconds(unsigned int us)
 {
-    if (micros > 100){
-        struct timespec tim, tim2;
-        tim.tv_sec = 0;
-        tim.tv_nsec = micros * 1000;
-        
-        if(nanosleep(&tim , &tim2) < 0 )   {
-            fprintf(stderr,"Nano sleep system call failed \n");
-            exit(1);
-        }
-    }else{
-        struct timeval tNow, tLong, tEnd ;
-        
-        gettimeofday (&tNow, NULL) ;
-        tLong.tv_sec  = micros / 1000000 ;
-        tLong.tv_usec = micros % 1000000 ;
-        timeradd (&tNow, &tLong, &tEnd) ;
-        
-        while (timercmp (&tNow, &tEnd, <))
-            gettimeofday (&tNow, NULL) ;
-    }
+    unistd::usleep(us);
 }
 
 /////////////////////////////////////////////
@@ -1764,6 +1779,7 @@ void * threadFunction(void *args){
 
 */
 
+TimeElapsed ProgramStart = TimeElapsed();
 SerialPi Serial = SerialPi();
 WirePi Wire = WirePi();
 SPIPi SPI = SPIPi();

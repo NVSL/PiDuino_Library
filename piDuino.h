@@ -132,7 +132,7 @@ private:
 	timespec timeDiff(timespec start, timespec end);
 	int timedPeek();
 	int peekNextDigit(bool detectDecimal);
-	int timeDiffmillis(timespec start, timespec end);
+	long timeDiffmillis(timespec start, timespec end);
 	char * int2bin(int n);
 
 public:
@@ -307,8 +307,18 @@ void analogWrite(int pin, int value);
 //          Time      		     		  //
 ////////////////////////////////////////////
 
-void delay(long millis);
-void delayMicroseconds(long micros);
+class TimeElapsed {											
+    public:
+        struct timespec timestamp;
+        TimeElapsed(); 
+};
+
+unsigned long timeDiffmillis(timespec start, timespec end);
+unsigned long timeDiffmicros(timespec start, timespec end); 
+unsigned long millis(void);
+unsigned long micros(void);
+void delay(unsigned long millis);
+void delayMicroseconds(unsigned int us);
 
 /////////////////////////////////////////////
 //          Math           				  //
@@ -406,7 +416,6 @@ void attachInterrupt(int p,void (*f)(), Digivalue m);
 void detachInterrupt(int p);
 void setup();
 void loop();
-long millis();
 
 // Helper functions
 int getBoardRev();
@@ -417,7 +426,7 @@ pthread_t *getThreadIdFromPin(int pin);
 void * threadFunction(void *args);
 
 */
-
+extern TimeElapsed ProgramStart;
 extern SerialPi Serial;
 extern WirePi Wire;
 extern SPIPi SPI;
