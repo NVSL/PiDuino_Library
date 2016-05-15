@@ -58,9 +58,9 @@ will not be implemented in the first release.
 
 | Function | Implemented (YES/NO-Comment/In Progress) |
 | ------ | ----------- |
-| time = millis()  | In Progress |
-| time = micros()  | In Progress |
-| delay(ms)  | In Progress |
+| time = millis()  | YES |
+| time = micros()  | YES |
+| delay(ms)  | YES |
 | delayMicroseconds(us)  | YES |
 
 #### - Math
