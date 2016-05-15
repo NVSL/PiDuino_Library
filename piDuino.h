@@ -52,7 +52,7 @@
 
 
 namespace unistd {
-	//All functions of unistd.h must be called like this: unistd::the_function()
+	// All functions of unistd.h must be called like this: unistd::the_function()
     #include <unistd.h>
 };
 
@@ -78,12 +78,16 @@ typedef enum{
 }Digivalue;
 
 typedef bool boolean;
-typedef unsigned char byte;
+typedef uint8_t byte;
+typedef unsigned int word;
+
 
 
 /////////////////////////////////////////////
 //          SerialPi class (UART)         //
 ////////////////////////////////////////////
+
+
 
 // Defines for setting data, parity, and stop bits
 // e.g SERIAL_ABC
@@ -176,7 +180,7 @@ public:
 
 
 
-#define I2C_SLAVE       0x0703  // Use this slave address
+#define I2C_SLAVE 0x0703
 #define BUFFER_LENGTH 32
 
 
@@ -279,15 +283,120 @@ class SPIPi {
  		void transfer(void *buf, size_t count);
 };
 
-// Some useful arduino functions
+
+/////////////////////////////////////////////
+//          Digital I/O           		  //
+////////////////////////////////////////////
+
 void pinMode(int pin, Pinmode mode);
-void analogWrite(int pin, int value);
 void digitalWrite(int pin, int value);
+int digitalRead(int pin);
 void digitalWriteSoft(int pin, int value);
+
+/////////////////////////////////////////////
+//          Analog I/O           		  //
+////////////////////////////////////////////
+
+int analogRead (int pin);
+void analogWrite(int pin, int value);
+
+/////////////////////////////////////////////
+//          Advanced I/O           		  //
+////////////////////////////////////////////
+/////////////////////////////////////////////
+//          Time      		     		  //
+////////////////////////////////////////////
+
 void delay(long millis);
 void delayMicroseconds(long micros);
-int digitalRead(int pin);
-int analogRead (int pin);
+
+/////////////////////////////////////////////
+//          Math           				  //
+////////////////////////////////////////////
+
+#define PI 3.1415926535897932384626433832795
+#define HALF_PI 1.5707963267948966192313216916398
+#define TWO_PI 6.283185307179586476925286766559
+#define DEG_TO_RAD 0.017453292519943295769236907684886
+#define RAD_TO_DEG 57.295779513082320876798154814105
+#define EULER 2.718281828459045235360287471352
+
+#ifdef abs
+#undef abs
+#endif
+
+#define min(a,b) ((a)<(b)?(a):(b))
+#define max(a,b) ((a)>(b)?(a):(b))
+#define abs(x) ((x)>0?(x):-(x))
+#define constrain(amt,low,high) ((amt)<(low)?(low):((amt)>(high)?(high):(amt)))
+#define round(x)     ((x)>=0?(long)((x)+0.5):(long)((x)-0.5))
+#define radians(deg) ((deg)*DEG_TO_RAD)
+#define degrees(rad) ((rad)*RAD_TO_DEG)
+#define sq(x) ((x)*(x))
+
+long map(long x, long in_min, long in_max, long out_min, long out_max);
+// pow() already in <math.h>...
+
+/////////////////////////////////////////////
+//          Trigonometry          		  //
+////////////////////////////////////////////
+
+// sin(rad) already in <math.h>...
+// cos(rad) already in <math.h>...
+// tan(rad) already in <math.h>...
+
+/////////////////////////////////////////////
+//          Characters           		  //
+////////////////////////////////////////////
+
+inline boolean isAlphaNumeric(int c) __attribute__((always_inline));
+inline boolean isAlpha(int c) __attribute__((always_inline));
+inline boolean isAscii(int c) __attribute__((always_inline));
+inline boolean isWhitespace(int c) __attribute__((always_inline));
+inline boolean isControl(int c) __attribute__((always_inline));
+inline boolean isDigit(int c) __attribute__((always_inline));
+inline boolean isGraph(int c) __attribute__((always_inline));
+inline boolean isLowerCase(int c) __attribute__((always_inline));
+inline boolean isPrintable(int c) __attribute__((always_inline));
+inline boolean isPunct(int c) __attribute__((always_inline));
+inline boolean isSpace(int c) __attribute__((always_inline));
+inline boolean isUpperCase(int c) __attribute__((always_inline));
+inline boolean isHexadecimalDigit(int c) __attribute__((always_inline));
+inline int toAscii(int c) __attribute__((always_inline));
+inline int toLowerCase(int c) __attribute__((always_inline));
+inline int toUpperCase(int c)__attribute__((always_inline));
+
+/////////////////////////////////////////////
+//          Random Functions       		  //
+////////////////////////////////////////////
+
+void randomSeed(unsigned long);
+long random(long);
+long random(long, long);
+
+/////////////////////////////////////////////
+//          Bits and Bytes         		  //
+////////////////////////////////////////////
+
+#define lowByte(w) ((uint8_t) ((w) & 0xff))
+#define highByte(w) ((uint8_t) ((w) >> 8))
+#define bitRead(value, bit) (((value) >> (bit)) & 0x01)
+#define bitWrite(value, bit, bitvalue) (bitvalue ? bitSet(value, bit) : bitClear(value, bit))
+#define bitSet(value, bit) ((value) |= (1UL << (bit)))
+#define bitClear(value, bit) ((value) &= ~(1UL << (bit)))
+#define bit(b) (1UL << (b))
+
+/////////////////////////////////////////////
+//          External Interrupts    		  //
+////////////////////////////////////////////
+/////////////////////////////////////////////
+//          Interrupts           		  //
+////////////////////////////////////////////
+
+
+
+
+
 
 
 /*

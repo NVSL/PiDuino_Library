@@ -1151,12 +1151,29 @@ void SPIPi::transfer(void *buf, size_t count)
 }
 
 
-/********** FUNCTIONS OUTSIDE CLASSES **********/
+
+
+
+
+
+
+/////////////////////////////////////////////
+//          Digital I/O                   //
+////////////////////////////////////////////
+/////////////////////////////////////////////
+//          Analog I/O                    //
+////////////////////////////////////////////
+/////////////////////////////////////////////
+//          Advanced I/O                  //
+////////////////////////////////////////////
+/////////////////////////////////////////////
+//          Time                          //
+////////////////////////////////////////////
 
 // Sleep the specified milliseconds
 void delay(long millis)
 {
-	unistd::usleep(millis*1000);
+    unistd::usleep(millis*1000);
 }
 
 void delayMicroseconds(long micros)
@@ -1182,6 +1199,161 @@ void delayMicroseconds(long micros)
             gettimeofday (&tNow, NULL) ;
     }
 }
+
+/////////////////////////////////////////////
+//          Math                          //
+////////////////////////////////////////////
+
+long map(long x, long in_min, long in_max, long out_min, long out_max)
+{
+  return (x - in_min) * (out_max - out_min) / (in_max - in_min) + out_min;
+}
+
+/////////////////////////////////////////////
+//          Characters                    //
+////////////////////////////////////////////
+
+// Checks for an alphanumeric character. 
+// It is equivalent to (isalpha(c) || isdigit(c)).
+inline boolean isAlphaNumeric(int c) 
+{
+  return ( isalnum(c) == 0 ? false : true);
+}
+
+// Checks for an alphabetic character. 
+// It is equivalent to (isupper(c) || islower(c)).
+inline boolean isAlpha(int c)
+{
+  return ( isalpha(c) == 0 ? false : true);
+}
+
+// Checks whether c is a 7-bit unsigned char value 
+// that fits into the ASCII character set.
+inline boolean isAscii(int c)
+{
+  return ( isascii (c) == 0 ? false : true);
+}
+
+// Checks for a blank character, that is, a space or a tab.
+inline boolean isWhitespace(int c)
+{
+  return ( isblank (c) == 0 ? false : true);
+}
+
+// Checks for a control character.
+inline boolean isControl(int c)
+{
+  return ( iscntrl (c) == 0 ? false : true);
+}
+
+// Checks for a digit (0 through 9).
+inline boolean isDigit(int c)
+{
+  return ( isdigit (c) == 0 ? false : true);
+}
+
+// Checks for any printable character except space.
+inline boolean isGraph(int c)
+{
+  return ( isgraph (c) == 0 ? false : true);
+}
+
+// Checks for a lower-case character.
+inline boolean isLowerCase(int c)
+{
+  return (islower (c) == 0 ? false : true);
+}
+
+// Checks for any printable character including space.
+inline boolean isPrintable(int c)
+{
+  return ( isprint (c) == 0 ? false : true);
+}
+
+// Checks for any printable character which is not a space 
+// or an alphanumeric character.
+inline boolean isPunct(int c)
+{
+  return ( ispunct (c) == 0 ? false : true);
+}
+
+// Checks for white-space characters. For the avr-libc library, 
+// these are: space, formfeed ('\f'), newline ('\n'), carriage 
+// return ('\r'), horizontal tab ('\t'), and vertical tab ('\v').
+inline boolean isSpace(int c)
+{
+  return ( isspace (c) == 0 ? false : true);
+}
+
+// Checks for an uppercase letter.
+inline boolean isUpperCase(int c)
+{
+  return ( isupper (c) == 0 ? false : true);
+}
+
+// Checks for a hexadecimal digits, i.e. one of 0 1 2 3 4 5 6 7 
+// 8 9 a b c d e f A B C D E F.
+inline boolean isHexadecimalDigit(int c)
+{
+  return ( isxdigit (c) == 0 ? false : true);
+}
+
+// Converts c to a 7-bit unsigned char value that fits into the 
+// ASCII character set, by clearing the high-order bits.
+inline int toAscii(int c)
+{
+  return toascii (c);
+}
+
+// Converts the letter c to lower case, if possible.
+inline int toLowerCase(int c)
+{
+  return tolower (c);
+}
+
+// Converts the letter c to upper case, if possible.
+inline int toUpperCase(int c)
+{
+  return toupper (c);
+}
+
+/////////////////////////////////////////////
+//          Random Functions              //
+////////////////////////////////////////////
+
+
+void randomSeed(unsigned long seed)
+{
+  if (seed != 0) {
+    srandom(seed);
+  }
+}
+
+long random(long howbig)
+{
+  if (howbig == 0) {
+    return 0;
+  }
+  return random() % howbig;
+}
+
+long random(long howsmall, long howbig)
+{
+  if (howsmall >= howbig) {
+    return howsmall;
+  }
+  long diff = howbig - howsmall;
+  return random(diff) + howsmall;
+}
+
+/////////////////////////////////////////////
+//          External Interrupts           //
+////////////////////////////////////////////
+/////////////////////////////////////////////
+//          Interrupts                    //
+////////////////////////////////////////////
+
+
 
 /*
 uint8_t shiftIn(uint8_t dPin, uint8_t cPin, bcm2835SPIBitOrder order){
