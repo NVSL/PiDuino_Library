@@ -67,59 +67,62 @@ will not be implemented in the first release.
 
 | Function | Implemented (YES/NO-Comment/In Progress) |
 | ------ | ----------- |
-| min(x, y)  | In Progress |
-| max(x, y) | In Progress |
-| abs(x)  | In Progress |
-| constrain(x, a, b) | In Progress |
-| map(value, fromLow, fromHigh, toLow, toHigh)  | In Progress |
-| pow(base, exponent)  | In Progress |
-| sqrt(x)  | In Progress |
+| min(x, y)  | YES |
+| max(x, y) | YES |
+| abs(x)  | YES |
+| constrain(x, a, b) | YES |
+| map(value, fromLow, fromHigh, toLow, toHigh)  | YES |
+| pow(base, exponent)  | YES |
+| radians(deg) | YES |
+| degrees(rad) | YES |
+| sqrt(x)  | YES |
+| sq(x)  | YES |
 
 #### - Trigonometry
 
 | Function | Implemented (YES/NO-Comment/In Progress) |
 | ------ | ----------- |
-| sin(rad) | In Progress |
-| cos(rad) | In Progress |
-| tan(rad) | In Progress |
+| sin(rad) | YES |
+| cos(rad) | YES |
+| tan(rad) | YES |
 
 #### - Characters
 
 | Function | Implemented (YES/NO-Comment/In Progress) |
 | ------ | ----------- |
-| isAlphaNumeric(thisChar) | In Progress |
-| isAlpha(thisChar) | In Progress |
-| isAscii(thisChar) | In Progress |
-| isWhitespace(thisChar) | In Progress |
-| isControl(thisChar) | In Progress |
-| isDigit(thisChar) | In Progress |
-| isGraph(thisChar) | In Progress |
-| isLowerCase(thisChar) | In Progress |
-| isPrintable(thisChar) | In Progress |
-| isPunct(thisChar) | In Progress |
-| isSpace(thisChar) | In Progress |
-| isUpperCase(thisChar) | In Progress |
-| isHexadecimalDigit(thisChar) | In Progress |
+| isAlphaNumeric(thisChar) | YES |
+| isAlpha(thisChar) | YES |
+| isAscii(thisChar) | YES |
+| isWhitespace(thisChar) | YES |
+| isControl(thisChar) | YES |
+| isDigit(thisChar) | YES |
+| isGraph(thisChar) | YES |
+| isLowerCase(thisChar) | YES |
+| isPrintable(thisChar) | YES |
+| isPunct(thisChar) | YES |
+| isSpace(thisChar) | YES |
+| isUpperCase(thisChar) | YES |
+| isHexadecimalDigit(thisChar) | YES |
 
 #### - Random Numbers
 
 | Function | Implemented (YES/NO-Comment/In Progress) |
 | ------ | ----------- |
-| randomSeed(seed)  | In Progress |
-| random(max)  | In Progress |
-| random(min, max)  | In Progress |
+| randomSeed(seed)  | YES |
+| random(max)  | YES |
+| random(min, max)  | YES |
 
 #### - Bits and Bytes
 
 | Function | Implemented (YES/NO-Comment/In Progress) |
 | ------ | ----------- |
-| lowByte(x) | In Progress |
-| highByte(x) | In Progress |
-| bitRead(x, n) | In Progress |
-| bitWrite(x, n, b) | In Progress |
-| bitSet(x, n) | In Progress |
-| bitClear(x, n) | In Progress |
-| bit(n) | In Progress |
+| lowByte(x) | YES |
+| highByte(x) | YES |
+| bitRead(x, n) | YES |
+| bitWrite(x, n, b) | YES |
+| bitSet(x, n) | YES |
+| bitClear(x, n) | YES |
+| bit(n) | YES |
 
 #### - External Interrupts
 
