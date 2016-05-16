@@ -30,9 +30,9 @@ will not be implemented in the first release.
 
 | Function | Implemented (YES/NO-Comment/In Progress) |
 | ------ | ----------- |
-| pinMode(pin, mode)  | In Progress |
-| digitalWrite(pin, value) | In Progress |
-| digitalRead(pin)  | In Progress |
+| pinMode(pin, mode)  | YES |
+| digitalWrite(pin, value) | YES |
+| digitalRead(pin)  | YES |
 
 #### - Analog I/O
 
@@ -233,4 +233,5 @@ will not be implemented in the first release.
 * Maybe add a SPISettings(..., bitsPerWord, CS(High?low)) and their bit routines config. to SPI. For bitPerWord transfer len will need to be multiplied by (bitsPerWord/8)
 * Add string, String, (arg, ...) to prints.
 * Check/DO printFloat()
+* Make TimeElapsed() Private. 
 
