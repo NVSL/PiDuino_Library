@@ -65,11 +65,6 @@ enum Representation{
 };
 
 typedef enum{
-	INPUT,
-	OUTPUT
-}Pinmode;
-
-typedef enum{
 	LOW = 0,
 	HIGH = 1,
 	RISING = 2,
@@ -77,9 +72,11 @@ typedef enum{
 	BOTH = 4
 }Digivalue;
 
+// Arduino extra types
 typedef bool boolean;
 typedef uint8_t byte;
 typedef unsigned int word;
+
 
 
 
@@ -288,10 +285,18 @@ class SPIPi {
 //          Digital I/O           		  //
 ////////////////////////////////////////////
 
-void pinMode(int pin, Pinmode mode);
-void digitalWrite(int pin, int value);
-int digitalRead(int pin);
-void digitalWriteSoft(int pin, int value);
+// Pin modes
+#define INPUT 0x0
+#define OUTPUT 0x1
+#define INPUT_PULLUP 0x2
+#define INPUT_PULLDOWN 0x3
+
+// GPIO Driver name (user can change it)
+extern char GPIO_DRIVER_NAME[];
+
+void pinMode(uint8_t pin, uint8_t mode);
+void digitalWrite(uint8_t pin, uint8_t value);
+int digitalRead(uint8_t pin);
 
 /////////////////////////////////////////////
 //          Analog I/O           		  //
@@ -313,8 +318,6 @@ class TimeElapsed {
         TimeElapsed(); 
 };
 
-unsigned long timeDiffmillis(timespec start, timespec end);
-unsigned long timeDiffmicros(timespec start, timespec end); 
 unsigned long millis(void);
 unsigned long micros(void);
 void delay(unsigned long millis);
@@ -399,6 +402,12 @@ long random(long, long);
 /////////////////////////////////////////////
 //          External Interrupts    		  //
 ////////////////////////////////////////////
+#define NOT_AN_INTERRUPT -1
+#define digitalPinToInterrupt(p) ((p) >= 0 && (p) <= 26 ? (p) : NOT_AN_INTERRUPT)))
+
+void attachInterrupt(uint8_t, void (*)(void), int mode);
+void detachInterrupt(uint8_t);
+
 /////////////////////////////////////////////
 //          Interrupts           		  //
 ////////////////////////////////////////////

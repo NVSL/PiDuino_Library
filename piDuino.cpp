@@ -1126,8 +1126,7 @@ void SPIPi::setDataMode(uint8_t dataMode)
 
     // Set SPI mode (0,1,2,3)
     if (ioctl(fd, SPI_IOC_WR_MODE, &dataMode) < 0) {
-        fprintf(stderr, "%s(): ioctl error: %s\n",
-            __func__, strerror (errno));
+        fprintf(stderr, "%s(): ioctl error: %s\n", __func__, strerror (errno));
         exit(1);
     }
 }
@@ -1153,19 +1152,156 @@ void SPIPi::transfer(void *buf, size_t count)
 
 
 
-
-
-
-
 /////////////////////////////////////////////
 //          Digital I/O                   //
 ////////////////////////////////////////////
+
+// BCM2708 Registers for GPIO (Do not put them in .h)
+#define BCM2708_PERI_BASE   0x20000000
+#define GPIO_BASE           (BCM2708_PERI_BASE + 0x200000)
+#define OFFSET_FSEL         0   // 0x0000
+#define OFFSET_SET          7   // 0x001c / 4
+#define OFFSET_CLR          10  // 0x0028 / 4
+#define OFFSET_PINLEVEL     13  // 0x0034 / 4
+#define OFFSET_PULLUPDN     37  // 0x0094 / 4
+#define OFFSET_PULLUPDNCLK  38  // 0x0098 / 4
+#define PAGE_SIZE  (4*1024)
+#define BLOCK_SIZE (4*1024)
+static volatile uint32_t *gpio_map;
+static bool open_gpiomem_flag = false;
+char GPIO_DRIVER_NAME[] = "/dev/gpiomem";
+
+// Sets pin (gpio) mode as INPUT/INTPUT_PULLUP/INTPUT_PULLDOWN/OUTPUT
+void pinMode(uint8_t pin, uint8_t mode)
+{
+    int mem_fd;
+    uint8_t *gpio_mem;
+    int clk_offset = OFFSET_PULLUPDNCLK + (pin/32);
+    int shift_offset = (pin%32);
+    int offset = OFFSET_FSEL + (pin/10);
+    int shift = (pin%10)*3;
+
+    printf("Driver = %s \n", GPIO_DRIVER_NAME);
+
+    // Initialize gpiomem only once
+    if (open_gpiomem_flag == false) {
+        if ((mem_fd = open(GPIO_DRIVER_NAME, O_RDWR|O_SYNC) ) < 0) {
+            fprintf(stderr, "%s(): gpio driver %s: %s\n",__func__, 
+                GPIO_DRIVER_NAME, strerror (errno));
+            exit(1);
+        }
+
+        if ((gpio_mem = (uint8_t *) malloc(BLOCK_SIZE + (PAGE_SIZE-1))) == NULL) {
+            fprintf(stderr, "%s(): gpio error: %s\n",__func__, strerror (errno));
+            exit(1);
+        }
+
+        if ((uint32_t)gpio_mem % PAGE_SIZE) {
+            gpio_mem += PAGE_SIZE - ((uint32_t)gpio_mem % PAGE_SIZE);
+        }
+
+        gpio_map = (uint32_t *)mmap( (void *)gpio_mem, BLOCK_SIZE, 
+            PROT_READ|PROT_WRITE, MAP_SHARED|MAP_FIXED, mem_fd, GPIO_BASE);
+
+        if ((uint32_t)gpio_map < 0) {
+            fprintf(stderr, "%s(): gpio error: %s\n",__func__, strerror (errno));
+            exit(1);
+        }
+
+        // gpiomem initialized correctly
+        open_gpiomem_flag = true;
+    }
+
+
+    // Set resistor mode PULLUP, PULLDOWN or PULLOFF resitor (OUTPUT always PULLOFF)
+    if (mode == INPUT_PULLDOWN) {
+       *(gpio_map+OFFSET_PULLUPDN) = (*(gpio_map+OFFSET_PULLUPDN) & ~3) | 0x01;
+    } else if (mode == INPUT_PULLUP) {
+       *(gpio_map+OFFSET_PULLUPDN) = (*(gpio_map+OFFSET_PULLUPDN) & ~3) | 0x02;
+    } else { // mode == PULLOFF
+       *(gpio_map+OFFSET_PULLUPDN) &= ~3;
+    }
+    unistd::usleep(1);
+    *(gpio_map+clk_offset) = 1 << shift_offset;
+    unistd::usleep(1);
+    *(gpio_map+OFFSET_PULLUPDN) &= ~3;
+    *(gpio_map+clk_offset) = 0;
+
+    // Set pin mode INPUT/OUTPUT
+    if (mode == OUTPUT) {
+        *(gpio_map+offset) = (*(gpio_map+offset) & ~(7<<shift)) | (1<<shift);
+    } else { // mode == INPUT or INPUT_PULLUP or INPUT_PULLDOWN
+        *(gpio_map+offset) = (*(gpio_map+offset) & ~(7<<shift));
+    }
+
+}
+
+// Sets a pin (gpio) output to 1 or 0
+void digitalWrite(uint8_t pin, uint8_t val)
+{
+    int offset;
+    if (val) { // value == HIGH
+        offset = OFFSET_SET + (pin / 32);
+    } else {    // value == LOW
+        offset = OFFSET_CLR + (pin / 32);
+    }
+    *(gpio_map+offset) = 1 << pin % 32;
+}
+
+// Returns the value of a pin (gpio) input (1 or 0)
+int digitalRead(uint8_t pin)
+{
+   int offset, value, mask;
+   offset = OFFSET_PINLEVEL + (pin/32);
+   mask = (1 << pin%32);
+   value = *(gpio_map+offset) & mask;
+   return (value) ? HIGH : LOW;
+}
+
 /////////////////////////////////////////////
 //          Analog I/O                    //
 ////////////////////////////////////////////
 /////////////////////////////////////////////
 //          Advanced I/O                  //
 ////////////////////////////////////////////
+/*
+uint8_t shiftIn(uint8_t dPin, uint8_t cPin, bcm2835SPIBitOrder order){
+    uint8_t value = 0 ;
+    int8_t  i ;
+
+    if (order == BCM2835_SPI_BIT_ORDER_MSBFIRST )
+        for (i = 7 ; i >= 0 ; --i){
+            digitalWrite (cPin, HIGH);
+            value |= digitalRead (dPin) << i;
+            digitalWrite (cPin, LOW);
+        }
+    else
+        for (i = 0 ; i < 8 ; ++i){
+          digitalWrite (cPin, HIGH);
+          value |= digitalRead (dPin) << i;
+          digitalWrite (cPin, LOW);
+        }
+
+    return value;
+}
+
+void shiftOut(uint8_t dPin, uint8_t cPin, bcm2835SPIBitOrder order, uint8_t val){
+    int8_t i;
+
+    if (order == BCM2835_SPI_BIT_ORDER_MSBFIRST )
+        for (i = 7 ; i >= 0 ; --i){ 
+            digitalWrite (dPin, val & (1 << i)) ;
+            digitalWrite (cPin, HIGH) ;
+            digitalWrite (cPin, LOW) ;
+        }
+    else
+        for (i = 0 ; i < 8 ; ++i){
+            digitalWrite (dPin, val & (1 << i)) ;
+            digitalWrite (cPin, HIGH) ;
+            digitalWrite (cPin, LOW) ;
+        }
+}
+*/
 /////////////////////////////////////////////
 //          Time                          //
 ////////////////////////////////////////////
@@ -1175,32 +1311,24 @@ TimeElapsed::TimeElapsed() {
     clock_gettime(CLOCK_REALTIME, &timestamp);
 }
 
-// Returns the difference of two times in miiliseconds
-unsigned long timeDiffmillis(timespec start, timespec end)
-{
-    return (unsigned long) ((end.tv_sec - start.tv_sec) * 1e3 + (end.tv_nsec - start.tv_nsec) * 1e-6);
-}
-
-// Returns the difference of two times in miiliseconds
-unsigned long timeDiffmicros(timespec start, timespec end)
-{
-    return (unsigned long) ((end.tv_sec - start.tv_sec) * 1e6 + (end.tv_nsec - start.tv_nsec) * 1e-3);
-}
-
 // Returns the time in millseconds since the program started.
 unsigned long millis(void) 
 {
-    struct timespec timenow;
+    struct timespec timenow, start, end;
     clock_gettime(CLOCK_REALTIME, &timenow);
-    return timeDiffmillis(ProgramStart.timestamp, timenow);
+    start = ProgramStart.timestamp;
+    end = timenow;
+    return ((end.tv_sec - start.tv_sec) * 1e3 + (end.tv_nsec - start.tv_nsec) * 1e-6);
 }
 
 // Returns the time in microseconds since the program started.
 unsigned long micros(void)
 {
-    struct timespec timenow;
+    struct timespec timenow, start, end;
     clock_gettime(CLOCK_REALTIME, &timenow);
-    return timeDiffmicros(ProgramStart.timestamp, timenow);
+    start = ProgramStart.timestamp;
+    end = timenow;
+    return ((end.tv_sec - start.tv_sec) * 1e6 + (end.tv_nsec - start.tv_nsec) * 1e-3);
 }
 
 // Sleep the specified milliseconds
@@ -1336,7 +1464,6 @@ inline int toUpperCase(int c)
 //          Random Functions              //
 ////////////////////////////////////////////
 
-
 void randomSeed(unsigned long seed)
 {
   if (seed != 0) {
@@ -1364,6 +1491,75 @@ long random(long howsmall, long howbig)
 /////////////////////////////////////////////
 //          External Interrupts           //
 ////////////////////////////////////////////
+/*
+void attachInterrupt(int p,void (*f)(), Digivalue m){
+    int GPIOPin = raspberryPinNumber(p);
+    pthread_t *threadId = getThreadIdFromPin(p);
+    struct ThreadArg *threadArgs = (ThreadArg *)malloc(sizeof(ThreadArg));
+    threadArgs->func = f;
+    threadArgs->pin = GPIOPin;
+    
+    //Export pin for interrupt
+    FILE *fp = fopen("/sys/class/gpio/export","w");
+    if (fp == NULL){
+        fprintf(stderr,"Unable to export pin %d for interrupt\n",p);
+        exit(1);
+    }else{
+        fprintf(fp,"%d",GPIOPin); 
+    }
+    fclose(fp);
+    
+    //The system to create the file /sys/class/gpio/gpio<GPIO number>
+    //So we wait a bit
+    delay(1L);
+    
+    char * interruptFile = NULL;
+    asprintf(&interruptFile, "/sys/class/gpio/gpio%d/edge",GPIOPin);
+    
+    //Set detection condition
+    fp = fopen(interruptFile,"w");
+    if (fp == NULL){
+        fprintf(stderr,"Unable to set detection type on pin %d\n",p);
+        exit(1);
+    }else{
+        switch(m){
+            case RISING: fprintf(fp,"rising");break;
+            case FALLING: fprintf(fp,"falling");break;
+            default: fprintf(fp,"both");break;
+        }
+        
+    }
+    fclose(fp);
+    
+    if(*threadId == 0){
+        //Create a thread passing the pin and function
+        pthread_create (threadId, NULL, threadFunction, (void *)threadArgs);
+    }else{
+        //First cancel the existing thread for that pin
+        pthread_cancel(*threadId);
+        //Create a thread passing the pin, function and mode
+        pthread_create (threadId, NULL, threadFunction, (void *)threadArgs);
+    }
+    
+}
+
+void detachInterrupt(int p){
+    int GPIOPin = raspberryPinNumber(p);
+    
+    FILE *fp = fopen("/sys/class/gpio/unexport","w");
+    if (fp == NULL){
+        fprintf(stderr,"Unable to unexport pin %d for interrupt\n",p);
+        exit(1);
+    }else{
+        fprintf(fp,"%d",GPIOPin); 
+    }
+    fclose(fp);
+    
+    pthread_t *threadId = getThreadIdFromPin(p);
+    pthread_cancel(*threadId);
+}
+*/
+
 /////////////////////////////////////////////
 //          Interrupts                    //
 ////////////////////////////////////////////
@@ -1371,193 +1567,11 @@ long random(long howsmall, long howbig)
 
 
 /*
-uint8_t shiftIn(uint8_t dPin, uint8_t cPin, bcm2835SPIBitOrder order){
-	uint8_t value = 0 ;
-	int8_t  i ;
-
-	if (order == BCM2835_SPI_BIT_ORDER_MSBFIRST )
-		for (i = 7 ; i >= 0 ; --i){
-			digitalWrite (cPin, HIGH);
-			value |= digitalRead (dPin) << i;
-			digitalWrite (cPin, LOW);
-		}
-	else
-		for (i = 0 ; i < 8 ; ++i){
-		  digitalWrite (cPin, HIGH);
-		  value |= digitalRead (dPin) << i;
-		  digitalWrite (cPin, LOW);
-		}
-
-	return value;
-}
-
-void shiftOut(uint8_t dPin, uint8_t cPin, bcm2835SPIBitOrder order, uint8_t val){
-	int8_t i;
-
-	if (order == BCM2835_SPI_BIT_ORDER_MSBFIRST )
-		for (i = 7 ; i >= 0 ; --i){	
-			digitalWrite (dPin, val & (1 << i)) ;
-			digitalWrite (cPin, HIGH) ;
-			digitalWrite (cPin, LOW) ;
-		}
-	else
-		for (i = 0 ; i < 8 ; ++i){
-			digitalWrite (dPin, val & (1 << i)) ;
-			digitalWrite (cPin, HIGH) ;
-			digitalWrite (cPin, LOW) ;
-		}
-}
-
-// Configures the specified pin to behave either as an input or an output
-void pinMode(int pin, Pinmode mode){
-	pin = raspberryPinNumber(pin);
-	if(mode == OUTPUT){
-		switch(pin){
-			case 4:  GPFSEL0 &= ~(7 << 12); GPFSEL0 |= (1 << 12); break;
-			case 8:  GPFSEL0 &= ~(7 << 24); GPFSEL0 |= (1 << 24); break;
-			case 9:  GPFSEL0 &= ~(7 << 27); GPFSEL0 |= (1 << 27); break;
-			case 10: GPFSEL1 &= ~(7 << 0); 	GPFSEL1 |= (1 << 0);  break;
-			case 11: GPFSEL1 &= ~(7 << 3);  GPFSEL1 |= (1 << 3);  break;
-			case 14: GPFSEL1 &= ~(7 << 12); GPFSEL1 |= (1 << 12); break;
-			case 17: GPFSEL1 &= ~(7 << 21); GPFSEL1 |= (1 << 21); break;
-			case 18: GPFSEL1 &= ~(7 << 24); GPFSEL1 |= (1 << 24); break;
-			case 21: GPFSEL2 &= ~(7 << 3);  GPFSEL2 |= (1 << 3);  break;
-			case 27: GPFSEL2 &= ~(7 << 21); GPFSEL2 |= (1 << 21); break;
-			case 22: GPFSEL2 &= ~(7 << 6);  GPFSEL2 |= (1 << 6);  break;
-			case 23: GPFSEL2 &= ~(7 << 9);  GPFSEL2 |= (1 << 9);  break;
-			case 24: GPFSEL2 &= ~(7 << 12); GPFSEL2 |= (1 << 12); break;
-			case 25: GPFSEL2 &= ~(7 << 15); GPFSEL2 |= (1 << 15); break;
-		}
-
-	}else if (mode == INPUT){
-		switch(pin){
-			case 4:  GPFSEL0 &= ~(7 << 12); break;
-			case 8:  GPFSEL0 &= ~(7 << 24); break;
-			case 9:  GPFSEL0 &= ~(7 << 27); break;
-			case 10: GPFSEL1 &= ~(7 << 0);  break;
-			case 11: GPFSEL1 &= ~(7 << 3);  break;	
-			case 14: GPFSEL1 &= ~(7 << 12);  break;	
-            case 17: GPFSEL1 &= ~(7 << 21); break;
-			case 18: GPFSEL1 &= ~(7 << 24); break;
-			case 21: GPFSEL2 &= ~(7 << 3);  break;
-			case 27: GPFSEL2 &= ~(7 << 3);  break;
-			case 22: GPFSEL2 &= ~(7 << 6);  break;
-			case 23: GPFSEL2 &= ~(7 << 9);  break;
-			case 24: GPFSEL2 &= ~(7 << 12); break;
-			case 25: GPFSEL2 &= ~(7 << 15); break;
-		}
-	}
-}
-
 void analogWrite(int pin, int value) {
     auto digitalVal = value > 0 ? HIGH : LOW;
     digitalWrite(pin, digitalVal);
 }
 
-// Write a HIGH or a LOW value to a digital pin
-void digitalWrite(int pin, int value){
-	pin = raspberryPinNumber(pin);
-	if (value == HIGH){
-		switch(pin){
-			case  4:GPSET0 =  BIT_4;break;
-			case  8:GPSET0 =  BIT_8;break;
-			case  9:GPSET0 =  BIT_9;break;
-			case 10:GPSET0 = BIT_10;break;
-			case 11:GPSET0 = BIT_11;break;
-			case 14:GPSET0 = BIT_14;break;
-			case 17:GPSET0 = BIT_17;break;
-			case 18:GPSET0 = BIT_18;break;
-			case 21:GPSET0 = BIT_21;break;
-			case 27:GPSET0 = BIT_27;break;
-			case 22:GPSET0 = BIT_22;break;
-			case 23:GPSET0 = BIT_23;break;
-			case 24:GPSET0 = BIT_24;break;
-			case 25:GPSET0 = BIT_25;break;
-		}
-	}else if(value == LOW){
-		switch(pin){
-			case  4:GPCLR0 =  BIT_4;break;
-			case  8:GPCLR0 =  BIT_8;break;
-			case  9:GPCLR0 =  BIT_9;break;
-			case 10:GPCLR0 = BIT_10;break;
-			case 11:GPCLR0 = BIT_11;break;
-			case 14:GPCLR0 = BIT_14;break;
-			case 17:GPCLR0 = BIT_17;break;
-			case 18:GPCLR0 = BIT_18;break;
-			case 21:GPCLR0 = BIT_21;break;
-			case 27:GPCLR0 = BIT_27;break;
-			case 22:GPCLR0 = BIT_22;break;
-			case 23:GPCLR0 = BIT_23;break;
-			case 24:GPCLR0 = BIT_24;break;
-			case 25:GPCLR0 = BIT_25;break;
-		}
-	}
-    
-    delayMicroseconds(1);
-    // Delay to allow any change in state to be reflected in the LEVn, register bit.
-}
-
-//Soft digitalWrite to avoid spureous Reset in Socket Power ON
-void digitalWriteSoft(int pin, int value)
-{
-  uint frame[32];
-
-  for(int z=0;z<7;z++)
-  {
-    uint V = 0xFFFFFFFF;
-
-    for(int v=0;v<32;v++)
-    {
-      uint T = 0xFFFFFFFF;
-
-      V = V << 1;
-      for (int t=0; t<32;t++)
-      {
-        if (value==HIGH)
-        {  
-          if (T > V) frame[t]=HIGH;
-          else frame [t]=LOW;
-        }
-        else
-        {  
-          if (T > V) frame[t]=LOW;
-          else frame [t]=HIGH;
-        }
-        T = T << 1;
-      }
-
-      for (int i=0; i<32; i++)
-      {
-        digitalWrite(pin,frame[i]);
-      }
-    }
-  }
-
-  if (value==HIGH) digitalWrite(pin,HIGH);
-  else digitalWrite(pin,LOW);
-}
-
-// Reads the value from a specified digital pin, either HIGH or LOW.
-int digitalRead(int pin){
-	Digivalue value;
-	pin = raspberryPinNumber(pin);
-	switch(pin){
-		case 4: if(GPLEV0 & BIT_4){value = HIGH;} else{value = LOW;};break;
-		case 8: if(GPLEV0 & BIT_8){value = HIGH;} else{value = LOW;};break;
-		case 9: if(GPLEV0 & BIT_9){value = HIGH;} else{value = LOW;};break;
-		case 10:if(GPLEV0 & BIT_10){value = HIGH;} else{value = LOW;};break;
-		case 11:if(GPLEV0 & BIT_11){value = HIGH;} else{value = LOW;};break;
-		case 17:if(GPLEV0 & BIT_17){value = HIGH;}else{value = LOW;};break;
-		case 18:if(GPLEV0 & BIT_18){value = HIGH;}else{value = LOW;};break;
-		case 21:if(GPLEV0 & BIT_21){value = HIGH;}else{value = LOW;};break;
-		case 27:if(GPLEV0 & BIT_27){value = HIGH;}else{value = LOW;};break;
-		case 22:if(GPLEV0 & BIT_22){value = HIGH;}else{value = LOW;};break;
-		case 23:if(GPLEV0 & BIT_23){value = HIGH;}else{value = LOW;};break;
-		case 24:if(GPLEV0 & BIT_24){value = HIGH;}else{value = LOW;};break;
-		case 25:if(GPLEV0 & BIT_25){value = HIGH;}else{value = LOW;};break;
-	}
-	return value;
-}
 
 int analogRead (int pin){
 
@@ -1565,83 +1579,6 @@ int analogRead (int pin){
 	return value;
 }
 
-void attachInterrupt(int p,void (*f)(), Digivalue m){
-	int GPIOPin = raspberryPinNumber(p);
-	pthread_t *threadId = getThreadIdFromPin(p);
-	struct ThreadArg *threadArgs = (ThreadArg *)malloc(sizeof(ThreadArg));
-	threadArgs->func = f;
-	threadArgs->pin = GPIOPin;
-	
-	//Export pin for interrupt
-	FILE *fp = fopen("/sys/class/gpio/export","w");
-	if (fp == NULL){
-		fprintf(stderr,"Unable to export pin %d for interrupt\n",p);
-		exit(1);
-	}else{
-		fprintf(fp,"%d",GPIOPin); 
-	}
-	fclose(fp);
-	
-	//The system to create the file /sys/class/gpio/gpio<GPIO number>
-	//So we wait a bit
-	delay(1L);
-	
-	char * interruptFile = NULL;
-	asprintf(&interruptFile, "/sys/class/gpio/gpio%d/edge",GPIOPin);
-	
-	//Set detection condition
-	fp = fopen(interruptFile,"w");
-	if (fp == NULL){
-		fprintf(stderr,"Unable to set detection type on pin %d\n",p);
-		exit(1);
-	}else{
-		switch(m){
-			case RISING: fprintf(fp,"rising");break;
-			case FALLING: fprintf(fp,"falling");break;
-			default: fprintf(fp,"both");break;
-		}
-		
-	}
-	fclose(fp);
-	
-	if(*threadId == 0){
-		//Create a thread passing the pin and function
-		pthread_create (threadId, NULL, threadFunction, (void *)threadArgs);
-	}else{
-		//First cancel the existing thread for that pin
-		pthread_cancel(*threadId);
-		//Create a thread passing the pin, function and mode
-		pthread_create (threadId, NULL, threadFunction, (void *)threadArgs);
-	}
-	
-}
-
-void detachInterrupt(int p){
-	int GPIOPin = raspberryPinNumber(p);
-	
-	FILE *fp = fopen("/sys/class/gpio/unexport","w");
-	if (fp == NULL){
-		fprintf(stderr,"Unable to unexport pin %d for interrupt\n",p);
-		exit(1);
-	}else{
-		fprintf(fp,"%d",GPIOPin); 
-	}
-	fclose(fp);
-	
-	pthread_t *threadId = getThreadIdFromPin(p);
-	pthread_cancel(*threadId);
-}
-
-long millis(){
-	long elapsedTime;
-	// stop timer
-    gettimeofday(&end_point, NULL);
-
-    // compute and print the elapsed time in millisec
-    elapsedTime = (end_point.tv_sec - start_program.tv_sec) * 1000.0;      // sec to ms
-    elapsedTime += (end_point.tv_usec - start_program.tv_usec) / 1000.0;   // us to ms
-    return elapsedTime;
-}
 
 
 
