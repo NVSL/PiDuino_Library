@@ -1,4 +1,4 @@
-# PiDuino_Library
+# PiDuino Library
 
 PiDuino Library is a C++ library that lets you write programs for Raspberry Pi as if you were writing an Arduino program. 
 
