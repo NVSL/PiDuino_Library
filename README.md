@@ -128,9 +128,9 @@ will not be implemented in the first release.
 
 | Function | Implemented (YES/NO-Comment/In Progress) |
 | ------ | ----------- |
-| attachInterrupt(digitalPinToInterrupt(pin), ISR, mode)  | In Progress |
-| detachInterrupt(interrupt)  | In Progress |
-| detachInterrupt(digitalPinToInterrupt(pin))  | In Progress |
+| attachInterrupt(digitalPinToInterrupt(pin), ISR, mode)  | YES |
+| detachInterrupt(interrupt)  | YES |
+| detachInterrupt(digitalPinToInterrupt(pin))  | YES |
 
 #### - Interrupts
 
