@@ -342,8 +342,8 @@ size_t SerialPi::print(unsigned char b, int base)
 }
 
 // Prints data to the serial port as human-readable ASCII text.
-//  It can print the message in many format representations such as:
-// Binary, Octal, Decimal, Hexadecimal and as a BYTE.
+// It can print the message in many format representations such as:
+// Binary, Octal, Decimal and Hexadecimal.
 size_t SerialPi::print(unsigned int n, int base)
 {
     char * message;
@@ -369,8 +369,8 @@ size_t SerialPi::print(unsigned int n, int base)
 }
 
 // Prints data to the serial port as human-readable ASCII text.
-//  It can print the message in many format representations such as:
-// Binary, Octal, Decimal, Hexadecimal and as a BYTE.
+// It can print the message in many format representations such as:
+// Binary, Octal, Decimal and Hexadecimal.
 size_t SerialPi::print(int n, int base)
 {
     char * message;
@@ -854,14 +854,13 @@ void WirePi::beginTransmission(uint8_t address)
     // reset tx buffer iterator vars
     txBufferIndex = 0;
     txBufferLength = 0;
-
 }
 
 // Writes data to the I2C, returns bytes written.
 size_t WirePi::write(uint8_t data)
 {
 
-    if(transmitting) {
+    if (transmitting) {
         // in master transmitter mode
         // don't bother if buffer is full
         if (txBufferLength >= BUFFER_LENGTH) {
@@ -1260,60 +1259,54 @@ int digitalRead(uint8_t pin)
 //          Analog I/O                    //
 ////////////////////////////////////////////
 /*
-void analogWrite(int pin, int value) {
-    auto digitalVal = value > 0 ? HIGH : LOW;
-    digitalWrite(pin, digitalVal);
+void analogWrite(int pin, int value) 
+{
 }
 
 
-int analogRead (int pin){
-
-    int value = 0;
-    return value;
+int analogRead (int pin)
+{
 }
 
 */
 /////////////////////////////////////////////
 //          Advanced I/O                  //
 ////////////////////////////////////////////
-/*
-uint8_t shiftIn(uint8_t dPin, uint8_t cPin, bcm2835SPIBitOrder order){
-    uint8_t value = 0 ;
-    int8_t  i ;
 
-    if (order == BCM2835_SPI_BIT_ORDER_MSBFIRST )
-        for (i = 7 ; i >= 0 ; --i){
-            digitalWrite (cPin, HIGH);
-            value |= digitalRead (dPin) << i;
-            digitalWrite (cPin, LOW);
-        }
-    else
-        for (i = 0 ; i < 8 ; ++i){
-          digitalWrite (cPin, HIGH);
-          value |= digitalRead (dPin) << i;
-          digitalWrite (cPin, LOW);
-        }
 
+uint8_t shiftIn(uint8_t dataPin, uint8_t clockPin, uint8_t bitOrder) 
+{
+    uint8_t value = 0;
+    uint8_t i;
+
+    for (i = 0; i < 8; ++i) {
+        digitalWrite(clockPin, HIGH);
+        if (bitOrder == LSBFIRST)
+            value |= digitalRead(dataPin) << i;
+        else
+            value |= digitalRead(dataPin) << (7 - i);
+        digitalWrite(clockPin, LOW);
+    }
     return value;
 }
 
-void shiftOut(uint8_t dPin, uint8_t cPin, bcm2835SPIBitOrder order, uint8_t val){
-    int8_t i;
 
-    if (order == BCM2835_SPI_BIT_ORDER_MSBFIRST )
-        for (i = 7 ; i >= 0 ; --i){ 
-            digitalWrite (dPin, val & (1 << i)) ;
-            digitalWrite (cPin, HIGH) ;
-            digitalWrite (cPin, LOW) ;
-        }
-    else
-        for (i = 0 ; i < 8 ; ++i){
-            digitalWrite (dPin, val & (1 << i)) ;
-            digitalWrite (cPin, HIGH) ;
-            digitalWrite (cPin, LOW) ;
-        }
+void shiftOut(uint8_t dataPin, uint8_t clockPin, uint8_t bitOrder, uint8_t val)
+{
+    uint8_t i;
+
+    for (i = 0; i < 8; i++)  {
+        if (bitOrder == LSBFIRST)
+            digitalWrite(dataPin, !!(val & (1 << i)));
+        else    
+            digitalWrite(dataPin, !!(val & (1 << (7 - i))));
+            
+        digitalWrite(clockPin, HIGH);
+        digitalWrite(clockPin, LOW);        
+    }
 }
-*/
+
+
 /////////////////////////////////////////////
 //          Time                          //
 ////////////////////////////////////////////
@@ -1482,17 +1475,17 @@ inline int toUpperCase(int c)
 
 void randomSeed(unsigned long seed)
 {
-  if (seed != 0) {
-    srandom(seed);
-  }
+    if (seed != 0) {
+        srandom(seed);
+    }
 }
 
 long random(long howbig)
 {
-  if (howbig == 0) {
-    return 0;
-  }
-  return random() % howbig;
+    if (howbig == 0) {
+        return 0;
+    }
+    return random() % howbig;
 }
 
 long random(long howsmall, long howbig)

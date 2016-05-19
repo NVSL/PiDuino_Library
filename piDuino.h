@@ -56,13 +56,7 @@ namespace unistd {
     #include <unistd.h>
 };
 
-enum Representation{
-	BIN,
-	OCT,
-	DEC,
-	HEX,
-	BYTE
-};
+
 
 // Arduino extra types
 typedef bool boolean;
@@ -76,6 +70,11 @@ typedef unsigned int word;
 //          SerialPi class (UART)         //
 ////////////////////////////////////////////
 
+// Printing format options
+#define DEC 10
+#define HEX 16
+#define OCT 8
+#define BIN 2
 
 
 // Defines for setting data, parity, and stop bits
@@ -303,6 +302,10 @@ void analogWrite(int pin, int value);
 /////////////////////////////////////////////
 //          Advanced I/O           		  //
 ////////////////////////////////////////////
+
+uint8_t shiftIn(uint8_t dataPin, uint8_t clockPin, uint8_t bitOrder);
+void shiftOut(uint8_t dataPin, uint8_t clockPin, uint8_t bitOrder, uint8_t val);
+
 /////////////////////////////////////////////
 //          Time      		     		  //
 ////////////////////////////////////////////
