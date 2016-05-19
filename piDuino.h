@@ -64,14 +64,6 @@ enum Representation{
 	BYTE
 };
 
-typedef enum{
-	LOW = 0,
-	HIGH = 1,
-	RISING = 2,
-	FALLING = 3,
-	BOTH = 4
-}Digivalue;
-
 // Arduino extra types
 typedef bool boolean;
 typedef uint8_t byte;
@@ -284,6 +276,9 @@ class SPIPi {
 /////////////////////////////////////////////
 //          Digital I/O           		  //
 ////////////////////////////////////////////
+// Pin logic states
+#define HIGH 0x1
+#define LOW  0x0
 
 // Pin modes
 #define INPUT 0x0
@@ -311,12 +306,6 @@ void analogWrite(int pin, int value);
 /////////////////////////////////////////////
 //          Time      		     		  //
 ////////////////////////////////////////////
-
-class TimeElapsed {											
-    public:
-        struct timespec timestamp;
-        TimeElapsed(); 
-};
 
 unsigned long millis(void);
 unsigned long micros(void);
@@ -402,11 +391,17 @@ long random(long, long);
 /////////////////////////////////////////////
 //          External Interrupts    		  //
 ////////////////////////////////////////////
-#define NOT_AN_INTERRUPT -1
-#define digitalPinToInterrupt(p) ((p) >= 0 && (p) <= 26 ? (p) : NOT_AN_INTERRUPT)))
 
-void attachInterrupt(uint8_t, void (*)(void), int mode);
-void detachInterrupt(uint8_t);
+// Interrupt modes
+#define CHANGE 1
+#define FALLING 2
+#define RISING 3
+
+#define NOT_AN_INTERRUPT -1
+#define digitalPinToInterrupt(p) ((p) >= 0 && (p) <= 26 ? (p) : NOT_AN_INTERRUPT)
+
+void attachInterrupt(uint8_t p, void (*f)(void), int mode);
+void detachInterrupt(uint8_t p);
 
 /////////////////////////////////////////////
 //          Interrupts           		  //
@@ -431,11 +426,10 @@ int getBoardRev();
 uint32_t *mapmem(const char *msg, size_t size, int fd, off_t off);
 void setBoardRev(int rev);
 int raspberryPinNumber(int arduinoPin);
-pthread_t *getThreadIdFromPin(int pin);
-void * threadFunction(void *args);
+
 
 */
-extern TimeElapsed ProgramStart;
+//extern TimeElapsed ProgramStart;
 extern SerialPi Serial;
 extern WirePi Wire;
 extern SPIPi SPI;

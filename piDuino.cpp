@@ -1181,8 +1181,6 @@ void pinMode(uint8_t pin, uint8_t mode)
     int offset = OFFSET_FSEL + (pin/10);
     int shift = (pin%10)*3;
 
-    printf("Driver = %s \n", GPIO_DRIVER_NAME);
-
     // Initialize gpiomem only once
     if (open_gpiomem_flag == false) {
         if ((mem_fd = open(GPIO_DRIVER_NAME, O_RDWR|O_SYNC) ) < 0) {
@@ -1261,6 +1259,20 @@ int digitalRead(uint8_t pin)
 /////////////////////////////////////////////
 //          Analog I/O                    //
 ////////////////////////////////////////////
+/*
+void analogWrite(int pin, int value) {
+    auto digitalVal = value > 0 ? HIGH : LOW;
+    digitalWrite(pin, digitalVal);
+}
+
+
+int analogRead (int pin){
+
+    int value = 0;
+    return value;
+}
+
+*/
 /////////////////////////////////////////////
 //          Advanced I/O                  //
 ////////////////////////////////////////////
@@ -1307,9 +1319,11 @@ void shiftOut(uint8_t dPin, uint8_t cPin, bcm2835SPIBitOrder order, uint8_t val)
 ////////////////////////////////////////////
 
 // Gets a timestamp when the program starts
-TimeElapsed::TimeElapsed() {
-    clock_gettime(CLOCK_REALTIME, &timestamp);
-}
+class TimeElapsed {                                         
+    public:
+        struct timespec timestamp;
+        TimeElapsed() {clock_gettime(CLOCK_REALTIME, &timestamp);}
+} ProgramStart;
 
 // Returns the time in millseconds since the program started.
 unsigned long millis(void) 
@@ -1318,6 +1332,7 @@ unsigned long millis(void)
     clock_gettime(CLOCK_REALTIME, &timenow);
     start = ProgramStart.timestamp;
     end = timenow;
+    // timeDiffmillis:
     return ((end.tv_sec - start.tv_sec) * 1e3 + (end.tv_nsec - start.tv_nsec) * 1e-6);
 }
 
@@ -1328,6 +1343,7 @@ unsigned long micros(void)
     clock_gettime(CLOCK_REALTIME, &timenow);
     start = ProgramStart.timestamp;
     end = timenow;
+    // timeDiffmicros
     return ((end.tv_sec - start.tv_sec) * 1e6 + (end.tv_nsec - start.tv_nsec) * 1e-3);
 }
 
@@ -1491,74 +1507,215 @@ long random(long howsmall, long howbig)
 /////////////////////////////////////////////
 //          External Interrupts           //
 ////////////////////////////////////////////
-/*
-void attachInterrupt(int p,void (*f)(), Digivalue m){
-    int GPIOPin = raspberryPinNumber(p);
+
+struct ThreadArg {
+    void (*func)();
+    int pin;
+};
+
+pthread_t idThread0;
+pthread_t idThread1;
+pthread_t idThread2;
+pthread_t idThread3;
+pthread_t idThread4;
+pthread_t idThread5;
+pthread_t idThread6;
+pthread_t idThread7;
+pthread_t idThread8;
+pthread_t idThread9;
+pthread_t idThread10;
+pthread_t idThread11;
+pthread_t idThread12;
+pthread_t idThread13;
+pthread_t idThread14;
+pthread_t idThread15;
+pthread_t idThread16;
+pthread_t idThread17;
+pthread_t idThread18;
+pthread_t idThread19;
+pthread_t idThread20;
+pthread_t idThread21;
+pthread_t idThread22;
+pthread_t idThread23;
+pthread_t idThread24;
+pthread_t idThread25;
+pthread_t idThread26;
+
+pthread_t *getThreadIdFromPin(int pin)
+{
+    switch(pin) {
+        case 0: return &idThread0; break;
+        case 1: return &idThread1; break;
+        case 2: return &idThread2; break;
+        case 3: return &idThread3; break;
+        case 4: return &idThread4; break;
+        case 5: return &idThread5; break;
+        case 6: return &idThread6; break;
+        case 7: return &idThread7; break;
+        case 8: return &idThread8; break;
+        case 9: return &idThread9; break;
+        case 10: return &idThread10; break;
+        case 11: return &idThread11; break;
+        case 12: return &idThread12; break;
+        case 13: return &idThread13; break;
+        case 14: return &idThread14; break;
+        case 15: return &idThread15; break;
+        case 16: return &idThread16; break;
+        case 17: return &idThread17; break;
+        case 18: return &idThread18; break;
+        case 19: return &idThread19; break;
+        case 20: return &idThread20; break;
+        case 21: return &idThread21; break;
+        case 22: return &idThread22; break;
+        case 23: return &idThread23; break;
+        case 24: return &idThread24; break;
+        case 25: return &idThread25; break;
+        case 26: return &idThread26; break;
+        default: return &idThread0; break;
+    }
+}
+
+// This is the function that will be running in a thread if
+// attachInterrupt() is called 
+void * threadFunction(void *args)
+{
+    ThreadArg *arguments = (ThreadArg *)args;
+    int pin = arguments->pin;
+    
+    int GPIO_FN_MAXLEN = 32;
+    int RDBUF_LEN = 5;
+    
+    char fn[GPIO_FN_MAXLEN];
+    int fd,ret;
+    struct pollfd pfd;
+    char rdbuf [RDBUF_LEN];
+    
+    memset(rdbuf, 0x00, RDBUF_LEN);
+    memset(fn,0x00,GPIO_FN_MAXLEN);
+    
+    snprintf(fn, GPIO_FN_MAXLEN-1, "/sys/class/gpio/gpio%d/value",pin);
+    fd=open(fn, O_RDONLY);
+    if (fd<0) {
+        fprintf(stderr, "%s(): gpio error: %s\n",__func__, strerror (errno));
+        exit(1);
+    }
+    pfd.fd=fd;
+    pfd.events=POLLPRI;
+    
+    ret=unistd::read(fd,rdbuf,RDBUF_LEN-1);
+    if (ret<0) {
+        fprintf(stderr, "%s(): gpio error: %s\n",__func__, strerror (errno));
+        exit(1);
+    }
+    
+    while(1) {
+        memset(rdbuf, 0x00, RDBUF_LEN);
+        unistd::lseek(fd, 0, SEEK_SET);
+        ret=poll(&pfd, 1, -1);
+        if (ret<0) {
+            fprintf(stderr, "%s(): gpio error: %s\n",__func__, strerror (errno));
+            unistd::close(fd);
+            exit(1);
+        }
+        if (ret==0) {
+            printf("Timeout\n");
+            continue;
+        }
+        ret=unistd::read(fd,rdbuf,RDBUF_LEN-1);
+        if (ret<0) {
+            fprintf(stderr, "%s(): gpio error: %s\n",__func__, strerror (errno));
+            exit(1);
+        }
+        //Interrupt. We call user function.
+        arguments->func();
+    }
+}
+
+void attachInterrupt(uint8_t p, void (*f)(void), int mode)
+{
+    uint8_t GPIOPin = p;
     pthread_t *threadId = getThreadIdFromPin(p);
     struct ThreadArg *threadArgs = (ThreadArg *)malloc(sizeof(ThreadArg));
     threadArgs->func = f;
     threadArgs->pin = GPIOPin;
+
+    // Return if the interrupt pin number is out of range. 
+    if (GPIOPin == (uint8_t) NOT_AN_INTERRUPT) {
+        fprintf(stderr, "%s(): interrupr pin number out of range\n",__func__);
+        return;
+    }
     
-    //Export pin for interrupt
+    // Export pin for interrupt
     FILE *fp = fopen("/sys/class/gpio/export","w");
-    if (fp == NULL){
-        fprintf(stderr,"Unable to export pin %d for interrupt\n",p);
+    if (fp == NULL) {
+        fprintf(stderr, "%s(): export gpio error: %s\n",__func__, strerror (errno));
         exit(1);
-    }else{
+    } else {
         fprintf(fp,"%d",GPIOPin); 
     }
     fclose(fp);
     
-    //The system to create the file /sys/class/gpio/gpio<GPIO number>
-    //So we wait a bit
-    delay(1L);
-    
+    // Tell the system to create the file /sys/class/gpio/gpio<GPIO number>
     char * interruptFile = NULL;
     asprintf(&interruptFile, "/sys/class/gpio/gpio%d/edge",GPIOPin);
     
-    //Set detection condition
+    //Set detection edge condition
     fp = fopen(interruptFile,"w");
-    if (fp == NULL){
-        fprintf(stderr,"Unable to set detection type on pin %d\n",p);
-        exit(1);
-    }else{
-        switch(m){
-            case RISING: fprintf(fp,"rising");break;
-            case FALLING: fprintf(fp,"falling");break;
-            default: fprintf(fp,"both");break;
+    if (fp == NULL) {
+        // First time may fail because the file may not be ready.
+        // if that the case then we wait two seconds and try again.
+        unistd::sleep(2);
+        fp = fopen(interruptFile,"w");
+        if (fp == NULL) {
+            fprintf(stderr, "%s(): set gpio edge interrupt of (%s) error: %s\n",
+                __func__, interruptFile, strerror (errno));
+            exit(1);
         }
-        
+    }
+    switch(mode) {
+        case RISING: fprintf(fp,"rising");break;
+        case FALLING: fprintf(fp,"falling");break;
+        default: fprintf(fp,"both");break;  // Change
     }
     fclose(fp);
     
-    if(*threadId == 0){
-        //Create a thread passing the pin and function
+    if (*threadId == 0) {
+        // Create a thread passing the pin and function
         pthread_create (threadId, NULL, threadFunction, (void *)threadArgs);
-    }else{
-        //First cancel the existing thread for that pin
+    } else {
+        // First cancel the existing thread for that pin
         pthread_cancel(*threadId);
-        //Create a thread passing the pin, function and mode
+        // Create a thread passing the pin, function and mode
         pthread_create (threadId, NULL, threadFunction, (void *)threadArgs);
     }
     
 }
 
-void detachInterrupt(int p){
-    int GPIOPin = raspberryPinNumber(p);
-    
+void detachInterrupt(uint8_t p)
+{
+    uint8_t GPIOPin = p;
+    pthread_t *threadId = getThreadIdFromPin(p);
+
+    // Return if the interrupt pin number is out of range. 
+    if(GPIOPin == (uint8_t) NOT_AN_INTERRUPT) {
+        fprintf(stderr, "%s(): interrupr pin number out of range\n",__func__);
+        return;
+    }
+
+    // Cancel Thread
+    pthread_cancel(*threadId);
+
+    // Unexport gpio pin
     FILE *fp = fopen("/sys/class/gpio/unexport","w");
-    if (fp == NULL){
-        fprintf(stderr,"Unable to unexport pin %d for interrupt\n",p);
+    if (fp == NULL) {
+        fprintf(stderr, "%s(): unexrpot gpio error: %s\n",__func__, strerror (errno));
         exit(1);
-    }else{
+    } else {
         fprintf(fp,"%d",GPIOPin); 
     }
     fclose(fp);
     
-    pthread_t *threadId = getThreadIdFromPin(p);
-    pthread_cancel(*threadId);
 }
-*/
 
 /////////////////////////////////////////////
 //          Interrupts                    //
@@ -1566,157 +1723,7 @@ void detachInterrupt(int p){
 
 
 
-/*
-void analogWrite(int pin, int value) {
-    auto digitalVal = value > 0 ? HIGH : LOW;
-    digitalWrite(pin, digitalVal);
-}
 
-
-int analogRead (int pin){
-
-	int value = 0;
-	return value;
-}
-
-
-
-
-//// Some helper functions ////
-
-int getBoardRev(){
-	
-	FILE *cpu_info;
-	char line [120];
-	char *c,finalChar;
-	static int rev = 0;
-	
-	if (REV != 0) return REV;
-	
-	if ((cpu_info = fopen("/proc/cpuinfo","r"))==NULL){
-		fprintf(stderr,"Unable to open /proc/cpuinfo. Cannot determine board reivision.\n");
-		exit(1);
-	}
-	
-	while (fgets (line,120,cpu_info) != NULL){
-		if(strncmp(line,"Revision",8) == 0) break;
-	}
-	
-	fclose(cpu_info);
-	
-	if (line == NULL){
-		fprintf (stderr, "Unable to determine board revision from /proc/cpuinfo.\n") ;
-		exit(1);
-	}
-	
-	for (c = line ; *c ; ++c)
-    if (isdigit (*c))
-      break ;
-
-	if (!isdigit (*c)){
-		fprintf (stderr, "Unable to determine board revision from /proc/cpuinfo\n") ;
-		fprintf (stderr, "  (Info not found in: %s\n", line) ;
-		exit(1);
-	}
-	
-	finalChar = c [strlen (c) - 2] ;
-	
-	if ((finalChar == '2') || (finalChar == '3')){
-		bsc0 = bsc_rev1;
-		return 1;
-	}else{
-		bsc0 = bsc_rev2;
-		return 2;
-	}
-}
-
-uint32_t* mapmem(const char *msg, size_t size, int fd, off_t off)
-{
-    uint32_t *map = (uint32_t *)mmap(NULL, size, (PROT_READ | PROT_WRITE), MAP_SHARED, fd, off);
-    if (MAP_FAILED == map)
-	fprintf(stderr, "bcm2835_init: %s mmap failed: %s\n", msg, strerror(errno));
-    return map;
-}
-
-int raspberryPinNumber(int arduinoPin){
-     return arduinoPin;
-}
-
-pthread_t *getThreadIdFromPin(int pin){
-	switch(pin){
-		case 2: return &idThread2; break;
-		case 3: return &idThread3; break;
-		case 4: return &idThread4; break;
-		case 5: return &idThread5; break;
-		case 6: return &idThread6; break;
-		case 7: return &idThread7; break;
-		case 8: return &idThread8; break;
-		case 9: return &idThread9; break;
-		case 10: return &idThread10; break;
-		case 11: return &idThread11; break;
-		case 12: return &idThread12; break;
-		case 13: return &idThread13; break;
-	}
-}
-
-// This is the function that will be running in a thread if
-// attachInterrupt() is called 
-void * threadFunction(void *args){
-	ThreadArg *arguments = (ThreadArg *)args;
-	int pin = arguments->pin;
-	
-	int GPIO_FN_MAXLEN = 32;
-	int RDBUF_LEN = 5;
-	
-	char fn[GPIO_FN_MAXLEN];
-	int fd,ret;
-	struct pollfd pfd;
-	char rdbuf [RDBUF_LEN];
-	
-	memset(rdbuf, 0x00, RDBUF_LEN);
-	memset(fn,0x00,GPIO_FN_MAXLEN);
-	
-	snprintf(fn, GPIO_FN_MAXLEN-1, "/sys/class/gpio/gpio%d/value",pin);
-	fd=open(fn, O_RDONLY);
-	if(fd<0){
-		perror(fn);
-		exit(1);
-	}
-	pfd.fd=fd;
-	pfd.events=POLLPRI;
-	
-	ret=unistd::read(fd,rdbuf,RDBUF_LEN-1);
-	if(ret<0){
-		perror("Error reading interrupt file\n");
-		exit(1);
-	}
-	
-	while(1){
-		memset(rdbuf, 0x00, RDBUF_LEN);
-		unistd::lseek(fd, 0, SEEK_SET);
-		ret=poll(&pfd, 1, -1);
-		if(ret<0){
-			perror("Error waiting for interrupt\n");
-			unistd::close(fd);
-			exit(1);
-		}
-		if(ret==0){
-			printf("Timeout\n");
-			continue;
-		}
-		ret=unistd::read(fd,rdbuf,RDBUF_LEN-1);
-		if(ret<0){
-			perror("Error reading interrupt file\n");
-			exit(1);
-		}
-		//Interrupt. We call user function.
-		arguments->func();
-	}
-}
-
-*/
-
-TimeElapsed ProgramStart = TimeElapsed();
 SerialPi Serial = SerialPi();
 WirePi Wire = WirePi();
 SPIPi SPI = SPIPi();
