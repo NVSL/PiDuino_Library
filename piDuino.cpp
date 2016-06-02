@@ -637,7 +637,7 @@ int SerialPi::peekNextDigit(bool detectDecimal)
 // Returns the difference of two times in miiliseconds
 long SerialPi::timeDiffmillis(timespec start, timespec end)
 {
-    return (long) ((end.tv_sec - start.tv_sec) * 1e3 + (end.tv_nsec - start.tv_nsec) * 1e-6);
+    return ((end.tv_sec - start.tv_sec) * 1e3 + (end.tv_nsec - start.tv_nsec) * 1e-6);
 }
 
 // Returns a binary representation of the integer passed as argument
@@ -1306,6 +1306,46 @@ void shiftOut(uint8_t dataPin, uint8_t clockPin, uint8_t bitOrder, uint8_t val)
     }
 }
 
+// Measures the length (in microseconds) of a pulse on the pin; state is HIGH
+// or LOW, the type of pulse to measure. timeout is 1 second by default.
+unsigned long pulseIn(uint8_t pin, uint8_t state, unsigned long timeout)
+{
+    struct timespec start, end;
+    clock_gettime(CLOCK_REALTIME, &start);
+
+    // wait for any previous pulse to end
+    while (digitalRead(pin) == state) {
+        clock_gettime(CLOCK_REALTIME, &end);
+        // timeDiffmicros > timeout?
+        if (((end.tv_sec - start.tv_sec) * 1e6  + 
+            (end.tv_nsec - start.tv_nsec) * 1e-3) > timeout)
+            return 0;
+    }
+
+    // wait for the pulse to start
+    while (digitalRead(pin) != state) {
+        clock_gettime(CLOCK_REALTIME, &end);
+         // timeDiffmicros > timeout?
+        if (((end.tv_sec - start.tv_sec) * 1e6  + 
+            (end.tv_nsec - start.tv_nsec) * 1e-3) > timeout)
+            return 0;
+    }
+
+    clock_gettime(CLOCK_REALTIME, &start);
+    // wait for the pulse to stop
+    while (digitalRead(pin) == state) {
+        clock_gettime(CLOCK_REALTIME, &end);
+         // timeDiffmicros > timeout?
+        if (((end.tv_sec - start.tv_sec) * 1e6  + 
+            (end.tv_nsec - start.tv_nsec) * 1e-3) > timeout)
+            return 0;
+    }
+
+    // return microsecond ellpsed
+    return ((end.tv_sec - start.tv_sec) * 1e6  + 
+            (end.tv_nsec - start.tv_nsec) * 1e-3);
+}
+
 
 /////////////////////////////////////////////
 //          Time                          //
@@ -1611,7 +1651,7 @@ void * threadFunction(void *args)
             exit(1);
         }
         if (ret==0) {
-            printf("Timeout\n");
+            // Timeout
             continue;
         }
         ret=unistd::read(fd,rdbuf,RDBUF_LEN-1);

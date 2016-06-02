@@ -305,6 +305,7 @@ void analogWrite(int pin, int value);
 
 uint8_t shiftIn(uint8_t dataPin, uint8_t clockPin, uint8_t bitOrder);
 void shiftOut(uint8_t dataPin, uint8_t clockPin, uint8_t bitOrder, uint8_t val);
+unsigned long pulseIn(uint8_t pin, uint8_t state, unsigned long timeout = 1000000L);
 
 /////////////////////////////////////////////
 //          Time      		     		  //
