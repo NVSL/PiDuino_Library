@@ -49,8 +49,8 @@ will not be implemented in the first release.
 | noTone(pin)  | In Progress |
 | shiftOut(dataPin, clockPin, bitOrder, value)  | YES |
 | byte incoming = shiftIn(dataPin, clockPin, bitOrder) | YES |
-| pulseIn(pin, value)  | In Progress |
-| pulseIn(pin, value, timeout) | In Progress |
+| pulseIn(pin, value)  | YES |
+| pulseIn(pin, value, timeout) | YES |
 
 #### - Time
 
