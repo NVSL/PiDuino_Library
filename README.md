@@ -237,5 +237,5 @@ will not be implemented in the first release.
 * Add string, String, (arg, ...) to prints.
 * Check/DO printFloat()
 * ~~Make an Arduino init function~~
-* ~~Implement an exit rutine when SIGINT (Ctrl^Z) to turn GPIO OFF ~~
+* ~~Implement an exit rutine when SIGINT (Ctrl^Z) to turn GPIO OFF~~
 
