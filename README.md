@@ -22,6 +22,8 @@ will not be implemented in the first release.
 
 ### Implemented Arduino Functions
 
+**Notes:**
+* Functions that begin with (EXTRA) are extra functions added to provide more functionality to the library.
 
 
 #### - Digital I/O
@@ -38,15 +40,18 @@ will not be implemented in the first release.
 | ------ | ----------- |
 | analogReference(type) | NO - No hardware support for RPi |
 | analogRead(pin) | NO - No hardware support for RPi |
-| analogWrite() - PWM | In progress |
-
+| analogWrite() - PWM | YES |
+| (EXTRA) setPwmFrequency (pin,frequency,dutycycle)  | YES |
+| (EXTRA) setPwmFrequency (pin,frequency)  | YES |
+| (EXTRA) setPwmPeriod (pin,microseconds)  | YES |
+ 
 #### - Advanced I/O
 
 | Function | Implemented (YES/NO-Comment/In Progress) |
 | ------ | ----------- |
-| tone(pin, frequency)   | In Progress |
+| tone(pin, frequency)   | YES |
 | tone(pin, frequency, duration) | In Progress |
-| noTone(pin)  | In Progress |
+| noTone(pin)  | YES |
 | shiftOut(dataPin, clockPin, bitOrder, value)  | YES |
 | byte incoming = shiftIn(dataPin, clockPin, bitOrder) | YES |
 | pulseIn(pin, value)  | YES |
