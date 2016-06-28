@@ -8,6 +8,24 @@
 *   version: 1.0.0
 *   author: Jorge Garza (jgarzagu@gmail.com)
 *   
+
+    ### BCM283x Notes for GPIO and PWM
+    
+    BCM283x  has a maximum of 54 GPIOS
+
+    The BCM2835 contains 2 independent PWM channels (0 and 1) that uses
+    the same PWM clock as the base frequency. The following are the
+    available PWM pins for this chip:
+    GPIO PIN   RPi2 pin   PWM Channel  ALT FUN
+    12         YES        0            0
+    13         YES        1            0
+    18         YES        0            5
+    19         YES        1            5
+    40                    0            0
+    41                    1            0
+    45                    1            0
+    52                    0            1
+    53                    1            1
 */
 
 
@@ -46,10 +64,10 @@ void SerialPi::begin(int baud, unsigned char config)
     int flags;
 
     // Open Serial port 
-	if ((sd = open(serialPort, O_RDWR | O_NOCTTY | O_NONBLOCK)) == -1) {
-		fprintf(stderr,"Unable to open the serial port %s - \n", serialPort);
-		exit(-1);
-	}
+    if ((sd = open(serialPort, O_RDWR | O_NOCTTY | O_NONBLOCK)) == -1) {
+        fprintf(stderr,"Unable to open the serial port %s - \n", serialPort);
+        exit(-1);
+    }
 
     // We obtain a pointer to FILE structure (sd_file) from the file descriptor sd
     // and set it to be non-blocking
@@ -93,10 +111,10 @@ void SerialPi::begin(int baud, unsigned char config)
         default:        speed =   B9600 ; break ;
     }
 
-	tcgetattr(sd, &options);
-	cfmakeraw(&options);
-	cfsetispeed (&options, speed);
-	cfsetospeed (&options, speed);
+    tcgetattr(sd, &options);
+    cfmakeraw(&options);
+    cfsetispeed (&options, speed);
+    cfsetospeed (&options, speed);
 
     switch (config) {
         case SERIAL_5N1: DataSize = CS5; ParityEN = 0; Parity = 0; StopBits = 0; break;
@@ -132,10 +150,10 @@ void SerialPi::begin(int baud, unsigned char config)
     (ParityEN) ? options.c_cflag |= PARENB : options.c_cflag &= ~PARENB;    // Parity enable ? YES : NO
     (Parity) ? options.c_cflag |= PARODD : options.c_cflag &= ~PARODD;      // Parity ? Odd : Even
     (StopBits) ? options.c_cflag |= CSTOPB : options.c_cflag &= ~CSTOPB;    // Stop bits ? 2 bits: 1 bit
-	options.c_lflag &= ~(ICANON | ECHO | ECHOE | ISIG);
-	options.c_oflag &= ~OPOST;
+    options.c_lflag &= ~(ICANON | ECHO | ECHOE | ISIG);
+    options.c_oflag &= ~OPOST;
 
-	tcsetattr (sd, TCSANOW, &options);
+    tcsetattr (sd, TCSANOW, &options);
     
 }
 
@@ -333,7 +351,7 @@ size_t SerialPi::print(const char str[])
 // Prints one character to the serial port as human-readable ASCII text.
 size_t SerialPi::print(char c)
 {
-	return unistd::write(sd,&c,1);
+    return unistd::write(sd,&c,1);
 }
 
 size_t SerialPi::print(unsigned char b, int base)
@@ -578,8 +596,8 @@ void SerialPi::setTimeout(long millis)
 // Returns: number of bytes written
 size_t SerialPi::write(uint8_t c)
 {
-	unistd::write(sd,&c,1);
-	return 1;
+    unistd::write(sd,&c,1);
+    return 1;
 }
 
 // Writes binary data to the serial port. This data is sent as a series
@@ -588,7 +606,7 @@ size_t SerialPi::write(uint8_t c)
 size_t SerialPi::write(const char *str)
 {
     if (str == NULL) return 0;
-	return unistd::write(sd,str,strlen(str));
+    return unistd::write(sd,str,strlen(str));
 }
 
 // Writes binary data to the serial port. This data is sent as a series
@@ -596,7 +614,7 @@ size_t SerialPi::write(const char *str)
 // Returns: number of bytes written 
 size_t SerialPi::write(char *buffer, size_t size)
 {
-	return unistd::write(sd,buffer,size);
+    return unistd::write(sd,buffer,size);
 }
 
 
@@ -1149,12 +1167,11 @@ void SPIPi::transfer(void *buf, size_t count)
 }
 
 
-
-
 /////////////////////////////////////////////
 //          Digital I/O                   //
 ////////////////////////////////////////////
 
+// -- Digital I/O --
 // BCM2708 Registers for GPIO (Do not put them in .h)
 #define BCM2708_PERI_BASE   0x20000000
 #define GPIO_BASE           (BCM2708_PERI_BASE + 0x200000)
@@ -1164,77 +1181,199 @@ void SPIPi::transfer(void *buf, size_t count)
 #define OFFSET_PINLEVEL     13  // 0x0034 / 4
 #define OFFSET_PULLUPDN     37  // 0x0094 / 4
 #define OFFSET_PULLUPDNCLK  38  // 0x0098 / 4
+#define GPIO_FSEL_INPUT     0   // Pin Input mode
+#define GPIO_FSEL_OUTPUT    1   // Pin Output mode
 #define PAGE_SIZE  (4*1024)
 #define BLOCK_SIZE (4*1024)
-static volatile uint32_t *gpio_map;
-static bool open_gpiomem_flag = false;
+#define BCM283X_GPIO_NUM   54   // Total Number of GPIOs in BCM283x chips
+static volatile uint32_t *gpio_map = NULL;
+static bool g_open_gpiomem_flag = false;
+int g_gpio_pin_set[BCM283X_GPIO_NUM];           // Used to know which gpio pins are set (HIGH) or not set (LOW) 
 char GPIO_DRIVER_NAME[] = "/dev/gpiomem";
 
-// Sets pin (gpio) mode as INPUT/INTPUT_PULLUP/INTPUT_PULLDOWN/OUTPUT
+// -- Analog I/O --
+#define BCM2708_PERI_BASE   0x20000000
+#define PWM_BASE           (BCM2708_PERI_BASE + 0x20C000)
+#define CLOCK_BASE         (BCM2708_PERI_BASE + 0x101000)
+#define PWMCLK_CNTL         40
+#define PWMCLK_DIV          41
+#define PWM_CONTROL         0
+#define PWM0_RANGE          4
+#define PWM0_DATA           5
+#define PWM1_RANGE          8
+#define PWM1_DATA           9
+#define GPIO_FSEL_ALT0      4  
+#define GPIO_FSEL_ALT1      5  
+#define GPIO_FSEL_ALT5      2  
+static volatile uint32_t *pwm_map = NULL;
+static volatile uint32_t *clk_map = NULL;
+static bool g_open_pwmmem_flag = false;
+int g_pwm_pin_set[BCM283X_GPIO_NUM];            // Used to know which pwm pins are set (HIGH) or not set (LOW)
+int g_pwm_dutycycle_value[BCM283X_GPIO_NUM];    // Pwm duty cycle value of pwm pins
+int PWM_DUTYCYCLE_RESOLUTION = 256;             // Set pwm duty cycle resolution to 256 buts
+int PWM_DEFAULT_FREQUENCY = 440;                // Set default pwm frequency to 440 Hz (Arduino default pwm freq)
+char PWM_DRIVER_NAME[] = "/dev/mem";
+
+// Sets pin (gpio) mode as INPUT,INTPUT_PULLUP,INTPUT_PULLDOWN,OUTPUT,PWM_OUTPUT
 void pinMode(uint8_t pin, uint8_t mode)
 {
-    int mem_fd;
+    int mem_fd, pwm_mem_fd;
     uint8_t *gpio_mem;
     int clk_offset = OFFSET_PULLUPDNCLK + (pin/32);
     int shift_offset = (pin%32);
     int offset = OFFSET_FSEL + (pin/10);
     int shift = (pin%10)*3;
+    int gpio_fsel_alt = 0;
+    int pwm_channel = 0;
+    int divisor;
+    double period;
+    double countDuration;
+
+
+    // For BCM283x chips gpio pin range should be between 0 and 54
+    if (pin >= BCM283X_GPIO_NUM) {
+        fprintf(stderr, "%s(): Pin number range should be less than %d, yours is (%d) \n",
+            __func__, BCM283X_GPIO_NUM, pin);
+        exit(1);
+    }
 
     // Initialize gpiomem only once
-    if (open_gpiomem_flag == false) {
+    if (g_open_gpiomem_flag == false) {
+        
         if ((mem_fd = open(GPIO_DRIVER_NAME, O_RDWR|O_SYNC) ) < 0) {
             fprintf(stderr, "%s(): gpio driver %s: %s\n",__func__, 
                 GPIO_DRIVER_NAME, strerror (errno));
             exit(1);
         }
 
-        if ((gpio_mem = (uint8_t *) malloc(BLOCK_SIZE + (PAGE_SIZE-1))) == NULL) {
-            fprintf(stderr, "%s(): gpio error: %s\n",__func__, strerror (errno));
-            exit(1);
-        }
-
-        if ((uint32_t)gpio_mem % PAGE_SIZE) {
-            gpio_mem += PAGE_SIZE - ((uint32_t)gpio_mem % PAGE_SIZE);
-        }
-
-        gpio_map = (uint32_t *)mmap( (void *)gpio_mem, BLOCK_SIZE, 
-            PROT_READ|PROT_WRITE, MAP_SHARED|MAP_FIXED, mem_fd, GPIO_BASE);
+        gpio_map = (uint32_t *)mmap( NULL, BLOCK_SIZE, 
+            PROT_READ|PROT_WRITE|PROT_EXEC, MAP_SHARED|MAP_LOCKED, mem_fd, GPIO_BASE);
 
         if ((uint32_t)gpio_map < 0) {
             fprintf(stderr, "%s(): gpio error: %s\n",__func__, strerror (errno));
             exit(1);
         }
 
-        // gpiomem initialized correctly
-        open_gpiomem_flag = true;
+        // gpio memory mapping initialized correctly
+        g_open_gpiomem_flag = true;
     }
 
+    if (mode == INPUT || mode == INPUT_PULLUP 
+        || mode == INPUT_PULLDOWN || mode == OUTPUT) {
+        // (INPUT,...,OUTPUT) MODE
 
-    // Set resistor mode PULLUP, PULLDOWN or PULLOFF resitor (OUTPUT always PULLOFF)
-    if (mode == INPUT_PULLDOWN) {
-       *(gpio_map+OFFSET_PULLUPDN) = (*(gpio_map+OFFSET_PULLUPDN) & ~3) | 0x01;
-    } else if (mode == INPUT_PULLUP) {
-       *(gpio_map+OFFSET_PULLUPDN) = (*(gpio_map+OFFSET_PULLUPDN) & ~3) | 0x02;
-    } else { // mode == PULLOFF
-       *(gpio_map+OFFSET_PULLUPDN) &= ~3;
-    }
-    unistd::usleep(1);
-    *(gpio_map+clk_offset) = 1 << shift_offset;
-    unistd::usleep(1);
-    *(gpio_map+OFFSET_PULLUPDN) &= ~3;
-    *(gpio_map+clk_offset) = 0;
+        // Save gpio pin number so at program close we put it to default state
+        // Also clear pwm pin to prevent any errro if difenrent pin mode is set multiple times
+        g_gpio_pin_set[pin] = HIGH;
+        g_pwm_pin_set[pin] = LOW;
 
-    // Set pin mode INPUT/OUTPUT
-    if (mode == OUTPUT) {
-        *(gpio_map+offset) = (*(gpio_map+offset) & ~(7<<shift)) | (1<<shift);
-    } else { // mode == INPUT or INPUT_PULLUP or INPUT_PULLDOWN
-        *(gpio_map+offset) = (*(gpio_map+offset) & ~(7<<shift));
-    }
+        // Set resistor mode PULLUP, PULLDOWN or PULLOFF resitor (OUTPUT always PULLOFF)
+        if (mode == INPUT_PULLDOWN) {
+           *(gpio_map+OFFSET_PULLUPDN) = (*(gpio_map+OFFSET_PULLUPDN) & ~3) | 0x01;
+        } else if (mode == INPUT_PULLUP) {
+           *(gpio_map+OFFSET_PULLUPDN) = (*(gpio_map+OFFSET_PULLUPDN) & ~3) | 0x02;
+        } else { // mode == PULLOFF
+           *(gpio_map+OFFSET_PULLUPDN) &= ~3;
+        }
+        unistd::usleep(1);
+        *(gpio_map+clk_offset) = 1 << shift_offset;
+        unistd::usleep(1);
+        *(gpio_map+OFFSET_PULLUPDN) &= ~3;
+        *(gpio_map+clk_offset) = 0;
+
+        // Set pin mode INPUT/OUTPUT
+        if (mode == OUTPUT) {
+            *(gpio_map+offset) = (*(gpio_map+offset) & ~(7<<shift)) | (GPIO_FSEL_OUTPUT<<shift);
+        } else { // mode == INPUT or INPUT_PULLUP or INPUT_PULLDOWN
+            *(gpio_map+offset) = (*(gpio_map+offset) & ~(7<<shift)) | (GPIO_FSEL_INPUT<<shift);
+        }
+
+    } else if(mode == PWM_OUTPUT) {
+        // (PWM_OUTPUT) MODE
+
+
+        // Check if the pin is compatible for PWM and assign its channel
+        switch (pin) {
+            case 12: pwm_channel = 0; gpio_fsel_alt = GPIO_FSEL_ALT0; break;
+            case 13: pwm_channel = 1; gpio_fsel_alt = GPIO_FSEL_ALT0; break;
+            case 18: pwm_channel = 0; gpio_fsel_alt = GPIO_FSEL_ALT5; break;
+            case 19: pwm_channel = 1; gpio_fsel_alt = GPIO_FSEL_ALT5; break;
+            case 40: pwm_channel = 0; gpio_fsel_alt = GPIO_FSEL_ALT0; break;
+            case 41: pwm_channel = 1; gpio_fsel_alt = GPIO_FSEL_ALT0; break;
+            case 45: pwm_channel = 1; gpio_fsel_alt = GPIO_FSEL_ALT0; break;
+            case 52: pwm_channel = 0; gpio_fsel_alt = GPIO_FSEL_ALT1; break;
+            case 53: pwm_channel = 1; gpio_fsel_alt = GPIO_FSEL_ALT1; break;
+            default:
+                fprintf(stderr, "%s(): pin %d can not be set as PWM_OUTPUT\n",__func__, pin);
+                exit(1);
+                break;
+        }
+
+
+        // Initialize mem only once (this requires sudo)
+        if (g_open_pwmmem_flag == false) {
+
+            if ((pwm_mem_fd = open(PWM_DRIVER_NAME, O_RDWR|O_SYNC) ) < 0) {
+                fprintf(stderr, "%s(): pwm driver %s: %s\n",__func__, 
+                    PWM_DRIVER_NAME, strerror (errno));
+                exit(1);
+            }
+
+            pwm_map = (uint32_t *)mmap(NULL, BLOCK_SIZE, 
+                PROT_READ|PROT_WRITE|PROT_EXEC, MAP_SHARED|MAP_LOCKED, pwm_mem_fd, PWM_BASE);
+
+            if ((uint32_t)pwm_map < 0) {
+                fprintf(stderr, "%s(): pwm error: %s\n",__func__, strerror (errno));
+                exit(1);
+            }
+
+            clk_map = (uint32_t *)mmap(NULL, BLOCK_SIZE, 
+                PROT_READ|PROT_WRITE|PROT_EXEC, MAP_SHARED|MAP_LOCKED, pwm_mem_fd, CLOCK_BASE);
+            
+            if ((uint32_t)clk_map < 0) {
+                fprintf(stderr, "%s(): pwm error: %s\n",__func__, strerror (errno));
+                exit(1);
+            }
+
+            // pwm memory mapping initialized correctly
+            g_open_pwmmem_flag = true;
+        }
+
+        // Save pwm pin number so at program close we put it to default state
+        // Also clear gpio pin to prevent any errro if diferent pin mode is set multiple times
+        g_pwm_pin_set[pin] = HIGH;
+        g_gpio_pin_set[pin] = LOW;
+
+        // Set pin to its correcponding ALT mode or (PWM MODE)
+        *(gpio_map+offset) = (*(gpio_map+offset) & ~(7 << shift)) | ((gpio_fsel_alt << shift) & (7 << shift));  // Original
+        //*(gpio_map+offset) = (*(gpio_map+offset) & ~(7<<shift)) | (gpio_fsel_alt<<shift); 
+
+        // Set frequency to defualt Arduino frequency (440Hz) and duty cycle value to zero
+        setPwmFrequency(pin, PWM_DEFAULT_FREQUENCY, 0);
+
+        // Ser PWM range to default of 256 bits of resolution
+        if (pwm_channel == 1) {
+            *(pwm_map + PWM1_RANGE) = PWM_DUTYCYCLE_RESOLUTION;
+        } else {
+            *(pwm_map + PWM0_RANGE) = PWM_DUTYCYCLE_RESOLUTION;
+        }
+
+        // Set PWM in MARKSPACE MODE and Enable PWM 
+        if (pwm_channel == 1) {
+            *(pwm_map + PWM_CONTROL) |= ( 0x8000 | 0x0100 );  // (PWM1_MS_MODE | PWM1_ENABLE )
+        } else {
+            *(pwm_map + PWM_CONTROL) |= ( 0x0080 | 0x0001 );  // (PWM0_MS_MODE | PWM0_ENABLE )
+        }
+
+        } else {
+            fprintf(stderr, "%s(): pin mode %d is not an available mode \n",__func__, mode);
+            exit(1);
+        }
 
 }
 
 // Sets a pin (gpio) output to 1 or 0
-void digitalWrite(uint8_t pin, uint8_t val)
+inline void digitalWrite(uint8_t pin, uint8_t val)
 {
     int offset;
     if (val) { // value == HIGH
@@ -1246,7 +1385,7 @@ void digitalWrite(uint8_t pin, uint8_t val)
 }
 
 // Returns the value of a pin (gpio) input (1 or 0)
-int digitalRead(uint8_t pin)
+inline int digitalRead(uint8_t pin)
 {
    int offset, value, mask;
    offset = OFFSET_PINLEVEL + (pin/32);
@@ -1258,21 +1397,154 @@ int digitalRead(uint8_t pin)
 /////////////////////////////////////////////
 //          Analog I/O                    //
 ////////////////////////////////////////////
-/*
-void analogWrite(int pin, int value) 
+
+
+// Changes the duty Cycle of the PWM
+void analogWrite(uint8_t pin, uint8_t value) 
 {
+    int pwm_channel = 0;
+
+    if (g_pwm_pin_set[pin] != HIGH) {
+        fprintf(stderr, "%s(): please initalize pin %d first \
+            using pinMode() function \n",__func__, pin);
+        exit(1);
+    } else {
+                    // Check if the pin is compatible for PWM and assign its channel
+        switch (pin) {
+            case 12: pwm_channel = 0; break;
+            case 13: pwm_channel = 1; break;
+            case 18: pwm_channel = 0; break;
+            case 19: pwm_channel = 1; break;
+            case 40: pwm_channel = 0; break;
+            case 41: pwm_channel = 1; break;
+            case 45: pwm_channel = 1; break;
+            case 52: pwm_channel = 0; break;
+            case 53: pwm_channel = 1; break;
+            default:
+                fprintf(stderr, "%s(): pin %d can not be assigned for \
+                 analogWrite() with mode PWM_OUTPUT\n",__func__, pin);
+                exit(1);
+                break;
+        }
+    }
+
+
+    // Set PWM0 Duty Cycle Value
+    g_pwm_dutycycle_value[pin] = value;
+    if (pwm_channel == 1) {
+        *(pwm_map + PWM1_DATA) = g_pwm_dutycycle_value[pin];
+    } else {
+        *(pwm_map + PWM0_DATA) = g_pwm_dutycycle_value[pin];
+    }
+
+}
+
+void setPwmPeriod (uint8_t pin, uint32_t microseconds) 
+{
+    setPwmFrequency (pin, (1000000 / microseconds), g_pwm_dutycycle_value[pin]);
+}
+
+void setPwmFrequency (uint8_t pin, uint32_t frequency) 
+{
+    setPwmFrequency (pin, frequency, g_pwm_dutycycle_value[pin]);
+}
+
+// Sets PWM frequency (in Hertz) and pwm duty cycle
+void setPwmFrequency (uint8_t pin, uint32_t frequency, uint32_t dutycycle) 
+{
+    int pwm_channel = 0;
+    int divisor;
+    double period;
+    double countDuration;
+
+    if (g_pwm_pin_set[pin] != HIGH) {
+        fprintf(stderr, "%s(): please initalize pin %d first \
+            using pinMode() function \n",__func__, pin);
+        exit(1);
+    }
+
+    // Check if the pin is compatible for PWM and assign its channel
+    switch (pin) {
+        case 12: pwm_channel = 0; break;
+        case 13: pwm_channel = 1; break;
+        case 18: pwm_channel = 0; break;
+        case 19: pwm_channel = 1; break;
+        case 40: pwm_channel = 0; break;
+        case 41: pwm_channel = 1; break;
+        case 45: pwm_channel = 1; break;
+        case 52: pwm_channel = 0; break;
+        case 53: pwm_channel = 1; break;
+        default:
+            fprintf(stderr, "%s(): pin %d can not be assigned for \
+             this function with mode PWM_OUTPUT \n",__func__, pin);
+            exit(1);
+            break;
+    }
+
+    // Check if duty cycle resolution match
+    if (dutycycle >= PWM_DUTYCYCLE_RESOLUTION) {
+        fprintf(stderr, "%s(): dutycycle %d should be less than the \
+            pwm resolution %d \n",__func__, dutycycle, PWM_DUTYCYCLE_RESOLUTION);
+            exit(1);
+    }
+
+    // -- Set frequency and duty cycle
+
+    // stop clock and waiting for busy flag doesn't work, so kill clock
+    *(clk_map + PWMCLK_CNTL) = 0x5A000000 | 0x01;
+    unistd::usleep(10);
+
+    // wait until busy flag is set 
+    while ( (*(clk_map + PWMCLK_CNTL)) & 0x80);
+
+    //calculate divisor value for PWM1 clock...base frequency is 19.2MHz
+    period = 1.0/frequency; 
+    countDuration = period/(PWM_DUTYCYCLE_RESOLUTION*1.0f);
+    divisor = (int)(19200000.0f / (1.0/countDuration));
+
+    if( divisor < 0 || divisor > 4095 ) {
+        fprintf(stderr, "%s(): pwm frequency %d with DUTY CYCLE \
+         RANGE of %d bits not supported \n",__func__, frequency, PWM_DUTYCYCLE_RESOLUTION);
+        exit(-1);
+    }
+
+    // Set divisor
+    *(clk_map + PWMCLK_DIV) = 0x5A000000 | (divisor << 12);
+
+    // source=osc and enable clock
+    *(clk_map + PWMCLK_CNTL) = 0x5A000011;
+
+    // Set PWM0 Duty Cycle pin Value to zero
+    g_pwm_dutycycle_value[pin] = dutycycle;
+    if (pwm_channel == 1) {
+        *(pwm_map + PWM1_DATA) = g_pwm_dutycycle_value[pin];
+    } else {
+        *(pwm_map + PWM0_DATA) = g_pwm_dutycycle_value[pin];
+    }
+
 }
 
 
-int analogRead (int pin)
-{
-}
-
-*/
 /////////////////////////////////////////////
 //          Advanced I/O                  //
 ////////////////////////////////////////////
 
+// Set tone frequency (in hertz) and duration (in milliseconds)
+void tone(uint8_t pin, uint32_t frequency, unsigned long duration, int block)
+{
+    // Set frequency at 50% duty cycle
+    setPwmFrequency(pin, frequency, PWM_DUTYCYCLE_RESOLUTION / 2);
+    if (duration == 0) {
+        return;
+    } else {
+        unistd::usleep(duration*1000);
+        noTone(pin);
+    }
+}
+
+void noTone(uint8_t pin) {
+    analogWrite(pin, 0);
+}
 
 uint8_t shiftIn(uint8_t dataPin, uint8_t clockPin, uint8_t bitOrder) 
 {
@@ -1351,19 +1623,12 @@ unsigned long pulseIn(uint8_t pin, uint8_t state, unsigned long timeout)
 //          Time                          //
 ////////////////////////////////////////////
 
-// Gets a timestamp when the program starts
-class TimeElapsed {                                         
-    public:
-        struct timespec timestamp;
-        TimeElapsed() {clock_gettime(CLOCK_REALTIME, &timestamp);}
-} ProgramStart;
-
 // Returns the time in millseconds since the program started.
 unsigned long millis(void) 
 {
     struct timespec timenow, start, end;
     clock_gettime(CLOCK_REALTIME, &timenow);
-    start = ProgramStart.timestamp;
+    start = Arduino.timestamp;
     end = timenow;
     // timeDiffmillis:
     return ((end.tv_sec - start.tv_sec) * 1e3 + (end.tv_nsec - start.tv_nsec) * 1e-6);
@@ -1374,7 +1639,7 @@ unsigned long micros(void)
 {
     struct timespec timenow, start, end;
     clock_gettime(CLOCK_REALTIME, &timenow);
-    start = ProgramStart.timestamp;
+    start = Arduino.timestamp;
     end = timenow;
     // timeDiffmicros
     return ((end.tv_sec - start.tv_sec) * 1e6 + (end.tv_nsec - start.tv_nsec) * 1e-3);
@@ -1755,8 +2020,61 @@ void detachInterrupt(uint8_t p)
 ////////////////////////////////////////////
 
 
+/////////////////////////////////////////////
+//    Extra Arduino Functions for Linux   //
+////////////////////////////////////////////
+void (*ARDUINO_EXIT_FUNC)(void) = NULL;
+
+// Every time an arduino program is ran it executes the following functions.
+ArduinoPi::ArduinoPi()
+{
+    // Gets a timestamp when the program starts
+    clock_gettime(CLOCK_REALTIME, &timestamp);
+
+    // Set a callback function to detect when program is closed.
+    // This is important so later we can turn off any gpio and pwm running. 
+    if (signal(SIGINT, ArduinoPi::onArduinoExit) == SIG_ERR)  // Ctrl^C
+        fprintf(stderr, "%s(): Can't catch signal SIGINT: %s\n",__func__, strerror (errno));
+    if (signal(SIGTERM, ArduinoPi::onArduinoExit) == SIG_ERR) // Kill command
+        fprintf(stderr, "%s(): Can't catch signal SIGKILL: %s\n",__func__, strerror (errno));
+    if (signal(SIGHUP, ArduinoPi::onArduinoExit) == SIG_ERR)  // Terminal closes
+        fprintf(stderr, "%s(): Can't catch signal SIGHUP: %s\n",__func__, strerror (errno));
+
+}
 
 
+// Catch Ctrl^C (SIGINT) and kill (SIGKILL) signals to set gpio and pwm to default state
+void ArduinoPi::onArduinoExit(int signumber)
+{
+    int i;
+
+    // Shut down 
+    if (signumber == SIGINT || signumber == SIGTERM ||  signumber == SIGHUP) {
+        printf("Yeeii \n");
+
+        // If user wants to call a function at the end, here he can call it. 
+        // He can exit so the rest of the code don't take place.
+        if (ARDUINO_EXIT_FUNC != NULL) {
+            // Call User exit func
+            (*ARDUINO_EXIT_FUNC)();
+        } else {
+
+            // Set PWM and GPIO used pins to default state = input with no pull-up resistor
+            for (i=0; i<BCM283X_GPIO_NUM; i++) {
+                if (g_gpio_pin_set[i] == HIGH || g_pwm_pin_set[i] == HIGH) {
+                    pinMode(i, INPUT);
+                }
+            }
+
+            exit(0);
+
+        }
+
+    }
+}
+
+
+ArduinoPi Arduino = ArduinoPi();
 SerialPi Serial = SerialPi();
 WirePi Wire = WirePi();
 SPIPi SPI = SPIPi();

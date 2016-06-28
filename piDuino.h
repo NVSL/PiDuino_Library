@@ -273,6 +273,19 @@ class SPIPi {
 
 
 /////////////////////////////////////////////
+//    Extra Arduino Functions for Linux/Pi //
+////////////////////////////////////////////
+extern void (*ARDUINO_EXIT_FUNC)(void);
+
+class ArduinoPi {                                 
+    public:
+        struct timespec timestamp;
+        ArduinoPi();
+        static void onArduinoExit(int signumber);
+};
+
+
+/////////////////////////////////////////////
 //          Digital I/O           		  //
 ////////////////////////////////////////////
 // Pin logic states
@@ -284,6 +297,7 @@ class SPIPi {
 #define OUTPUT 0x1
 #define INPUT_PULLUP 0x2
 #define INPUT_PULLDOWN 0x3
+#define PWM_OUTPUT 0x4
 
 // GPIO Driver name (user can change it)
 extern char GPIO_DRIVER_NAME[];
@@ -295,14 +309,23 @@ int digitalRead(uint8_t pin);
 /////////////////////////////////////////////
 //          Analog I/O           		  //
 ////////////////////////////////////////////
+extern char PWM_DRIVER_NAME[];
+extern int PWM_DUTYCYCLE_RESOLUTION;
+extern int PWM_DEFAULT_FREQUENCY;
 
-int analogRead (int pin);
-void analogWrite(int pin, int value);
+//int analogRead (int pin); // Not implemented
+//int analogReference(int type) // Not implemened
+void analogWrite(uint8_t pin, uint8_t value);
+void setPwmFPeriod (uint8_t pin, uint32_t microseconds);
+void setPwmFrequency (uint8_t pin, uint32_t frequency);
+void setPwmFrequency (uint8_t pin, uint32_t frequency, uint32_t dutycycle);
 
 /////////////////////////////////////////////
 //          Advanced I/O           		  //
 ////////////////////////////////////////////
 
+void tone(uint8_t pin, uint32_t frequency, unsigned long duration = 0, int block = false);
+void noTone(uint8_t pin);
 uint8_t shiftIn(uint8_t dataPin, uint8_t clockPin, uint8_t bitOrder);
 void shiftOut(uint8_t dataPin, uint8_t clockPin, uint8_t bitOrder, uint8_t val);
 unsigned long pulseIn(uint8_t pin, uint8_t state, unsigned long timeout = 1000000L);
@@ -412,28 +435,7 @@ void detachInterrupt(uint8_t p);
 ////////////////////////////////////////////
 
 
-
-
-
-
-
-/*
-uint8_t shiftIn  (uint8_t dPin, uint8_t cPin, bcm2835SPIBitOrder order);
-void shiftOut (uint8_t dPin, uint8_t cPin, bcm2835SPIBitOrder order, uint8_t val);
-void attachInterrupt(int p,void (*f)(), Digivalue m);
-void detachInterrupt(int p);
-void setup();
-void loop();
-
-// Helper functions
-int getBoardRev();
-uint32_t *mapmem(const char *msg, size_t size, int fd, off_t off);
-void setBoardRev(int rev);
-int raspberryPinNumber(int arduinoPin);
-
-
-*/
-//extern TimeElapsed ProgramStart;
+extern ArduinoPi Arduino;
 extern SerialPi Serial;
 extern WirePi Wire;
 extern SPIPi SPI;
