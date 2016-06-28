@@ -236,6 +236,6 @@ will not be implemented in the first release.
 * Maybe add a SPISettings(..., bitsPerWord, CS(High?low)) and their bit routines config. to SPI. For bitPerWord transfer len will need to be multiplied by (bitsPerWord/8)
 * Add string, String, (arg, ...) to prints.
 * Check/DO printFloat()
-* Make TimeElapsed() Private. 
-* Implement an exit rutine when SIGINT (Ctrl^Z) to turn GPIO OFF??
+* ~~Make an Arduino init function~~
+* ~~Implement an exit rutine when SIGINT (Ctrl^Z) to turn GPIO OFF ~~
 
