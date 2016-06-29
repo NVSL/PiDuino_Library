@@ -1,4 +1,4 @@
-# PiDuino Library (95%)
+# PiDuino Library (96%)
 
 PiDuino Library is a C++ library that lets you write programs for Raspberry Pi as if you were writing an Arduino program. 
 
@@ -40,17 +40,18 @@ will not be implemented in the first release.
 | ------ | ----------- |
 | analogReference(type) | NO - No hardware support for RPi |
 | analogRead(pin) | NO - No hardware support for RPi |
-| analogWrite() - PWM | YES |
-| (EXTRA) setPwmFrequency (pin,frequency,dutycycle)  | YES |
-| (EXTRA) setPwmFrequency (pin,frequency)  | YES |
-| (EXTRA) setPwmPeriod (pin,microseconds)  | YES |
+| analogWrite(pin, value) - PWM | YES |
+| (EXTRA) setPwmDutyCycle (pin, dutycycle)  | YES |
+| (EXTRA) setPwmFrequency (pin, frequency, dutycycle)  | YES |
+| (EXTRA) setPwmFrequency (pin, frequency)  | YES |
+| (EXTRA) setPwmPeriod (pin, microseconds)  | YES |
  
 #### - Advanced I/O
 
 | Function | Implemented (YES/NO-Comment/In Progress) |
 | ------ | ----------- |
 | tone(pin, frequency)   | YES |
-| tone(pin, frequency, duration) | In Progress |
+| tone(pin, frequency, duration) | YES |
 | noTone(pin)  | YES |
 | shiftOut(dataPin, clockPin, bitOrder, value)  | YES |
 | byte incoming = shiftIn(dataPin, clockPin, bitOrder) | YES |
