@@ -11,9 +11,8 @@
 
     ### BCM283x Notes for GPIO and PWM
     
-    BCM283x  has a maximum of 54 GPIOS
-
-    The BCM2835 contains 2 independent PWM channels (0 and 1) that uses
+    - BCM283x  has a maximum of 54 GPIOS
+    - The BCM2835 contains 2 independent PWM channels (0 and 1) that uses
     the same PWM clock as the base frequency. The following are the
     available PWM pins for this chip:
     GPIO PIN   RPi2 pin   PWM Channel  ALT FUN
@@ -171,7 +170,8 @@ int SerialPi::available()
 {
     int nbytes = 0;
     if (ioctl(sd, FIONREAD, &nbytes) < 0)  {
-        fprintf(stderr, "%s(): serial get available bytes error: %s \n",__func__, strerror (errno));
+        fprintf(stderr, "%s(): serial get available bytes error: %s \n",
+            __func__, strerror (errno));
         exit(-1);
     }
     return nbytes;
@@ -709,10 +709,12 @@ int WirePi::i2c_write_bytes(int file, uint8_t *txBuff, size_t numBytes)
     } else {
         bytes_written = unistd::write(file, txBuff, numBytes);
         if ( bytes_written < 0) {
-            // errno == 5 (Input/Output error) means I2C cables may not be connected properly.
+            // errno == 5 (Input/Output error) means I2C cables
+            // may not be connected properly.
             // Make noise about everything else except errno == 5. 
             if (errno != 5 ) {
-                fprintf(stderr, "%s(): i2c write error: %s \n",__func__, strerror (errno));
+                fprintf(stderr, "%s(): i2c write error: %s \n",
+                    __func__, strerror (errno));
             }
         }
     }
@@ -729,10 +731,12 @@ int WirePi::i2c_read_bytes(int file, uint8_t *rxBuff, size_t numBytes)
     } else {
         bytes_read = unistd::read(file, rxBuff, numBytes);
         if ( bytes_read < 0) {
-            // errno == 5 (Input/Output error) means I2C cables may not be connected properly.
+            // errno == 5 (Input/Output error) means I2C cables 
+            // may not be connected properly.
             // Make noise about everything else except errno == 5. 
             if (errno != 5 ) {
-                fprintf(stderr, "%s(): i2c read error: %s \n",__func__, strerror (errno));
+                fprintf(stderr, "%s(): i2c read error: %s \n",
+                    __func__, strerror (errno));
             }
         }
     }
@@ -760,7 +764,8 @@ void WirePi::begin()
     // Process the command below to search for i2c-1 device driver excistance
     fn = popen("/bin/ls /dev/ | /bin/grep i2c-1" , "r");
     if (fn == NULL) {
-        fprintf(stderr, "%s(): Failed to run command \"/bin/ls /dev/ | /bin/grep i2c-1\"\n",__func__);
+        fprintf(stderr, "%s(): failed to run command "
+            "\"/bin/ls /dev/ | /bin/grep i2c-1\"\n",__func__);
         exit(1);
     }
     
@@ -768,7 +773,8 @@ void WirePi::begin()
     // where x = 0, 1, etc
     fp = popen("/bin/ls /dev/ | /bin/grep i2c-" , "r");
     if (fp == NULL) {
-        fprintf(stderr, "%s(): Failed to run command \"/bin/ls /dev/ | /bin/grep i2c-\"\n",__func__);
+        fprintf(stderr, "%s(): failed to run command "
+            "\"/bin/ls /dev/ | /bin/grep i2c-\"\n",__func__);
         exit(1);
     }
 
@@ -788,8 +794,8 @@ void WirePi::begin()
 
     // If no I2C device driver is enabled or installed then exit. 
     if(strcmp(i2cDevice,"") == 0) {
-        fprintf(stderr, "%s(): Filed to locate any \"i2c-x\" device driver in /dev/. \
-            please install or enable a i2c interface in your board \n",__func__);
+        fprintf(stderr, "%s(): filed to locate any \"i2c-x\" device driver in /dev/. "
+            "please install or enable a i2c interface in your board \n",__func__);
         exit(1);
     }
 
@@ -797,7 +803,8 @@ void WirePi::begin()
     snprintf(filename, 11, "/dev/%s", i2cDevice);
     fd = open(filename, O_RDWR);
     if (fd < 0) {
-        fprintf(stderr, "%s(): Error openning I2C channel %s: %s\n",__func__, filename, strerror (errno));
+        fprintf(stderr, "%s(): error openning I2C channel %s: %s\n",
+            __func__, filename, strerror (errno));
         exit(1);
     }
 
@@ -827,7 +834,9 @@ uint8_t WirePi::requestFrom(uint8_t address, uint8_t quantity)
 {
 
     if (fd < 0) {
-        fprintf(stderr, "%s(): Initialize I2C first with Wire.begin() \n", __func__);
+        fprintf(stderr, 
+            "%s(): initialize I2C first with Wire.begin() \n",
+             __func__);
         exit(1);
     }
 
@@ -857,13 +866,13 @@ void WirePi::beginTransmission(uint8_t address)
 {
 
     if (fd < 0) {
-        fprintf(stderr, "%s(): Initialize I2C first with Wire.begin() \n", __func__);
+        fprintf(stderr, 
+            "%s(): initialize I2C first with Wire.begin() \n", __func__);
         exit(1);
     }
 
     if (ioctl(fd, I2C_SLAVE, address) < 0) {
-        fprintf(stderr, "%s(): ioctl error: %s\n",
-            __func__, strerror (errno));
+        fprintf(stderr, "%s(): ioctl error: %s\n", __func__, strerror (errno));
         exit(1);
     }
 
@@ -962,7 +971,7 @@ int WirePi::read(void)
 uint8_t WirePi::endTransmission()
 {
     if (fd < 0) {
-        fprintf(stderr, "%s(): Initialize I2C first with Wire.begin() \n", __func__);
+        fprintf(stderr, "%s(): initialize I2C first with Wire.begin() \n", __func__);
         exit(1);
     }
 
@@ -1002,7 +1011,7 @@ void SPIPi::spi_transfer_bytes(int file, uint8_t *data, size_t numBytes)
     spi.len           = numBytes;
 
     if (ioctl (file, SPI_IOC_MESSAGE(1), &spi) < 0) {
-        fprintf(stderr, "%s(): spi transfer error: %s \n",__func__, strerror (errno));
+        fprintf(stderr, "%s(): spi transfer error: %s \n", __func__, strerror (errno));
     }
 }
 
@@ -1025,7 +1034,8 @@ void SPIPi::begin()
     // Process the command below to search for spidev device driver excistance
     fp = popen("/bin/ls /dev/ | /bin/grep spidev" , "r");
     if (fp == NULL) {
-        fprintf(stderr, "%s(): Failed to run command \"/bin/ls /dev/ | /bin/grep spidev\"\n",__func__);
+        fprintf(stderr, "%s(): failed to run command "
+            "\"/bin/ls /dev/ | /bin/grep spidev\"\n",__func__);
         exit(1);
     }
 
@@ -1040,8 +1050,8 @@ void SPIPi::begin()
 
     // If no SPI device driver is enabled or installed then exit. 
     if(strcmp(spiDevice,"") == 0) {
-        fprintf(stderr, "%s(): Filed to locate any \"spidevX.X\" device driver in /dev/. \
-            please install or enable a spi interface in your board \n",__func__);
+        fprintf(stderr, "%s(): filed to locate any \"spidevX.X\" device driver in /dev/. "
+            "please install or enable a spi interface in your board \n",__func__);
         exit(1);
     }
 
@@ -1049,14 +1059,14 @@ void SPIPi::begin()
     snprintf(filename, 15, "/dev/%s", spiDevice);
     fd = open(filename, O_RDWR);
     if (fd < 0) {
-        fprintf(stderr, "%s(): Error openning SPI channel %s: %s\n",__func__, filename, strerror (errno));
+        fprintf(stderr, "%s(): error openning SPI channel %s: %s\n",
+            __func__, filename, strerror (errno));
         exit(1);
     }
 
     // Set bits per word to 8 always
     if (ioctl(fd, SPI_IOC_WR_BITS_PER_WORD, &bitsPerWord) < 0) {
-        fprintf(stderr, "%s(): ioctl error: %s\n",
-            __func__, strerror (errno));
+        fprintf(stderr, "%s(): ioctl error: %s\n", __func__, strerror (errno));
         exit(1);
     }
 
@@ -1072,28 +1082,25 @@ void SPIPi::beginTransaction(SPISettings settings)
 {
 
     if (fd < 0) {
-        fprintf(stderr, "%s(): Initialize SPI first with SPI.begin() \n", __func__);
+        fprintf(stderr, "%s(): initialize SPI first with SPI.begin() \n", __func__);
         exit(1);
     }
 
     // Set SPI mode (0,1,2,3)
     if (ioctl(fd, SPI_IOC_WR_MODE, &SPISET.spiDataMode) < 0) {
-        fprintf(stderr, "%s(): ioctl error: %s\n",
-            __func__, strerror (errno));
+        fprintf(stderr, "%s(): ioctl error: %s\n", __func__, strerror (errno));
         exit(1);
     }
 
     // Set SPI bit order (LSB/MSB)
     if (ioctl(fd, SPI_IOC_WR_LSB_FIRST, &SPISET.spiBitOrder) < 0) {
-        fprintf(stderr, "%s(): ioctl error: %s\n",
-            __func__, strerror (errno));
+        fprintf(stderr, "%s(): ioctl error: %s\n", __func__, strerror (errno));
         exit(1);
     }
 
     // Set max hz speed
     if (ioctl(fd, SPI_IOC_WR_MAX_SPEED_HZ, &SPISET.spiClock) < 0) {
-        fprintf(stderr, "%s(): ioctl error: %s\n",
-            __func__, strerror (errno));
+        fprintf(stderr, "%s(): ioctl error: %s\n", __func__, strerror (errno));
         exit(1);
     }
 
@@ -1107,14 +1114,13 @@ void SPIPi::endTransaction()
 void SPIPi::setBitOrder(uint8_t bitOrder)
 {
     if (fd < 0) {
-        fprintf(stderr, "%s(): Initialize SPI first with SPI.begin() \n", __func__);
+        fprintf(stderr, "%s(): initialize SPI first with SPI.begin() \n", __func__);
         exit(1);
     }
 
     // Set SPI bit order (LSB/MSB)
     if (ioctl(fd, SPI_IOC_WR_LSB_FIRST, &bitOrder) < 0) {
-        fprintf(stderr, "%s(): ioctl error: %s\n",
-            __func__, strerror (errno));
+        fprintf(stderr, "%s(): ioctl error: %s\n", __func__, strerror (errno));
         exit(1);
     }
 }
@@ -1122,7 +1128,7 @@ void SPIPi::setBitOrder(uint8_t bitOrder)
 void SPIPi::setClockDivider(uint32_t clockDiv)
 {
     if (fd < 0) {
-        fprintf(stderr, "%s(): Initialize SPI first with SPI.begin() \n", __func__);
+        fprintf(stderr, "%s(): initialize SPI first with SPI.begin() \n", __func__);
         exit(1);
     }
 
@@ -1137,7 +1143,7 @@ void SPIPi::setClockDivider(uint32_t clockDiv)
 void SPIPi::setDataMode(uint8_t dataMode)
 {
     if (fd < 0) {
-        fprintf(stderr, "%s(): Initialize SPI first with SPI.begin() \n", __func__);
+        fprintf(stderr, "%s(): initialize SPI first with SPI.begin() \n", __func__);
         exit(1);
     }
 
@@ -1185,10 +1191,9 @@ void SPIPi::transfer(void *buf, size_t count)
 #define GPIO_FSEL_OUTPUT    1   // Pin Output mode
 #define PAGE_SIZE  (4*1024)
 #define BLOCK_SIZE (4*1024)
-#define BCM283X_GPIO_NUM   54   // Total Number of GPIOs in BCM283x chips
 static volatile uint32_t *gpio_map = NULL;
 static bool g_open_gpiomem_flag = false;
-int g_gpio_pin_set[BCM283X_GPIO_NUM];           // Used to know which gpio pins are set (HIGH) or not set (LOW) 
+int g_gpio_pin_set[SOC_GPIO_PINS];           // Used to know which gpio pins are set (HIGH) or not set (LOW) 
 char GPIO_DRIVER_NAME[] = "/dev/gpiomem";
 
 // -- Analog I/O --
@@ -1208,10 +1213,10 @@ char GPIO_DRIVER_NAME[] = "/dev/gpiomem";
 static volatile uint32_t *pwm_map = NULL;
 static volatile uint32_t *clk_map = NULL;
 static bool g_open_pwmmem_flag = false;
-int g_pwm_pin_set[BCM283X_GPIO_NUM];            // Used to know which pwm pins are set (HIGH) or not set (LOW)
-int g_pwm_dutycycle_value[BCM283X_GPIO_NUM];    // Pwm duty cycle value of pwm pins
+int g_pwm_pin_set[SOC_GPIO_PINS];               // Used to know which pwm pins are set (HIGH) or not set (LOW)
+int g_pwm_dutycycle_value[SOC_GPIO_PINS];       // Pwm duty cycle value of pwm pins
 int PWM_DUTYCYCLE_RESOLUTION = 256;             // Set pwm duty cycle resolution to 256 buts
-int PWM_DEFAULT_FREQUENCY = 440;                // Set default pwm frequency to 440 Hz (Arduino default pwm freq)
+int PWM_DEFAULT_FREQUENCY = 490;                // Set default pwm frequency to 490 Hz (Arduino default pwm freq)
 char PWM_DRIVER_NAME[] = "/dev/mem";
 
 // Sets pin (gpio) mode as INPUT,INTPUT_PULLUP,INTPUT_PULLDOWN,OUTPUT,PWM_OUTPUT
@@ -1230,10 +1235,10 @@ void pinMode(uint8_t pin, uint8_t mode)
     double countDuration;
 
 
-    // For BCM283x chips gpio pin range should be between 0 and 54
-    if (pin >= BCM283X_GPIO_NUM) {
-        fprintf(stderr, "%s(): Pin number range should be less than %d, yours is (%d) \n",
-            __func__, BCM283X_GPIO_NUM, pin);
+    // Check if the pin number is valid
+    if (pin >= SOC_GPIO_PINS) {
+        fprintf(stderr, "%s(): pin number should be less than "
+            "%d, yours is %d \n", __func__, SOC_GPIO_PINS, pin);
         exit(1);
     }
 
@@ -1258,9 +1263,9 @@ void pinMode(uint8_t pin, uint8_t mode)
         g_open_gpiomem_flag = true;
     }
 
+    // Initialize different pin mode options
     if (mode == INPUT || mode == INPUT_PULLUP 
         || mode == INPUT_PULLDOWN || mode == OUTPUT) {
-        // (INPUT,...,OUTPUT) MODE
 
         // Save gpio pin number so at program close we put it to default state
         // Also clear pwm pin to prevent any errro if difenrent pin mode is set multiple times
@@ -1289,8 +1294,6 @@ void pinMode(uint8_t pin, uint8_t mode)
         }
 
     } else if(mode == PWM_OUTPUT) {
-        // (PWM_OUTPUT) MODE
-
 
         // Check if the pin is compatible for PWM and assign its channel
         switch (pin) {
@@ -1304,11 +1307,10 @@ void pinMode(uint8_t pin, uint8_t mode)
             case 52: pwm_channel = 0; gpio_fsel_alt = GPIO_FSEL_ALT1; break;
             case 53: pwm_channel = 1; gpio_fsel_alt = GPIO_FSEL_ALT1; break;
             default:
-                fprintf(stderr, "%s(): pin %d can not be set as PWM_OUTPUT\n",__func__, pin);
+                fprintf(stderr, "%s(): pin %d can not be set as PWM_OUTPUT\n", __func__, pin);
                 exit(1);
                 break;
         }
-
 
         // Initialize mem only once (this requires sudo)
         if (g_open_pwmmem_flag == false) {
@@ -1323,7 +1325,7 @@ void pinMode(uint8_t pin, uint8_t mode)
                 PROT_READ|PROT_WRITE|PROT_EXEC, MAP_SHARED|MAP_LOCKED, pwm_mem_fd, PWM_BASE);
 
             if ((uint32_t)pwm_map < 0) {
-                fprintf(stderr, "%s(): pwm error: %s\n",__func__, strerror (errno));
+                fprintf(stderr, "%s(): pwm error: %s\n", __func__, strerror (errno));
                 exit(1);
             }
 
@@ -1331,7 +1333,7 @@ void pinMode(uint8_t pin, uint8_t mode)
                 PROT_READ|PROT_WRITE|PROT_EXEC, MAP_SHARED|MAP_LOCKED, pwm_mem_fd, CLOCK_BASE);
             
             if ((uint32_t)clk_map < 0) {
-                fprintf(stderr, "%s(): pwm error: %s\n",__func__, strerror (errno));
+                fprintf(stderr, "%s(): pwm error: %s\n", __func__, strerror (errno));
                 exit(1);
             }
 
@@ -1345,10 +1347,10 @@ void pinMode(uint8_t pin, uint8_t mode)
         g_gpio_pin_set[pin] = LOW;
 
         // Set pin to its correcponding ALT mode or (PWM MODE)
-        *(gpio_map+offset) = (*(gpio_map+offset) & ~(7 << shift)) | ((gpio_fsel_alt << shift) & (7 << shift));  // Original
-        //*(gpio_map+offset) = (*(gpio_map+offset) & ~(7<<shift)) | (gpio_fsel_alt<<shift); 
+        *(gpio_map+offset) = 
+            (*(gpio_map+offset) & ~(7 << shift)) | ((gpio_fsel_alt << shift) & (7 << shift));
 
-        // Set frequency to defualt Arduino frequency (440Hz) and duty cycle value to zero
+        // Set frequency to defualt Arduino frequency (490Hz) and duty cycle value to zero
         setPwmFrequency(pin, PWM_DEFAULT_FREQUENCY, 0);
 
         // Ser PWM range to default of 256 bits of resolution
@@ -1366,7 +1368,7 @@ void pinMode(uint8_t pin, uint8_t mode)
         }
 
         } else {
-            fprintf(stderr, "%s(): pin mode %d is not an available mode \n",__func__, mode);
+            fprintf(stderr, "%s(): pin mode %d is not an available mode \n", __func__, mode);
             exit(1);
         }
 
@@ -1376,6 +1378,21 @@ void pinMode(uint8_t pin, uint8_t mode)
 inline void digitalWrite(uint8_t pin, uint8_t val)
 {
     int offset;
+
+    // Check if the pin number is valid
+    if (pin >= SOC_GPIO_PINS) {
+        fprintf(stderr, "%s(): pin number should be less than "
+            "%d, yours is %d \n", __func__, SOC_GPIO_PINS, pin);
+        exit(1);
+    }
+
+    // Check if pin has been initialized 
+    if (g_gpio_pin_set[pin] != HIGH) {
+        fprintf(stderr, "%s(): please initalize pin %d first "
+            "using pinMode() function \n",__func__, pin);
+        exit(1);
+    }
+
     if (val) { // value == HIGH
         offset = OFFSET_SET + (pin / 32);
     } else {    // value == LOW
@@ -1387,11 +1404,27 @@ inline void digitalWrite(uint8_t pin, uint8_t val)
 // Returns the value of a pin (gpio) input (1 or 0)
 inline int digitalRead(uint8_t pin)
 {
-   int offset, value, mask;
-   offset = OFFSET_PINLEVEL + (pin/32);
-   mask = (1 << pin%32);
-   value = *(gpio_map+offset) & mask;
-   return (value) ? HIGH : LOW;
+    int offset, value, mask;
+
+    // Check if the pin number is valid
+    if (pin >= SOC_GPIO_PINS) {
+        fprintf(stderr, "%s(): pin number should be less than "
+            "%d, yours is %d \n", __func__, SOC_GPIO_PINS, pin);
+        exit(1);
+    }
+
+    // Check if pin has been initialized 
+    if (g_gpio_pin_set[pin] != HIGH) {
+        fprintf(stderr, "%s(): please initalize pin %d first "
+            "using pinMode() function \n",__func__, pin);
+        exit(1);
+    }
+
+
+    offset = OFFSET_PINLEVEL + (pin/32);
+    mask = (1 << pin%32);
+    value = *(gpio_map+offset) & mask;
+    return (value) ? HIGH : LOW;
 }
 
 /////////////////////////////////////////////
@@ -1400,16 +1433,17 @@ inline int digitalRead(uint8_t pin)
 
 
 // Changes the duty Cycle of the PWM
-void analogWrite(uint8_t pin, uint8_t value) 
+void analogWrite(uint8_t pin, uint32_t value) 
 {
     int pwm_channel = 0;
 
+    // Check if pin has been initialized
     if (g_pwm_pin_set[pin] != HIGH) {
-        fprintf(stderr, "%s(): please initalize pin %d first \
-            using pinMode() function \n",__func__, pin);
+        fprintf(stderr, "%s(): please initalize pin %d first "
+            "using pinMode() function \n",__func__, pin);
         exit(1);
     } else {
-                    // Check if the pin is compatible for PWM and assign its channel
+        // Check if the pin is valid for PWM and assign its channel
         switch (pin) {
             case 12: pwm_channel = 0; break;
             case 13: pwm_channel = 1; break;
@@ -1421,11 +1455,19 @@ void analogWrite(uint8_t pin, uint8_t value)
             case 52: pwm_channel = 0; break;
             case 53: pwm_channel = 1; break;
             default:
-                fprintf(stderr, "%s(): pin %d can not be assigned for \
-                 analogWrite() with mode PWM_OUTPUT\n",__func__, pin);
+                fprintf(stderr, "%s(): pin %d can not be assigned for "
+                 "analogWrite() with PWM_OUTPUT mode\n",__func__, pin);
                 exit(1);
                 break;
         }
+    }
+
+    // Check if duty cycle resolution match
+    if (value >= PWM_DUTYCYCLE_RESOLUTION) {
+        fprintf(stderr, "%s(): dutycycle %d should be less than the "
+            "max pwm resolution = %d \n",
+            __func__, value, PWM_DUTYCYCLE_RESOLUTION);
+            exit(1);
     }
 
 
@@ -1439,14 +1481,20 @@ void analogWrite(uint8_t pin, uint8_t value)
 
 }
 
+// Does the same as anaogWrite but the function name makes more sense.
+void setPwmDutyCycle (uint8_t pin, uint32_t dutycycle)
+{
+    analogWrite(pin, dutycycle);
+}
+
 void setPwmPeriod (uint8_t pin, uint32_t microseconds) 
 {
-    setPwmFrequency (pin, (1000000 / microseconds), g_pwm_dutycycle_value[pin]);
+    setPwmFrequency(pin, (1000000 / microseconds), g_pwm_dutycycle_value[pin]);
 }
 
 void setPwmFrequency (uint8_t pin, uint32_t frequency) 
 {
-    setPwmFrequency (pin, frequency, g_pwm_dutycycle_value[pin]);
+    setPwmFrequency(pin, frequency, g_pwm_dutycycle_value[pin]);
 }
 
 // Sets PWM frequency (in Hertz) and pwm duty cycle
@@ -1458,12 +1506,12 @@ void setPwmFrequency (uint8_t pin, uint32_t frequency, uint32_t dutycycle)
     double countDuration;
 
     if (g_pwm_pin_set[pin] != HIGH) {
-        fprintf(stderr, "%s(): please initalize pin %d first \
-            using pinMode() function \n",__func__, pin);
+        fprintf(stderr, "%s(): please initalize pin %d first "
+            "using pinMode() function \n",__func__, pin);
         exit(1);
     }
 
-    // Check if the pin is compatible for PWM and assign its channel
+    // Check if the pin is valid for PWM and assign its channel
     switch (pin) {
         case 12: pwm_channel = 0; break;
         case 13: pwm_channel = 1; break;
@@ -1475,16 +1523,17 @@ void setPwmFrequency (uint8_t pin, uint32_t frequency, uint32_t dutycycle)
         case 52: pwm_channel = 0; break;
         case 53: pwm_channel = 1; break;
         default:
-            fprintf(stderr, "%s(): pin %d can not be assigned for \
-             this function with mode PWM_OUTPUT \n",__func__, pin);
+            fprintf(stderr, "%s(): pin %d can not be assigned for "
+                "this function with PWM_OUTPUT mode \n",__func__, pin);
             exit(1);
             break;
     }
 
     // Check if duty cycle resolution match
     if (dutycycle >= PWM_DUTYCYCLE_RESOLUTION) {
-        fprintf(stderr, "%s(): dutycycle %d should be less than the \
-            pwm resolution %d \n",__func__, dutycycle, PWM_DUTYCYCLE_RESOLUTION);
+        fprintf(stderr, "%s(): duty cycle %d should be less than the "
+            "max pwm resolution = %d \n",
+            __func__, dutycycle, PWM_DUTYCYCLE_RESOLUTION);
             exit(1);
     }
 
@@ -1503,8 +1552,9 @@ void setPwmFrequency (uint8_t pin, uint32_t frequency, uint32_t dutycycle)
     divisor = (int)(19200000.0f / (1.0/countDuration));
 
     if( divisor < 0 || divisor > 4095 ) {
-        fprintf(stderr, "%s(): pwm frequency %d with DUTY CYCLE \
-         RANGE of %d bits not supported \n",__func__, frequency, PWM_DUTYCYCLE_RESOLUTION);
+        fprintf(stderr, "%s(): pwm frequency %d with pwm duty cycle "
+            "resolution/range of %d bits not supported \n",__func__,
+             frequency, PWM_DUTYCYCLE_RESOLUTION);
         exit(-1);
     }
 
@@ -1529,16 +1579,61 @@ void setPwmFrequency (uint8_t pin, uint32_t frequency, uint32_t dutycycle)
 //          Advanced I/O                  //
 ////////////////////////////////////////////
 
-// Set tone frequency (in hertz) and duration (in milliseconds)
-void tone(uint8_t pin, uint32_t frequency, unsigned long duration, int block)
+// Arguments for Tone threads
+struct ThreadToneArg {
+    int pin;
+    unsigned long duration;
+};
+
+pthread_t idToneThread[SOC_GPIO_PINS];
+
+// This is function will be running in a thread if
+// non-blocking tone() is called.
+void * toneThreadFunction(void *args)
 {
+    ThreadToneArg *arguments = (ThreadToneArg *)args;
+    int pin = arguments->pin;
+    unsigned long duration = arguments->duration;
+
+    unistd::usleep(duration*1000);
+    noTone(pin);
+}
+
+
+// Set tone frequency (in hertz) and duration (in milliseconds)
+void tone(uint8_t pin, uint32_t frequency, unsigned long duration, uint32_t block)
+{
+    pthread_t *threadId;
+    struct ThreadToneArg *threadArgs;
+
     // Set frequency at 50% duty cycle
     setPwmFrequency(pin, frequency, PWM_DUTYCYCLE_RESOLUTION / 2);
+
+    // Tone duration: If duration == 0, don't stop the tone, 
+    // else perform duration either blocking or non-blocking
     if (duration == 0) {
         return;
     } else {
-        unistd::usleep(duration*1000);
-        noTone(pin);
+
+        threadId = &idToneThread[SOC_GPIO_PINS];
+        threadArgs = (ThreadToneArg *)malloc(sizeof(ThreadToneArg));
+        threadArgs->pin = pin;
+        threadArgs->duration = duration;
+
+        // Cancel any existant threads for the pwm pin
+        if (*threadId != 0) {
+            pthread_cancel(*threadId);
+        }
+
+        // If block == true  stop the tone after a sleep delay
+        // If block == false then start a thread that will stop the tone
+        // after certain duration and parallely continue with the rest of the func. 
+        if  (block) {
+            unistd::usleep(duration*1000);
+            noTone(pin);
+        } else {
+            pthread_create (threadId, NULL, toneThreadFunction, (void *)threadArgs);
+        }
     }
 }
 
@@ -1806,78 +1901,19 @@ long random(long howsmall, long howbig)
 //          External Interrupts           //
 ////////////////////////////////////////////
 
-struct ThreadArg {
+// Arguments for Externatl Interrupt threads
+struct ThreadExtArg {
     void (*func)();
     int pin;
 };
 
-pthread_t idThread0;
-pthread_t idThread1;
-pthread_t idThread2;
-pthread_t idThread3;
-pthread_t idThread4;
-pthread_t idThread5;
-pthread_t idThread6;
-pthread_t idThread7;
-pthread_t idThread8;
-pthread_t idThread9;
-pthread_t idThread10;
-pthread_t idThread11;
-pthread_t idThread12;
-pthread_t idThread13;
-pthread_t idThread14;
-pthread_t idThread15;
-pthread_t idThread16;
-pthread_t idThread17;
-pthread_t idThread18;
-pthread_t idThread19;
-pthread_t idThread20;
-pthread_t idThread21;
-pthread_t idThread22;
-pthread_t idThread23;
-pthread_t idThread24;
-pthread_t idThread25;
-pthread_t idThread26;
-
-pthread_t *getThreadIdFromPin(int pin)
-{
-    switch(pin) {
-        case 0: return &idThread0; break;
-        case 1: return &idThread1; break;
-        case 2: return &idThread2; break;
-        case 3: return &idThread3; break;
-        case 4: return &idThread4; break;
-        case 5: return &idThread5; break;
-        case 6: return &idThread6; break;
-        case 7: return &idThread7; break;
-        case 8: return &idThread8; break;
-        case 9: return &idThread9; break;
-        case 10: return &idThread10; break;
-        case 11: return &idThread11; break;
-        case 12: return &idThread12; break;
-        case 13: return &idThread13; break;
-        case 14: return &idThread14; break;
-        case 15: return &idThread15; break;
-        case 16: return &idThread16; break;
-        case 17: return &idThread17; break;
-        case 18: return &idThread18; break;
-        case 19: return &idThread19; break;
-        case 20: return &idThread20; break;
-        case 21: return &idThread21; break;
-        case 22: return &idThread22; break;
-        case 23: return &idThread23; break;
-        case 24: return &idThread24; break;
-        case 25: return &idThread25; break;
-        case 26: return &idThread26; break;
-        default: return &idThread0; break;
-    }
-}
+pthread_t idExtThread[SOC_GPIO_PINS];
 
 // This is the function that will be running in a thread if
 // attachInterrupt() is called 
 void * threadFunction(void *args)
 {
-    ThreadArg *arguments = (ThreadArg *)args;
+    ThreadExtArg *arguments = (ThreadExtArg *)args;
     int pin = arguments->pin;
     
     int GPIO_FN_MAXLEN = 32;
@@ -1894,7 +1930,7 @@ void * threadFunction(void *args)
     snprintf(fn, GPIO_FN_MAXLEN-1, "/sys/class/gpio/gpio%d/value",pin);
     fd=open(fn, O_RDONLY);
     if (fd<0) {
-        fprintf(stderr, "%s(): gpio error: %s\n",__func__, strerror (errno));
+        fprintf(stderr, "%s(): gpio error: %s\n", __func__, strerror (errno));
         exit(1);
     }
     pfd.fd=fd;
@@ -1902,7 +1938,7 @@ void * threadFunction(void *args)
     
     ret=unistd::read(fd,rdbuf,RDBUF_LEN-1);
     if (ret<0) {
-        fprintf(stderr, "%s(): gpio error: %s\n",__func__, strerror (errno));
+        fprintf(stderr, "%s(): gpio error: %s\n", __func__, strerror (errno));
         exit(1);
     }
     
@@ -1911,7 +1947,7 @@ void * threadFunction(void *args)
         unistd::lseek(fd, 0, SEEK_SET);
         ret=poll(&pfd, 1, -1);
         if (ret<0) {
-            fprintf(stderr, "%s(): gpio error: %s\n",__func__, strerror (errno));
+            fprintf(stderr, "%s(): gpio error: %s\n", __func__, strerror (errno));
             unistd::close(fd);
             exit(1);
         }
@@ -1921,7 +1957,7 @@ void * threadFunction(void *args)
         }
         ret=unistd::read(fd,rdbuf,RDBUF_LEN-1);
         if (ret<0) {
-            fprintf(stderr, "%s(): gpio error: %s\n",__func__, strerror (errno));
+            fprintf(stderr, "%s(): gpio error: %s\n", __func__, strerror (errno));
             exit(1);
         }
         //Interrupt. We call user function.
@@ -1929,18 +1965,25 @@ void * threadFunction(void *args)
     }
 }
 
-void attachInterrupt(uint8_t p, void (*f)(void), int mode)
+void attachInterrupt(uint8_t pin, void (*f)(void), int mode)
 {
-    uint8_t GPIOPin = p;
-    pthread_t *threadId = getThreadIdFromPin(p);
-    struct ThreadArg *threadArgs = (ThreadArg *)malloc(sizeof(ThreadArg));
+    pthread_t *threadId = &idExtThread[pin];
+    struct ThreadExtArg *threadArgs = (ThreadExtArg *)malloc(sizeof(ThreadExtArg));
     threadArgs->func = f;
-    threadArgs->pin = GPIOPin;
+    threadArgs->pin = pin;
 
-    // Return if the interrupt pin number is out of range. 
-    if (GPIOPin == (uint8_t) NOT_AN_INTERRUPT) {
+    // Return if the interrupt pin number is out of range
+    // NOT_AN_INTERRUPT is set when digitalPinToInterrupt(p) is used for an invalid pin
+    if (pin == (uint8_t) NOT_AN_INTERRUPT) {
         fprintf(stderr, "%s(): interrupr pin number out of range\n",__func__);
         return;
+    }
+
+    // Check if the pin number is valid
+    if (pin >= SOC_GPIO_PINS) {
+        fprintf(stderr, "%s(): pin number should be less than "
+            "%d, yours is %d \n", __func__, SOC_GPIO_PINS, pin);
+        exit(1);
     }
     
     // Export pin for interrupt
@@ -1949,13 +1992,13 @@ void attachInterrupt(uint8_t p, void (*f)(void), int mode)
         fprintf(stderr, "%s(): export gpio error: %s\n",__func__, strerror (errno));
         exit(1);
     } else {
-        fprintf(fp,"%d",GPIOPin); 
+        fprintf(fp,"%d",pin); 
     }
     fclose(fp);
     
     // Tell the system to create the file /sys/class/gpio/gpio<GPIO number>
     char * interruptFile = NULL;
-    asprintf(&interruptFile, "/sys/class/gpio/gpio%d/edge",GPIOPin);
+    asprintf(&interruptFile, "/sys/class/gpio/gpio%d/edge",pin);
     
     //Set detection edge condition
     fp = fopen(interruptFile,"w");
@@ -1977,27 +2020,32 @@ void attachInterrupt(uint8_t p, void (*f)(void), int mode)
     }
     fclose(fp);
     
-    if (*threadId == 0) {
-        // Create a thread passing the pin and function
-        pthread_create (threadId, NULL, threadFunction, (void *)threadArgs);
-    } else {
-        // First cancel the existing thread for that pin
+    // Cancel any existant threads for the interrupt pin
+    if (*threadId != 0) {
         pthread_cancel(*threadId);
-        // Create a thread passing the pin, function and mode
-        pthread_create (threadId, NULL, threadFunction, (void *)threadArgs);
     }
+
+    // Create a thread passing the pin, function and mode
+    pthread_create (threadId, NULL, threadFunction, (void *)threadArgs);
     
 }
 
-void detachInterrupt(uint8_t p)
+void detachInterrupt(uint8_t pin)
 {
-    uint8_t GPIOPin = p;
-    pthread_t *threadId = getThreadIdFromPin(p);
+    pthread_t *threadId = &idExtThread[pin];
 
-    // Return if the interrupt pin number is out of range. 
-    if(GPIOPin == (uint8_t) NOT_AN_INTERRUPT) {
+    // Return if the interrupt pin number is out of range
+    // NOT_AN_INTERRUPT is set when digitalPinToInterrupt(p) is used for an invalid pin
+    if (pin == (uint8_t) NOT_AN_INTERRUPT) {
         fprintf(stderr, "%s(): interrupr pin number out of range\n",__func__);
         return;
+    }
+
+    // Check if the pin number is valid
+    if (pin >= SOC_GPIO_PINS) {
+        fprintf(stderr, "%s(): pin number should be less than "
+            "%d, yours is %d \n", __func__, SOC_GPIO_PINS, pin);
+        exit(1);
     }
 
     // Cancel Thread
@@ -2009,7 +2057,7 @@ void detachInterrupt(uint8_t p)
         fprintf(stderr, "%s(): unexrpot gpio error: %s\n",__func__, strerror (errno));
         exit(1);
     } else {
-        fprintf(fp,"%d",GPIOPin); 
+        fprintf(fp,"%d",pin); 
     }
     fclose(fp);
     
@@ -2034,11 +2082,11 @@ ArduinoPi::ArduinoPi()
     // Set a callback function to detect when program is closed.
     // This is important so later we can turn off any gpio and pwm running. 
     if (signal(SIGINT, ArduinoPi::onArduinoExit) == SIG_ERR)  // Ctrl^C
-        fprintf(stderr, "%s(): Can't catch signal SIGINT: %s\n",__func__, strerror (errno));
+        fprintf(stderr, "%s(): can't catch signal SIGINT: %s\n",__func__, strerror (errno));
     if (signal(SIGTERM, ArduinoPi::onArduinoExit) == SIG_ERR) // Kill command
-        fprintf(stderr, "%s(): Can't catch signal SIGKILL: %s\n",__func__, strerror (errno));
+        fprintf(stderr, "%s(): can't catch signal SIGKILL: %s\n",__func__, strerror (errno));
     if (signal(SIGHUP, ArduinoPi::onArduinoExit) == SIG_ERR)  // Terminal closes
-        fprintf(stderr, "%s(): Can't catch signal SIGHUP: %s\n",__func__, strerror (errno));
+        fprintf(stderr, "%s(): can't catch signal SIGHUP: %s\n",__func__, strerror (errno));
 
 }
 
@@ -2050,7 +2098,6 @@ void ArduinoPi::onArduinoExit(int signumber)
 
     // Shut down 
     if (signumber == SIGINT || signumber == SIGTERM ||  signumber == SIGHUP) {
-        printf("Yeeii \n");
 
         // If user wants to call a function at the end, here he can call it. 
         // He can exit so the rest of the code don't take place.
@@ -2060,7 +2107,7 @@ void ArduinoPi::onArduinoExit(int signumber)
         } else {
 
             // Set PWM and GPIO used pins to default state = input with no pull-up resistor
-            for (i=0; i<BCM283X_GPIO_NUM; i++) {
+            for (i=0; i<SOC_GPIO_PINS; i++) {
                 if (g_gpio_pin_set[i] == HIGH || g_pwm_pin_set[i] == HIGH) {
                     pinMode(i, INPUT);
                 }

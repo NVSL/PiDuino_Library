@@ -42,6 +42,9 @@
 #include <linux/spi/spidev.h>
 
 
+// Total Number of GPIOs Pins in BCM283x SoC chips
+#define SOC_GPIO_PINS   54   
+
 // Remove some PROGMEM space macros if posible
 #define PROGMEM
 #define pgm_read_byte(addr) (*(const unsigned char *)(addr))
@@ -57,12 +60,10 @@ namespace unistd {
 };
 
 
-
 // Arduino extra types
 typedef bool boolean;
 typedef uint8_t byte;
 typedef unsigned int word;
-
 
 
 
@@ -315,7 +316,8 @@ extern int PWM_DEFAULT_FREQUENCY;
 
 //int analogRead (int pin); // Not implemented
 //int analogReference(int type) // Not implemened
-void analogWrite(uint8_t pin, uint8_t value);
+void analogWrite(uint8_t pin, uint32_t value);
+void setPwmDutyCycle (uint8_t pin, uint32_t dutycycle);
 void setPwmFPeriod (uint8_t pin, uint32_t microseconds);
 void setPwmFrequency (uint8_t pin, uint32_t frequency);
 void setPwmFrequency (uint8_t pin, uint32_t frequency, uint32_t dutycycle);
@@ -324,7 +326,7 @@ void setPwmFrequency (uint8_t pin, uint32_t frequency, uint32_t dutycycle);
 //          Advanced I/O           		  //
 ////////////////////////////////////////////
 
-void tone(uint8_t pin, uint32_t frequency, unsigned long duration = 0, int block = false);
+void tone(uint8_t pin, uint32_t frequency, unsigned long duration = 0, uint32_t block = false);
 void noTone(uint8_t pin);
 uint8_t shiftIn(uint8_t dataPin, uint8_t clockPin, uint8_t bitOrder);
 void shiftOut(uint8_t dataPin, uint8_t clockPin, uint8_t bitOrder, uint8_t val);
@@ -425,10 +427,10 @@ long random(long, long);
 #define RISING 3
 
 #define NOT_AN_INTERRUPT -1
-#define digitalPinToInterrupt(p) ((p) >= 0 && (p) <= 26 ? (p) : NOT_AN_INTERRUPT)
+#define digitalPinToInterrupt(p) ((p) >= 0 && (p) <= SOC_GPIO_PINS ? (p) : NOT_AN_INTERRUPT)
 
-void attachInterrupt(uint8_t p, void (*f)(void), int mode);
-void detachInterrupt(uint8_t p);
+void attachInterrupt(uint8_t pin, void (*f)(void), int mode);
+void detachInterrupt(uint8_t pin);
 
 /////////////////////////////////////////////
 //          Interrupts           		  //
