@@ -23,7 +23,7 @@ will not be implemented in the first release.
 ### Implemented Arduino Functions
 
 **Notes:**
-* Functions that begin with (EXTRA) are extra functions that were added to provide more functionality to the library.
+* Functions that begin with (EXTRA) are functions that were added to provide extra functionality to the library.
 
 
 #### - Digital I/O
