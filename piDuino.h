@@ -77,7 +77,6 @@ typedef unsigned int word;
 #define OCT 8
 #define BIN 2
 
-
 // Defines for setting data, parity, and stop bits
 // e.g SERIAL_ABC
 // A= data (5 bits, 6 bits, 7 bits, 8 bits)
@@ -111,12 +110,15 @@ typedef unsigned int word;
 // A char not found in a valid ASCII numeric field
 #define NO_IGNORE_CHAR  '\x01' 
 
+// Serial Driver name (user can change it)
+extern char GPIO_DRIVER_NAME[];
+
+
 class SerialPi {
 
 private:
-	int sd;
-	FILE * sd_file;
-	const char *serialPort;
+	int fd;
+	FILE * fd_file;
 	long timeOut;
 	timespec timeDiff(timespec start, timespec end);
 	int timedPeek();
@@ -126,8 +128,8 @@ private:
 
 public:
 	SerialPi();
-	void begin(int baud);
-	void begin(int baud, unsigned char config);
+	void begin(int baud, unsigned char config = SERIAL_8N1);
+	void begin(const char *serialPort, int baud, unsigned char config = SERIAL_8N1);
 	void end();
 	int available();
 	int availableForWrite();
@@ -156,7 +158,7 @@ public:
 	size_t write(uint8_t c);
 	size_t write(const char *str);
 	size_t write(char *buffer, size_t size);
-	operator bool() { return (sd == -1) ? false : true; }
+	operator bool() { return (fd == -1) ? false : true; }
 	
 };
 
@@ -167,11 +169,10 @@ public:
 //          WirePi class (I2C)             //
 ////////////////////////////////////////////
 
-
-
 #define I2C_SLAVE 0x0703
 #define BUFFER_LENGTH 32
 
+extern char I2C_DRIVER_NAME[]; 
 
 class WirePi {
 	private:
@@ -192,6 +193,7 @@ class WirePi {
 	public:
 		WirePi();
 		void begin();
+		void begin(const char *i2cDeviceName);
 		void end();
 		uint8_t  requestFrom(uint8_t address, uint8_t quantity);
 		void beginTransmission(uint8_t address);
@@ -233,6 +235,8 @@ class WirePi {
 #define SPI_CLOCK_DIV64 250000
 #define SPI_CLOCK_DIV128 125000
 
+extern char SPI_DRIVER_NAME[]; 
+
 class SPISettings {
 	private:
 		uint32_t spiClock;
@@ -261,6 +265,7 @@ class SPIPi {
 	public:
 		SPIPi();
   		void begin();
+  		void begin(const char *spiDeviceName);
     	void end();
     	void beginTransaction(SPISettings settings);
     	void endTransaction();
@@ -277,6 +282,7 @@ class SPIPi {
 //    Extra Arduino Functions for Linux/Pi //
 ////////////////////////////////////////////
 extern void (*ARDUINO_EXIT_FUNC)(void);
+
 
 class ArduinoPi {                                 
     public:

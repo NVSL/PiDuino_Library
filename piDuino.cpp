@@ -35,6 +35,7 @@
 //          SerialPi class (UART)         //
 ////////////////////////////////////////////
 
+char SERIAL_DRIVER_NAME[] = "/dev/ttyAMA0";
 
 ////  Public methods ////
 
@@ -42,19 +43,18 @@
 SerialPi::SerialPi()
 {
     // Default serial driver and timeout
-    serialPort="/dev/ttyAMA0";
     timeOut = 1000;
-    sd = -1;
-    sd_file = NULL;
+    fd = -1;
+    fd_file = NULL;
 }
 
-void SerialPi::begin(int baud)
+void SerialPi::begin(int baud, unsigned char config)
 {
-    begin(baud, SERIAL_8N1);
+     begin((const char *)SERIAL_DRIVER_NAME, baud, config);
 }
 
 // Sets the data rate in bits per second (baud) for serial data transmission
-void SerialPi::begin(int baud, unsigned char config)
+void SerialPi::begin(const char *serialPort, int baud, unsigned char config)
 {
 
     int speed;
@@ -63,16 +63,17 @@ void SerialPi::begin(int baud, unsigned char config)
     int flags;
 
     // Open Serial port 
-    if ((sd = open(serialPort, O_RDWR | O_NOCTTY | O_NONBLOCK)) == -1) {
-        fprintf(stderr,"Unable to open the serial port %s - \n", serialPort);
-        exit(-1);
+    if ((fd = open(serialPort, O_RDWR | O_NOCTTY | O_NONBLOCK)) == -1) {
+        fprintf(stderr,"%s(): Unable to open the serial port %s: %s\n",
+            __func__, serialPort, strerror (errno));
+        exit(1);
     }
 
-    // We obtain a pointer to FILE structure (sd_file) from the file descriptor sd
+    // We obtain a pointer to FILE structure (fd_file) from the file descriptor fd
     // and set it to be non-blocking
-    sd_file = fdopen(sd,"r+");
-    flags = fcntl( fileno(sd_file), F_GETFL );
-    fcntl(fileno(sd_file), F_SETFL, flags | O_NONBLOCK);
+    fd_file = fdopen(fd,"r+");
+    flags = fcntl( fileno(fd_file), F_GETFL );
+    fcntl(fileno(fd_file), F_SETFL, flags | O_NONBLOCK);
     
 
     // Set Serial options: baudRate/speed, data size and parity.
@@ -110,7 +111,7 @@ void SerialPi::begin(int baud, unsigned char config)
         default:        speed =   B9600 ; break ;
     }
 
-    tcgetattr(sd, &options);
+    tcgetattr(fd, &options);
     cfmakeraw(&options);
     cfsetispeed (&options, speed);
     cfsetospeed (&options, speed);
@@ -152,15 +153,15 @@ void SerialPi::begin(int baud, unsigned char config)
     options.c_lflag &= ~(ICANON | ECHO | ECHOE | ISIG);
     options.c_oflag &= ~OPOST;
 
-    tcsetattr (sd, TCSANOW, &options);
+    tcsetattr (fd, TCSANOW, &options);
     
 }
 
 // Disables serial communication
 void SerialPi::end() 
 {
-    unistd::close(sd);
-    sd = -1;
+    unistd::close(fd);
+    fd = -1;
 }
 
 // Get the numberof bytes (characters) available for reading from 
@@ -169,10 +170,10 @@ void SerialPi::end()
 int SerialPi::available()
 {
     int nbytes = 0;
-    if (ioctl(sd, FIONREAD, &nbytes) < 0)  {
+    if (ioctl(fd, FIONREAD, &nbytes) < 0)  {
         fprintf(stderr, "%s(): serial get available bytes error: %s \n",
             __func__, strerror (errno));
-        exit(-1);
+        exit(1);
     }
     return nbytes;
 }
@@ -218,7 +219,7 @@ bool SerialPi::findUntil(const char *target, const char *terminator)
 
     do {
         if (available()) {
-            unistd::read(sd,&readed,1);
+            unistd::read(fd,&readed,1);
             if (readed != target[index])
             index = 0; // reset index if any char does not match
 
@@ -247,7 +248,7 @@ bool SerialPi::findUntil(const char *target, const char *terminator)
 // Remove any data remaining on the serial buffer
 void SerialPi::flush()
 {
-    tcflush(sd,TCIOFLUSH);
+    tcflush(fd,TCIOFLUSH);
 }
 
 // returns the first valid floating point number from the serial buffer.
@@ -278,7 +279,7 @@ float SerialPi::parseFloat()
                 fraction *= 0.1;
         }
 
-        getc(sd_file);  // consume the character we got with peek
+        getc(fd_file);  // consume the character we got with peek
         c = timedPeek();
     } while( (c >= '0' && c <= '9')  || (c == '.' && !isFraction));
 
@@ -313,7 +314,7 @@ long SerialPi::parseInt(char ignore)
         else if(c >= '0' && c <= '9')       // is c a digit?
             value = value * 10 + c - '0';   // get digit number
         
-        getc(sd_file);  // consume the character we got with peek
+        getc(fd_file);  // consume the character we got with peek
         c = timedPeek();
     } while( (c >= '0' && c <= '9') || c == ignore );
 
@@ -329,10 +330,10 @@ int SerialPi::peek()
     int8_t c;
 
     // Rewind the file to get the latest data. 
-    rewind(sd_file);
+    rewind(fd_file);
     // With a pointer to FILE we can do getc and ungetc
-    c = getc(sd_file);
-    ungetc(c, sd_file);
+    c = getc(fd_file);
+    ungetc(c, fd_file);
 
     if (c == 0) 
         return -1;
@@ -345,13 +346,13 @@ int SerialPi::peek()
 // Prints data to the serial port as human-readable ASCII text.
 size_t SerialPi::print(const char str[])
 {
-    return unistd::write(sd,str,strlen(str));
+    return unistd::write(fd,str,strlen(str));
 }
 
 // Prints one character to the serial port as human-readable ASCII text.
 size_t SerialPi::print(char c)
 {
-    return unistd::write(sd,&c,1);
+    return unistd::write(fd,&c,1);
 }
 
 size_t SerialPi::print(unsigned char b, int base)
@@ -383,7 +384,7 @@ size_t SerialPi::print(unsigned int n, int base)
             break;
     }
 
-    return unistd::write(sd,message,strlen(message));
+    return unistd::write(fd,message,strlen(message));
 }
 
 // Prints data to the serial port as human-readable ASCII text.
@@ -410,7 +411,7 @@ size_t SerialPi::print(int n, int base)
             break;
     }
 
-    return unistd::write(sd,message,strlen(message));
+    return unistd::write(fd,message,strlen(message));
 }
 
 // Prints a new line
@@ -418,7 +419,7 @@ size_t SerialPi::println(void)
 {
     char * msg;
     asprintf(&msg,"\r\n");
-    return unistd::write(sd,msg,strlen(msg));
+    return unistd::write(fd,msg,strlen(msg));
 }
 
 // Prints data to the serial port as human-readable ASCII text
@@ -469,7 +470,7 @@ void SerialPi::print(float f, int precission)
 {
     char * message;
     asprintf(&message, "%.1f", f );
-    unistd::write(sd,message,strlen(message));
+    unistd::write(fd,message,strlen(message));
 }
 
 // Prints data to the serial port as human-readable ASCII text followed
@@ -486,7 +487,7 @@ void SerialPi::println(float f, int precission)
 
     char * msg = NULL;
     asprintf(&msg,"%s\r\n",message);
-    unistd::write(sd,msg,strlen(msg));
+    unistd::write(fd,msg,strlen(msg));
 }
 */
 
@@ -498,7 +499,7 @@ void SerialPi::println(float f, int precission)
 int SerialPi::read() 
 {
     int8_t c;
-    unistd::read(sd,&c,1);
+    unistd::read(fd,&c,1);
     return c;
 }
 
@@ -512,7 +513,7 @@ size_t SerialPi::readBytes(char buffer[], size_t length)
     int count = 0;
     while (count < length) {
         if (available()) {
-            unistd::read(sd,&buffer[count],1);
+            unistd::read(fd,&buffer[count],1);
             count ++;
         }
         clock_gettime(CLOCK_REALTIME, &time2);
@@ -533,7 +534,7 @@ size_t  SerialPi::readBytesUntil(char terminator, char buffer[], size_t length)
     char c;
     while (count < length) {
         if (available()) {
-            unistd::read(sd,&c,1);
+            unistd::read(fd,&c,1);
             if (c == terminator) break;
             buffer[count] = c;
             count ++;
@@ -553,7 +554,7 @@ String Stream::readString()
     int count = 0;
     while (count < length) {
         if (available()) {
-            unistd::read(sd,&buffer[count],1);
+            unistd::read(fd,&buffer[count],1);
             count ++;
         }
         clock_gettime(CLOCK_REALTIME, &time2);
@@ -572,7 +573,7 @@ String Stream::readStringUntil(char terminator)
     char c;
     while (count < length) {
         if (available()) {
-            unistd::read(sd,&c,1);
+            unistd::read(fd,&c,1);
             if (c == terminator) break;
             buffer[count] = c;
             count ++;
@@ -596,7 +597,7 @@ void SerialPi::setTimeout(long millis)
 // Returns: number of bytes written
 size_t SerialPi::write(uint8_t c)
 {
-    unistd::write(sd,&c,1);
+    unistd::write(fd,&c,1);
     return 1;
 }
 
@@ -606,7 +607,7 @@ size_t SerialPi::write(uint8_t c)
 size_t SerialPi::write(const char *str)
 {
     if (str == NULL) return 0;
-    return unistd::write(sd,str,strlen(str));
+    return unistd::write(fd,str,strlen(str));
 }
 
 // Writes binary data to the serial port. This data is sent as a series
@@ -614,7 +615,7 @@ size_t SerialPi::write(const char *str)
 // Returns: number of bytes written 
 size_t SerialPi::write(char *buffer, size_t size)
 {
-    return unistd::write(sd,buffer,size);
+    return unistd::write(fd,buffer,size);
 }
 
 
@@ -648,7 +649,7 @@ int SerialPi::peekNextDigit(bool detectDecimal)
             (c >= '0' && c <= '9') ||
             (detectDecimal && c == '.')) return c;
 
-        getc(sd_file);  // discard non-numeric
+        getc(fd_file);  // discard non-numeric
     }
 }
 
@@ -687,6 +688,9 @@ char * SerialPi::int2bin(int n)
 /////////////////////////////////////////////
 //          WirePi class (I2C)             //
 ////////////////////////////////////////////
+
+char I2C_DRIVER_NAME[] = ""; // "" means search for any I2C device
+
 
 //// Private methods ///
 uint8_t WirePi::rxBuffer[BUFFER_LENGTH];
@@ -752,58 +756,74 @@ WirePi::WirePi()
     fd = -1;
 }
 
-// Initialize the Wire library
 void WirePi::begin()
 {
+    begin(I2C_DRIVER_NAME);
+}
 
+// Initialize the Wire library
+void WirePi::begin(const char *i2cDeviceName)
+{
     FILE *fn, *fp;
-    char filename[20];
     char path[1024];
-    char i2cDevice[32] = "";
+    char *filename;
+    char *i2cDevice;
+    char *tmpi2cDevice = NULL;
 
-    // Process the command below to search for i2c-1 device driver excistance
-    fn = popen("/bin/ls /dev/ | /bin/grep i2c-1" , "r");
-    if (fn == NULL) {
-        fprintf(stderr, "%s(): failed to run command "
-            "\"/bin/ls /dev/ | /bin/grep i2c-1\"\n",__func__);
-        exit(1);
-    }
-    
-    // Process the command below to search for i2c-x devices drivers excistance, 
-    // where x = 0, 1, etc
-    fp = popen("/bin/ls /dev/ | /bin/grep i2c-" , "r");
-    if (fp == NULL) {
-        fprintf(stderr, "%s(): failed to run command "
-            "\"/bin/ls /dev/ | /bin/grep i2c-\"\n",__func__);
-        exit(1);
-    }
+    // If I2C device name is empty, then search for the first available i2c in /dev/
+    // else  try to open the given device name
+    if (strcmp(i2cDeviceName, "") == 0) {
 
-
-    // If i2c-1 exists (RPI main i2c) then set it to open, 
-    // else set any other existant i2c-x like i2c-0 for old RPI revisions 
-    if (fgets(path, sizeof(path)-1, fn) != NULL) {
-        // Set i2c-1 device
-        snprintf(i2cDevice, 32, "i2c-1", path);
-    } else {
-        // Set i2c-x device
-        while (fgets(path, sizeof(path)-1, fp) != NULL) {
-            snprintf(i2cDevice, 32, "%s", path);
-            break;
+        // Process the command below to search for i2c-1 device driver excistance
+        fn = popen("/bin/ls /dev/ | /bin/grep i2c-1" , "r");
+        if (fn == NULL) {
+            fprintf(stderr, "%s(): failed to run command "
+                "\"/bin/ls /dev/ | /bin/grep i2c-1\"\n",__func__);
+            exit(1);
         }
+        
+        // Process the command below to search for i2c-x devices drivers excistance, 
+        // where x = 0, 1, etc
+        fp = popen("/bin/ls /dev/ | /bin/grep i2c-" , "r");
+        if (fp == NULL) {
+            fprintf(stderr, "%s(): failed to run command "
+                "\"/bin/ls /dev/ | /bin/grep i2c-\"\n",__func__);
+            exit(1);
+        }
+
+
+        // If i2c-1 exists (RPI main i2c) then set it to open, 
+        // else set any other existant i2c-x like i2c-0 for old RPI revisions 
+        if (fgets(path, sizeof(path)-1, fn) != NULL) {
+            // Set i2c-1 device
+            asprintf(&tmpi2cDevice, "i2c-1", path);
+        } else {
+            // Set i2c-x device
+            while (fgets(path, sizeof(path)-1, fp) != NULL) {
+                asprintf(&tmpi2cDevice, "%s", path);
+                break;
+            }
+        }
+
+        // If no I2C device driver is enabled or installed then exit. 
+        if (tmpi2cDevice == NULL) {
+            fprintf(stderr, "%s(): filed to locate any \"i2c-x\" device driver in /dev/. "
+                "please install or enable a i2c interface in your board \n",__func__);
+            exit(1);
+        }
+
+        // Set i2c-x device found to /dev/i2c-x fromat
+        asprintf(&i2cDevice, "/dev/%s", tmpi2cDevice);
+    } else {
+        // Set user given i2c device name
+        asprintf(&i2cDevice, "%s", i2cDeviceName);
     }
 
-    // If no I2C device driver is enabled or installed then exit. 
-    if(strcmp(i2cDevice,"") == 0) {
-        fprintf(stderr, "%s(): filed to locate any \"i2c-x\" device driver in /dev/. "
-            "please install or enable a i2c interface in your board \n",__func__);
-        exit(1);
-    }
-
-    // Open /dev/i2c-x device 
-    snprintf(filename, 11, "/dev/%s", i2cDevice);
+    // Open i2c device name (e.g /dev/i2c-x)
+    asprintf(&filename,"%s", i2cDevice);
     fd = open(filename, O_RDWR);
     if (fd < 0) {
-        fprintf(stderr, "%s(): error openning I2C channel %s: %s\n",
+        fprintf(stderr, "%s(): error openning I2C device %s: %s\n",
             __func__, filename, strerror (errno));
         exit(1);
     }
@@ -994,6 +1014,7 @@ uint8_t WirePi::endTransmission()
 //          SPIPi class (SPI)             //
 ////////////////////////////////////////////
 
+char SPI_DRIVER_NAME[] = ""; // "" means search for any SPI device
 SPISettings SPISET;
 
 ////  Private methods ////
@@ -1025,41 +1046,59 @@ SPIPi::SPIPi()
 
 void SPIPi::begin()
 {
+    begin(SPI_DRIVER_NAME);
+}
+
+void SPIPi::begin(const char *spiDeviceName)
+{
     FILE *fp;
-    char filename[20];
     char path[1024];
-    char spiDevice[32] = "";
+    char *filename;
+    char *spiDevice;
+    char *tmpspiDevice = NULL;
     uint8_t bitsPerWord = 8;
 
-    // Process the command below to search for spidev device driver excistance
-    fp = popen("/bin/ls /dev/ | /bin/grep spidev" , "r");
-    if (fp == NULL) {
-        fprintf(stderr, "%s(): failed to run command "
-            "\"/bin/ls /dev/ | /bin/grep spidev\"\n",__func__);
-        exit(1);
-    }
+    // If SPI device name is empty, then search for the first available spi in /dev/
+    // else try to open the given device name
+    if (strcmp(spiDeviceName, "") == 0) {
+
+        // Process the command below to search for spidev device driver excistance
+        fp = popen("/bin/ls /dev/ | /bin/grep spidev" , "r");
+        if (fp == NULL) {
+            fprintf(stderr, "%s(): failed to run command "
+                "\"/bin/ls /dev/ | /bin/grep spidev\"\n",__func__);
+            exit(1);
+        }
 
 
-    // If any spidevX.X exits, then set to open it.
-    // If there are two or more (e.g spidev0.0 and spidev 0.1) 
-    // then the one with the lowest number (spidev0.0) will be set
-    while (fgets(path, sizeof(path)-1, fp) != NULL) {
-        snprintf(spiDevice, 32, "%s", path);
-        break;
-    }
+        // If any spidevX.X exits, then set to open it.
+        // If there are two or more (e.g spidev0.0 and spidev 0.1) 
+        // then the one with the lowest number (spidev0.0) will be set
+        while (fgets(path, sizeof(path)-1, fp) != NULL) {
+            asprintf(&tmpspiDevice, "%s", path);
+            tmpspiDevice[strcspn(tmpspiDevice, "\n")] = '\0'; // Remove \n if any
+            break;
+        }
 
-    // If no SPI device driver is enabled or installed then exit. 
-    if(strcmp(spiDevice,"") == 0) {
-        fprintf(stderr, "%s(): filed to locate any \"spidevX.X\" device driver in /dev/. "
-            "please install or enable a spi interface in your board \n",__func__);
-        exit(1);
+        // If no SPI device driver is enabled or installed then exit. 
+        if (tmpspiDevice == NULL) {
+            fprintf(stderr, "%s(): filed to locate any \"spidevX.X\" device driver in /dev/. "
+                "please install or enable a spi interface in your board \n",__func__);
+            exit(1);
+        }
+
+        // Set spidevX.X device found to /dev/spidevX.X fromat
+        asprintf(&spiDevice, "/dev/%s", tmpspiDevice);
+    } else {
+        // Set user given SPI device name
+        asprintf(&spiDevice, "%s", spiDeviceName);
     }
 
     // Open /dev/spidevX.X device 
-    snprintf(filename, 15, "/dev/%s", spiDevice);
+    asprintf(&filename, "%s", spiDevice);
     fd = open(filename, O_RDWR);
     if (fd < 0) {
-        fprintf(stderr, "%s(): error openning SPI channel %s: %s\n",
+        fprintf(stderr, "%s(): error openning SPI device %s: %s\n",
             __func__, filename, strerror (errno));
         exit(1);
     }
