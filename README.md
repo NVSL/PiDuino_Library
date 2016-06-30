@@ -165,6 +165,8 @@ will not be implemented in the first release.
 | Serial.availableForWrite() | YES |
 | Serial.begin(speed) | YES |
 | Serial.begin(speed, config)| YES |
+| (EXTRA) Serial.begin(driverName, speed) | YES |
+| (EXTRA) Serial.begin(driverName, speed, config)| YES |
 | Serial.end() | YES |
 | Serial.find(target) | YES |
 | Serial.findUntil(target, terminal) | YES |
@@ -192,6 +194,7 @@ will not be implemented in the first release.
 | Function | Implemented (YES/NO-Comment/In Progress) |
 | ------ | ----------- |
 | Wire.begin() | YES |
+| (EXTRA) Wire.begin(driverName) | YES |
 | Wire.begin(address) | NO/In Progress - Linux I2C Slave driver was added recently, still verifying |
 | Wire.requestFrom(address, quantity) | YES |
 | Wire.requestFrom(address, quantity, stop) | NO - There is no way to send an I2C stop msg to the driver |
@@ -212,6 +215,7 @@ will not be implemented in the first release.
 | ------ | ----------- |
 | SPISettings | YES |
 | SPI.begin() | YES |
+| (EXTRA) SPI.begin(driverName) | YES |
 | SPI.end()| YES |
 | SPI.beginTransaction(mySettings) | YES |
 | SPI.endTransaction() | YES |
@@ -228,7 +232,7 @@ will not be implemented in the first release.
 
 ## TODO'S
 
-* Make a SPI and I2C begin("/dev/i2c-x") to let developers choose any i2c-x number. 
+* ~~Make a SPI and I2C begin("/dev/i2c-x") to let developers choose any i2c-x number.~~ 
 * Check Linux i2c-slave. 
 * Maybe only add B(8 bits) only and that way prevent conflicts with termios.h
 * Defintily separate files and make it C compatible (At the end)
