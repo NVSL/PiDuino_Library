@@ -1,4 +1,4 @@
-# PiDuino Library (98%)
+# PiDuino Library (97.5%)
 
 PiDuino Library is a C++ library that lets you write programs for Raspberry Pi as if you were writing an Arduino program. 
 
@@ -234,7 +234,7 @@ Serial, Wire, SPI
 * Maybe only add B(8 bits) only and that way prevent conflicts with termios.h
 * Defintily separate files and make it C compatible (At the end)
 * Make an Arduino.h header containing piDuino.h so developers don't need to change too much code. 
-* Add arduino String object.
+* ~~Add arduino String object~~
 * Maybe add a SPISettings(..., bitsPerWord, CS(High?low)) and their bit routines config. to SPI. For bitPerWord transfer len will need to be multiplied by (bitsPerWord/8)
 * Add string, String, (arg, ...) to prints.
 * Check/DO printFloat()
