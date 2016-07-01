@@ -1,4 +1,4 @@
-# PiDuino Library (97%)
+# PiDuino Library (98%)
 
 PiDuino Library is a C++ library that lets you write programs for Raspberry Pi as if you were writing an Arduino program. 
 
@@ -14,10 +14,7 @@ Digital I/O, Analog I/O, Advanced I/O, Time, Math, Trigonometry, Random Numbers,
 Serial, Wire, SPI
 
 **Notes:**
-* Data Type String - object:
-will not be implemented in the first release. 
 * **B** for binary representation (e.g B10100001) conflicts with some termios.h definitions so use **0b** instead. 
-
 
 
 ### Implemented Arduino Functions
