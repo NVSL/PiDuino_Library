@@ -344,6 +344,12 @@ int SerialPi::peek()
 //------- PRINTS --------//
 
 // Prints data to the serial port as human-readable ASCII text.
+size_t SerialPi::print(const String &s)
+{
+    unistd::write(fd,s.c_str(), s.length());
+}
+
+// Prints data to the serial port as human-readable ASCII text.
 size_t SerialPi::print(const char str[])
 {
     return unistd::write(fd,str,strlen(str));
@@ -420,6 +426,15 @@ size_t SerialPi::println(void)
     char * msg;
     asprintf(&msg,"\r\n");
     return unistd::write(fd,msg,strlen(msg));
+}
+
+// Prints data to the serial port as human-readable ASCII text
+// Followed by a new line
+size_t SerialPi::println(const String &s)
+{
+    size_t n = print(s);
+    n += println();
+    return n;
 }
 
 // Prints data to the serial port as human-readable ASCII text

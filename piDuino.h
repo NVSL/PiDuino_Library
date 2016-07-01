@@ -40,6 +40,7 @@
 #include <linux/types.h>
 #include <linux/i2c.h>
 #include <linux/spi/spidev.h>
+#include "WString.h"
 
 
 // Total Number of GPIOs Pins in BCM283x SoC chips
@@ -140,12 +141,14 @@ public:
 	long parseInt(char ignore);
 	float parseFloat();
 	int peek();
+	size_t print(const String &s);
 	size_t print(const char str[]);
 	size_t print(char c);
 	size_t print(unsigned char b, int base);
 	size_t print(int n, int base);
 	size_t print(unsigned int n, int base);
 	size_t println(void);
+	size_t println(const String &s);
 	size_t println(const char c[]);
 	size_t println(char c);
 	size_t println(unsigned char b, int base);
@@ -358,13 +361,17 @@ void delayMicroseconds(unsigned int us);
 #define RAD_TO_DEG 57.295779513082320876798154814105
 #define EULER 2.718281828459045235360287471352
 
-#ifdef abs
-#undef abs
-#endif
 
-#define min(a,b) ((a)<(b)?(a):(b))
-#define max(a,b) ((a)>(b)?(a):(b))
-#define abs(x) ((x)>0?(x):-(x))
+// min and max implemented as fucntions to prevent 
+// std::min and std::max conflicts with <string> header
+inline int min(int a, int b) { return ((a)<(b) ? (a) : (b)); }
+inline float min(float a, float b) { return ((a)<(b) ? (a) : (b)); }
+inline double min(double a, double b) { return ((a)<(b) ? (a) : (b)); }
+inline int max(int a, int b) { return ((a)>(b) ? (a) : (b)); }
+inline float max(float a, float b) { return ((a)>(b) ? (a) : (b)); }
+inline double max(double a, double b) { return ((a)>(b) ? (a) : (b)); }
+// #define abs(x) ((x)>0?(x):-(x)) // abs already in <stdlib.h>
+
 #define constrain(amt,low,high) ((amt)<(low)?(low):((amt)>(high)?(high):(amt)))
 #define round(x)     ((x)>=0?(long)((x)+0.5):(long)((x)-0.5))
 #define radians(deg) ((deg)*DEG_TO_RAD)
