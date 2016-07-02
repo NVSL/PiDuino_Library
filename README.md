@@ -1,4 +1,4 @@
-# PiDuino Library (97.5%)
+# PiDuino Library (98%)
 
 PiDuino Library is a C++ library that lets you write programs for Raspberry Pi as if you were writing an Arduino program. 
 
@@ -176,11 +176,13 @@ Serial, Wire, SPI
 | Serial.print(val, format)| YES |
 | Serial.println(val)  | YES |
 | Serial.println(val, format) | YES |
+| (EXTRA) Serial.printf(format, ...) | YES |
 | Serial.read() | YES |
 | Serial.readBytes(buffer, length)| YES |
 | Serial.readBytesUntil(character, buffer, length) | YES |
-| Serial.readString() | In Progress - Needs String which haven't been implemented yet |
-| Serial.readStringUntil(terminator) | In Progress - Needs String which haven't been implemented yet |
+| Serial.readString() | YES |
+| Serial.readStringUntil(terminator) | YES |
+| (EXRTA) Serial.readStringCommand(character, buffer, length) | YES |
 | Serial.setTimeout(time) | YES |
 | Serial.write(val)  | YES |
 | Serial.write(str)  | YES |
@@ -236,8 +238,7 @@ Serial, Wire, SPI
 * Make an Arduino.h header containing piDuino.h so developers don't need to change too much code. 
 * ~~Add arduino String object~~
 * Maybe add a SPISettings(..., bitsPerWord, CS(High?low)) and their bit routines config. to SPI. For bitPerWord transfer len will need to be multiplied by (bitsPerWord/8)
-* Add string, String, (arg, ...) to prints.
-* Check/DO printFloat()
+* ~~Add string, String, (arg, ...) to prints.~~
 * ~~Make an Arduino init function~~
 * ~~Implement an exit rutine when SIGINT (Ctrl^Z) to turn GPIO OFF~~
 
