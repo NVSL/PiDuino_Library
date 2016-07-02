@@ -154,9 +154,13 @@ public:
 	size_t println(unsigned char b, int base);
 	size_t println(int num, int base);
 	size_t println(unsigned int num, int base);
+	size_t printf(const char *fmt, ... );
 	int read();
 	size_t readBytes(char buffer[], size_t length);
 	size_t readBytesUntil(char terminator, char buffer[], size_t length);
+	String readString();
+	String readStringUntil(char terminator);
+	size_t readStringCommand(char terminator, char buffer[], size_t length);
 	void setTimeout(long millis);
 	size_t write(uint8_t c);
 	size_t write(const char *str);

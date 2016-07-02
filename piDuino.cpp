@@ -476,35 +476,19 @@ size_t SerialPi::println(unsigned int num, int base)
   return n;
 }
 
-/*
-// Prints data to the serial port as human-readable ASCII text.
-// precission is used to limit the number of decimals.
-//
- //TODO change precision
-void SerialPi::print(float f, int precission)
-{
-    char * message;
-    asprintf(&message, "%.1f", f );
-    unistd::write(fd,message,strlen(message));
+// Prints like a normal C language printf() but to the Serial port
+size_t SerialPi::printf(const char *fmt, ... ) {
+    char *buf = NULL; 
+    va_list args;
+
+    // Copy arguments to buf
+    va_start (args, fmt);
+    vasprintf(&buf, (const char *)fmt, args);
+    va_end (args);
+
+    return unistd::write(fd,buf,strlen(buf));
 }
 
-// Prints data to the serial port as human-readable ASCII text followed
-// by a carriage retrun character '\r' and a newline character '\n' 
-void SerialPi::println(float f, int precission)
-{
-    const char *str1="%.";
-    char * str2;
-    char * str3;
-    char * message;
-    sprintf(str2,"%df",precission);
-    asprintf(&str3,"%s%s",str1,str2);
-    sprintf(message,str3,f);
-
-    char * msg = NULL;
-    asprintf(&msg,"%s\r\n",message);
-    unistd::write(fd,msg,strlen(msg));
-}
-*/
 
 //------- END PRINTS --------//
 
@@ -541,7 +525,7 @@ size_t SerialPi::readBytes(char buffer[], size_t length)
 // The function terminates if the terminator character is detected,
 // the determined length has been read, or it times out.
 // Returns: number of characters read into the buffer.
-size_t  SerialPi::readBytesUntil(char terminator, char buffer[], size_t length)
+size_t SerialPi::readBytesUntil(char terminator, char buffer[], size_t length)
 {
     timespec time1, time2;
     clock_gettime(CLOCK_REALTIME, &time1);
@@ -560,32 +544,51 @@ size_t  SerialPi::readBytesUntil(char terminator, char buffer[], size_t length)
     return count;
 }
 
-/* TODO: Implement String first
-// Read a string until timeout or null char detected
-String Stream::readString()
+// Read a string until timeout
+String SerialPi::readString()
 {
+    String ret = "";
     timespec time1, time2;
+    char c = 0;
     clock_gettime(CLOCK_REALTIME, &time1);
-    int count = 0;
-    while (count < length) {
+    do {
         if (available()) {
-            unistd::read(fd,&buffer[count],1);
-            count ++;
+            unistd::read(fd,&c,1);
+            ret += (char)c;
         }
         clock_gettime(CLOCK_REALTIME, &time2);
         if (timeDiffmillis(time1,time2) > timeOut) break;
-    }
-    return count;
+    } while (c >= 0);
+    return ret;
 }
 
 
-// Read a string until timeout, null char detected or terminator detected
-String Stream::readStringUntil(char terminator)
+// Read a string until timeout or terminator is detected
+String SerialPi::readStringUntil(char terminator)
 {
+    String ret = "";
     timespec time1, time2;
+    char c = 0;
     clock_gettime(CLOCK_REALTIME, &time1);
+    do {
+        if (available()) {
+            unistd::read(fd,&c,1);
+            ret += (char)c;
+        }
+        clock_gettime(CLOCK_REALTIME, &time2);
+        if (timeDiffmillis(time1,time2) > timeOut) break;
+    } while (c >= 0 && c != terminator);
+    return ret;
+}
+
+// Reads a string unitl a termintor is given, this function blocks until the terminator is found.
+// Terminator character is not added to the char array and last character of the array
+// is always terminated with a null ('\0') character
+size_t SerialPi::readStringCommand(char terminator, char buffer[], size_t length)
+{
     int count = 0;
     char c;
+    if (length <= 0) return 0;
     while (count < length) {
         if (available()) {
             unistd::read(fd,&c,1);
@@ -593,12 +596,10 @@ String Stream::readStringUntil(char terminator)
             buffer[count] = c;
             count ++;
         }
-        clock_gettime(CLOCK_REALTIME, &time2);
-        if (timeDiffmillis(time1,time2) > timeOut) break;
     }
+    buffer[length-1] = '\0';
     return count;
 }
-*/
 
 // Sets the maximum milliseconds to wait for serial data when using 
 // readBytes(), readBytesUntil(), parseInt(), parseFloat(), findUnitl(), ...
