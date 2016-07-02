@@ -238,7 +238,7 @@ Serial, Wire, SPI
 * Make an Arduino.h header containing piDuino.h so developers don't need to change too much code. 
 * ~~Add arduino String object~~
 * Maybe add a SPISettings(..., bitsPerWord, CS(High?low)) and their bit routines config. to SPI. For bitPerWord transfer len will need to be multiplied by (bitsPerWord/8)
-* ~~Add string, String, (arg, ...) to prints.!!
+* ~~Add string, String, (arg, ...) to prints.~~
 * ~~Make an Arduino init function~~
 * ~~Implement an exit rutine when SIGINT (Ctrl^Z) to turn GPIO OFF~~
 
