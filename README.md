@@ -16,7 +16,7 @@ Serial, Wire, SPI
 **Notes:**
 * **B** some binary representation (e.g  B1000000[7 bits] and  B110[3 bits]) conflicts with some termios.h definitions so only 8 bit binary representations are supported (e.g B01000000[8 bits], B00010001[8 bits], etc). To represent a binary with less than 8 bits please use **0b** instead. 
 
----------------------------------------------------
+
 ## Implemented Arduino Functions
 
 **Notes:**
