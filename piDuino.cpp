@@ -35,7 +35,7 @@
 //          SerialPi class (UART)         //
 ////////////////////////////////////////////
 
-char SERIAL_DRIVER_NAME[] = "/dev/ttyAMA0";
+char SERIAL_DRIVER_NAME[128] = "/dev/ttyAMA0";
 
 ////  Public methods ////
 
@@ -705,7 +705,7 @@ char * SerialPi::int2bin(int n)
 //          WirePi class (I2C)             //
 ////////////////////////////////////////////
 
-char I2C_DRIVER_NAME[] = ""; // "" means search for any I2C device
+char I2C_DRIVER_NAME[128] = ""; // "" means search for any I2C device
 
 
 //// Private methods ///
@@ -1030,7 +1030,7 @@ uint8_t WirePi::endTransmission()
 //          SPIPi class (SPI)             //
 ////////////////////////////////////////////
 
-char SPI_DRIVER_NAME[] = ""; // "" means search for any SPI device
+char SPI_DRIVER_NAME[128] = ""; // "" means search for any SPI device
 SPISettings SPISET;
 
 ////  Private methods ////
@@ -1249,7 +1249,7 @@ void SPIPi::transfer(void *buf, size_t count)
 static volatile uint32_t *gpio_map = NULL;
 static bool g_open_gpiomem_flag = false;
 int g_gpio_pin_set[SOC_GPIO_PINS];           // Used to know which gpio pins are set (HIGH) or not set (LOW) 
-char GPIO_DRIVER_NAME[] = "/dev/gpiomem";
+char GPIO_DRIVER_NAME[128] = "/dev/gpiomem";
 
 // -- Analog I/O --
 #define BCM2708_PERI_BASE   0x20000000
@@ -1272,7 +1272,7 @@ int g_pwm_pin_set[SOC_GPIO_PINS];               // Used to know which pwm pins a
 int g_pwm_dutycycle_value[SOC_GPIO_PINS];       // Pwm duty cycle value of pwm pins
 int PWM_DUTYCYCLE_RESOLUTION = 256;             // Set pwm duty cycle resolution to 256 buts
 int PWM_DEFAULT_FREQUENCY = 490;                // Set default pwm frequency to 490 Hz (Arduino default pwm freq)
-char PWM_DRIVER_NAME[] = "/dev/mem";
+char PWM_DRIVER_NAME[128] = "/dev/mem";
 
 // Sets pin (gpio) mode as INPUT,INTPUT_PULLUP,INTPUT_PULLDOWN,OUTPUT,PWM_OUTPUT
 void pinMode(uint8_t pin, uint8_t mode)
