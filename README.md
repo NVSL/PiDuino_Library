@@ -14,10 +14,10 @@ Digital I/O, Analog I/O, Advanced I/O, Time, Math, Trigonometry, Random Numbers,
 Serial, Wire, SPI
 
 **Notes:**
-* **B** for binary representation (e.g B10100001) conflicts with some termios.h definitions so use **0b** instead. 
+* **B** some binary representation (e.g  B1000000[7 bits] and  B110[3 bits]) conflicts with some termios.h definitions so only 8 bit binary representations are supported (e.g B01000000[8 bits], B00010001[8 bits], etc). To represent a binary with less than 8 bits please use **0b** instead. 
 
-
-### Implemented Arduino Functions
+---------------------------------------------------
+## Implemented Arduino Functions
 
 **Notes:**
 * Functions that begin with (EXTRA) are functions that were added to provide extra functionality to the library.
@@ -233,7 +233,7 @@ Serial, Wire, SPI
 
 * ~~Make a SPI and I2C begin("/dev/i2c-x") to let developers choose any i2c-x number.~~ 
 * Check Linux i2c-slave. 
-* Maybe only add B(8 bits) only and that way prevent conflicts with termios.h
+* ~~Maybe only add B(8 bits) only and that way prevent conflicts with termios.h~~
 * Defintily separate files and make it C compatible (At the end)
 * Make an Arduino.h header containing piDuino.h so developers don't need to change too much code. 
 * ~~Add arduino String object~~
