@@ -1,5 +1,5 @@
 /*
-  piDuino.h - (piDuino) Arduino library for BCM283x SoCs running Linux.
+  Arduino.h - Arduino for linux (LinuxDuino) main loop
 
   Copyright (c) 2016 Jorge Garza <jgarzagu@ucsd.edu>
 
@@ -18,8 +18,8 @@
   Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA  02110-1301  USA
 */
 
-#ifndef piDuino_h
-#define piDuino_h
+#ifndef Arduino_h
+#define Arduino_h
 
 #include <stdio.h>
 #include <string.h>
@@ -28,8 +28,20 @@
 #include <time.h>
 #include "Core.h"
 #include "Serial.h"
-#include "Wire.h"
-#include "SPI.h"
 #include "WString.h"
+
+void setup(void);
+void loop(void);
+
+int main(void)
+{	
+	setup();
+    
+	for (;;) {
+		loop();
+	}
+        
+	return 0;
+}
 
 #endif

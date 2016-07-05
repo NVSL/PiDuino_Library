@@ -1,32 +1,22 @@
 /*
-*   piDuino Library
-*
-*   Arduino like functions for (Raspberry Pi Zero)
-*   piDuino is a fork of arduPi ->
-*   (https://www.cooking-hacks.com/documentation/tutorials/raspberry-pi-to-arduino-shields-connection-bridge/)
-*
-*   version: 1.0.0
-*   author: Jorge Garza (jgarzagu@gmail.com)
-*   
+  Core.cpp - piDuino Digital, PWM and Arduino functions
 
-    ### BCM283x Notes for GPIO and PWM
-    
-    - BCM283x  has a maximum of 54 GPIOS
-    - The BCM2835 contains 2 independent PWM channels (0 and 1) that uses
-    the same PWM clock as the base frequency. The following are the
-    available PWM pins for this chip:
-    GPIO PIN   RPi2 pin   PWM Channel  ALT FUN
-    12         YES        0            0
-    13         YES        1            0
-    18         YES        0            5
-    19         YES        1            5
-    40                    0            0
-    41                    1            0
-    45                    1            0
-    52                    0            1
-    53                    1            1
+  Copyright (c) 2016 Jorge Garza <jgarzagu@ucsd.edu>
+
+  This library is free software; you can redistribute it and/or
+  modify it under the terms of the GNU Lesser General Public
+  License as published by the Free Software Foundation; either
+  version 2.1 of the License, or (at your option) any later version.
+
+  This library is distributed in the hope that it will be useful,
+  but WITHOUT ANY WARRANTY; without even the implied warranty of
+  MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the GNU
+  Lesser General Public License for more details.
+
+  You should have received a copy of the GNU Lesser General Public
+  License along with this library; if not, write to the Free Software
+  Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA  02110-1301  USA
 */
-
 
 #include <errno.h>
 #include <fcntl.h>
@@ -43,6 +33,24 @@
 #include <linux/types.h>
 #include "Core.h"
 
+
+/* 
+    ### BCM283x SoC Notes for GPIO and PWM ###
+    - BCM283x SoCs have a maximum of 54 GPIOS
+    - BCM283x SoCs have 2 independent PWM channels (0 and 1) that uses
+    the same PWM clock as the base frequency. The following are the
+    available PWM pins for this chip:
+    GPIO PIN   RPi2 pin   PWM Channel  ALT FUN
+    12         YES        0            0
+    13         YES        1            0
+    18         YES        0            5
+    19         YES        1            5
+    40                    0            0
+    41                    1            0
+    45                    1            0
+    52                    0            1
+    53                    1            1
+*/
 
 
 /////////////////////////////////////////////
