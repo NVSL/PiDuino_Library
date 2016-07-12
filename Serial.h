@@ -24,10 +24,6 @@
 #include <stdint.h>
 #include "WString.h"
 
-// All functions of unistd.h must be called like this: unistd::the_function()
-namespace unistd {
-    #include <unistd.h>
-};
 
 /////////////////////////////////////////////
 //          SerialLinux class (UART)      //

@@ -23,11 +23,7 @@
 
 #include <stdint.h>
 #include <stdlib.h>
-
-// All functions of unistd.h must be called like this: unistd::the_function()
-namespace unistd {
-    #include <unistd.h>
-};
+  
 
 /////////////////////////////////////////////
 //          WireLinux class (I2C)         //

@@ -36,11 +36,6 @@
 #define pgm_read_float(addr) (*(const float *)(addr))
 #define pgm_read_ptr(addr) (*(const void *)(addr))
 
-// All functions of unistd.h must be called like this: unistd::the_function()
-namespace unistd {
-    #include <unistd.h>
-};
-
 
 // Arduino extra types
 typedef bool boolean;

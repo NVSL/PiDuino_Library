@@ -25,10 +25,6 @@
 #include <stdlib.h>
 #include <linux/spi/spidev.h>
 
-// All functions of unistd.h must be called like this: unistd::the_function()
-namespace unistd {
-    #include <unistd.h>
-};
 
 /////////////////////////////////////////////
 //          SPILinux class (SPI)          //

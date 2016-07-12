@@ -31,6 +31,8 @@
 #include <pthread.h>
 #include <poll.h>
 #include <linux/types.h>
+#include <unistd.h>
+#include <pthread.h>
 #include "Core.h"
 
 
@@ -129,7 +131,7 @@ void pinMode(uint8_t pin, uint8_t mode)
         gpio_map = (uint32_t *)mmap( NULL, BLOCK_SIZE, 
             PROT_READ|PROT_WRITE|PROT_EXEC, MAP_SHARED|MAP_LOCKED, mem_fd, GPIO_BASE);
 
-        if ((uint32_t)gpio_map < 0) {
+        if (gpio_map < 0) {
             fprintf(stderr, "%s(): gpio error: %s\n",__func__, strerror (errno));
             exit(1);
         }
@@ -155,9 +157,9 @@ void pinMode(uint8_t pin, uint8_t mode)
         } else { // mode == PULLOFF
            *(gpio_map+OFFSET_PULLUPDN) &= ~3;
         }
-        unistd::usleep(1);
+        usleep(1);
         *(gpio_map+clk_offset) = 1 << shift_offset;
-        unistd::usleep(1);
+        usleep(1);
         *(gpio_map+OFFSET_PULLUPDN) &= ~3;
         *(gpio_map+clk_offset) = 0;
 
@@ -199,7 +201,7 @@ void pinMode(uint8_t pin, uint8_t mode)
             pwm_map = (uint32_t *)mmap(NULL, BLOCK_SIZE, 
                 PROT_READ|PROT_WRITE|PROT_EXEC, MAP_SHARED|MAP_LOCKED, pwm_mem_fd, PWM_BASE);
 
-            if ((uint32_t)pwm_map < 0) {
+            if (pwm_map < 0) {
                 fprintf(stderr, "%s(): pwm error: %s\n", __func__, strerror (errno));
                 exit(1);
             }
@@ -207,7 +209,7 @@ void pinMode(uint8_t pin, uint8_t mode)
             clk_map = (uint32_t *)mmap(NULL, BLOCK_SIZE, 
                 PROT_READ|PROT_WRITE|PROT_EXEC, MAP_SHARED|MAP_LOCKED, pwm_mem_fd, CLOCK_BASE);
             
-            if ((uint32_t)clk_map < 0) {
+            if (clk_map < 0) {
                 fprintf(stderr, "%s(): pwm error: %s\n", __func__, strerror (errno));
                 exit(1);
             }
@@ -416,7 +418,7 @@ void setPwmFrequency (uint8_t pin, uint32_t frequency, uint32_t dutycycle)
 
     // stop clock and waiting for busy flag doesn't work, so kill clock
     *(clk_map + PWMCLK_CNTL) = 0x5A000000 | 0x01;
-    unistd::usleep(10);
+    usleep(10);
 
     // wait until busy flag is set 
     while ( (*(clk_map + PWMCLK_CNTL)) & 0x80);
@@ -470,7 +472,7 @@ void * toneThreadFunction(void *args)
     int pin = arguments->pin;
     unsigned long duration = arguments->duration;
 
-    unistd::usleep(duration*1000);
+    usleep(duration*1000);
     noTone(pin);
 
     return (NULL);
@@ -506,7 +508,7 @@ void tone(uint8_t pin, uint32_t frequency, unsigned long duration, uint32_t bloc
         // If block == false then start a thread that will stop the tone
         // after certain duration and parallely continue with the rest of the func. 
         if  (block) {
-            unistd::usleep(duration*1000);
+            usleep(duration*1000);
             noTone(pin);
         } else {
             pthread_create (threadId, NULL, toneThreadFunction, (void *)threadArgs);
@@ -620,13 +622,13 @@ unsigned long micros(void)
 // Sleep the specified milliseconds
 void delay(unsigned long millis)
 {
-    unistd::usleep(millis*1000);
+    usleep(millis*1000);
 }
 
 // Sleep the specified microseconds
 void delayMicroseconds(unsigned int us)
 {
-    unistd::usleep(us);
+    usleep(us);
 }
 
 /////////////////////////////////////////////
@@ -813,7 +815,7 @@ void * threadFunction(void *args)
     pfd.fd=fd;
     pfd.events=POLLPRI;
     
-    ret=unistd::read(fd,rdbuf,RDBUF_LEN-1);
+    ret=read(fd,rdbuf,RDBUF_LEN-1);
     if (ret<0) {
         fprintf(stderr, "%s(): gpio error: %s\n", __func__, strerror (errno));
         exit(1);
@@ -821,18 +823,18 @@ void * threadFunction(void *args)
     
     while(1) {
         memset(rdbuf, 0x00, RDBUF_LEN);
-        unistd::lseek(fd, 0, SEEK_SET);
+        lseek(fd, 0, SEEK_SET);
         ret=poll(&pfd, 1, -1);
         if (ret<0) {
             fprintf(stderr, "%s(): gpio error: %s\n", __func__, strerror (errno));
-            unistd::close(fd);
+            close(fd);
             exit(1);
         }
         if (ret==0) {
             // Timeout
             continue;
         }
-        ret=unistd::read(fd,rdbuf,RDBUF_LEN-1);
+        ret=read(fd,rdbuf,RDBUF_LEN-1);
         if (ret<0) {
             fprintf(stderr, "%s(): gpio error: %s\n", __func__, strerror (errno));
             exit(1);
@@ -882,7 +884,7 @@ void attachInterrupt(uint8_t pin, void (*f)(void), int mode)
     if (fp == NULL) {
         // First time may fail because the file may not be ready.
         // if that the case then we wait two seconds and try again.
-        unistd::sleep(2);
+        sleep(2);
         fp = fopen(interruptFile,"w");
         if (fp == NULL) {
             fprintf(stderr, "%s(): set gpio edge interrupt of (%s) error: %s\n",
