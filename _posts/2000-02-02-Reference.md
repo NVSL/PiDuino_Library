@@ -17,7 +17,7 @@ ___________________________________________________
 
 | Function | Implemented (YES/NO-Comment/In Progress) |
 | ------ | ----------- |
-| [pinMode(pin, mode)]({% post_url 2000-02-02-pinMode %})    | YES |
+| [pinMode(pin, mode)]({% post_url function-2000-02-02-pinMode %})    | YES |
 | digitalWrite(pin, value) | YES |
 | digitalRead(pin)  | YES |
 
