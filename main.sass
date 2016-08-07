@@ -1,0 +1,47 @@
+---
+---
+
+@import basic
+@import mixins
+
+$body: {% if site.style.body %}{{ site.style.body }}{% else %}white{% endif %}
+$padding: {% if site.style.padding %}{{ site.style.padding }}{% else %}33%{% endif %}
+$anchor: {% if site.style.anchor %}{{ site.style.anchor }}{% else %}false{% endif %}
+$nav: {% if site.style.nav %}{{ site.style.nav }}{% else %}#181818{% endif %}
+$headline: {% if site.style.headline %}{{ site.style.headline }}{% else %}#06f{% endif %}
+$description: {% if site.style.description %}{{ site.style.description }}{% else %}white{% endif %}
+
+body
+    +body_background($body, $padding)
+    > header, > footer
+        background: $nav
+        color: reduce($nav, 100%)
+    > div
+        background: $description
+        color: reduce($description, 100%)
+
+{% if site.style.serif-heading %}
+
+body > header h1
+    font-weight: normal
+
+h1, h2, h3, h4, h5, h6 
+    font-family: "TyponineSans", serif
+    letter-spacing: 2px
+    header &
+        text-transform: uppercase
+
+{% endif %}
+
+{% if site.style.headline %}
+
+body > div:first-of-type
+    background: $headline
+    color: reduce($headline, 100%)
+
+nav ul
+    margin: 0
+
+{% endif %}
+
+@import vendor

@@ -1,0 +1,18 @@
+---
+title: "Reference"
+---
+    {% for page in site.categories.reference %}
+      <article>
+        <header>
+        </header>
+        <div>
+  {{ page.excerpt }}
+        </div>
+        <!--
+        <p>By {% if page.author %}{{ page.author }}{% endif %} , Updated on: {% if page.date %}
+        <time datetime="{{ page.date | date_to_xmlschema }}">{{ page.date | date: "%b %-d, %Y" }}</time>{% endif %}
+        </p>
+        -->
+        <p>By {% if page.author %}{{ page.author }}{% endif %} , Updated on: {% if page.sdate %}{{page.sdate}}{% endif %}</p>
+      </article>
+    {% endfor %}

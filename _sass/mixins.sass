@@ -1,0 +1,40 @@
+@function reduce ($color, $percent)
+    @return if(lightness($color) > 50%, darken($color, $percent), lighten($color, $percent))
+
+=body_background($background, $padding)
+    $is_white: lightness($background) == 100%
+
+    background: $background
+
+    @if $is_white
+        > *
+            padding: 1em calc(#{$padding} - #{$padding / 3.5% * 1em})
+    @else
+        padding: 0 calc(#{$padding * 0.8} - #{$padding * 0.8 / 5% * 1em})
+        > *
+            padding: 1em calc(13% - 1.6em)
+
+=article_background($background, $anchor)
+    background: $background
+    color: reduce($background, 100%)
+
+    border-top-color: reduce($background, 12%)
+    tr:hover
+        background-color: reduce($background, 7%)
+    th
+        border-bottom-width: 2px
+    th, td
+        border-color: reduce($background, 14%)
+    header p
+        color: reduce($background, 60%)
+    div a
+        font-weight: if($anchor, inherit, 400)
+        color: if($anchor, reduce($anchor, 5%), inherit)
+        &:hover
+            color: gray
+    footer a
+        border-color: reduce($background, 100%)
+        border-width: 2px
+        &:hover
+            background-color: reduce($background, 100%)
+            color: $background

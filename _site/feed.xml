@@ -1,0 +1,1635 @@
+<?xml version="1.0" encoding="utf-8"?><?xml-stylesheet type="text/xml" href="/feed.xslt.xml"?><feed xmlns="http://www.w3.org/2005/Atom"><generator uri="http://jekyllrb.com" version="3.1.6">Jekyll</generator><link href="https://github.com/NVSL/PiDuino_Library/feed.xml" rel="self" type="application/atom+xml" /><link href="https://github.com/NVSL/PiDuino_Library/" rel="alternate" type="text/html" /><updated>2016-08-07T01:21:12-07:00</updated><id>https://github.com/NVSL/PiDuino_Library/</id><title>PiDuino Library</title><subtitle>Arduino library for Raspberry Pi</subtitle><author><name>Jorge Garza</name></author><entry><title>Piduino Library (libpiduino)</title><link href="https://github.com/NVSL/PiDuino_Library/index/2016/08/05/index.html" rel="alternate" type="text/html" title="Piduino Library (libpiduino)" /><published>2016-08-05T00:00:00-07:00</published><updated>2016-08-05T00:00:00-07:00</updated><id>https://github.com/NVSL/PiDuino_Library/index/2016/08/05/index</id><content type="html" xml:base="https://github.com/NVSL/PiDuino_Library/index/2016/08/05/index.html">&lt;p&gt;&lt;strong&gt;About&lt;/strong&gt;&lt;/p&gt;
+
+&lt;p&gt;&lt;strong&gt;Piduino Library (libpiduino)&lt;/strong&gt; is a C++ library that lets you write and compile Arduino programs for the Raspberry Pi. This library 
+targets the BCM283x SoC, all 54 pins, and not a specific set of pins of any Raspberry Pi (RPi) board.&lt;/p&gt;
+
+&lt;p&gt;This library &lt;strong&gt;does not support Analog to Digital Conversion (ADC)&lt;/strong&gt; functions as the BCM283x
+SoC does not have an integrated ADC and we don’t want to create hardware-dependant software. 
+If you need ADC is recomended to use external libraries.&lt;/p&gt;
+
+&lt;p&gt;Finally most of this library code was built so it can be easily exported to other plataforms like the Artik/Exynos SoCs
+ or Snapdragon SoCs in the future, if you want to export this library to other plataforms send me an email.&lt;/p&gt;
+
+&lt;p&gt;&lt;strong&gt;Install&lt;/strong&gt;&lt;/p&gt;
+
+&lt;p&gt;Open a terminal in your Raspberry Pi board and enter:&lt;/p&gt;
+
+&lt;div class=&quot;highlighter-rouge&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;sudo apt-get install TODO
+&lt;/code&gt;&lt;/pre&gt;
+&lt;/div&gt;
+
+&lt;p&gt;&lt;strong&gt;Setup&lt;/strong&gt;&lt;/p&gt;
+
+&lt;p&gt;To run this library correctly first setup the SPI, I2C and Serial Interfaces. To do this type:&lt;/p&gt;
+
+&lt;div class=&quot;highlighter-rouge&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;sudo raspi-config
+&lt;/code&gt;&lt;/pre&gt;
+&lt;/div&gt;
+
+&lt;p&gt;Go to Advanced options.&lt;/p&gt;
+
+&lt;p&gt;&lt;img src=&quot;images/rpi_config_1.png&quot; alt=&quot;rpi-advanced-options&quot; class=&quot;img-responsive&quot; /&gt;&lt;/p&gt;
+
+&lt;p&gt;Enable SPI and I2C Interfaces and disable Serial login shell.&lt;/p&gt;
+
+&lt;p&gt;&lt;img src=&quot;images/rpi_config_2.png&quot; alt=&quot;rpi-enable-interfaces&quot; class=&quot;img-responsive&quot; /&gt;&lt;/p&gt;
+
+&lt;ul&gt;
+  &lt;li&gt;Enable SPI Interface:    YES -&amp;gt; OK -&amp;gt; YES -&amp;gt; OK&lt;/li&gt;
+  &lt;li&gt;Enable I2C Interface:    YES -&amp;gt; OK -&amp;gt; YES -&amp;gt; OK&lt;/li&gt;
+  &lt;li&gt;Dsiable Serial login shell:    NO -&amp;gt; OK&lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;p&gt;Reboot your system.&lt;/p&gt;
+
+&lt;p&gt;Finally run this command to check that the SPI, I2C and Serial drivers are there.
+Note that the I2C number may be diferent depending on your board version.&lt;/p&gt;
+
+&lt;div class=&quot;highlighter-rouge&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;ls /dev/ | grep &#39;i2c-\|spidev\|ttyAMA0&#39;
+&lt;/code&gt;&lt;/pre&gt;
+&lt;/div&gt;
+
+&lt;p&gt;The outupt should be something like this:&lt;/p&gt;
+
+&lt;div class=&quot;highlighter-rouge&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;i2c-1
+spidev0.0
+spidev0.1
+ttyAMA0
+&lt;/code&gt;&lt;/pre&gt;
+&lt;/div&gt;
+
+&lt;p&gt;&lt;strong&gt;Run&lt;/strong&gt;&lt;/p&gt;
+
+&lt;p&gt;Once the setup is complete create a file, lets say test.cpp, and copy the following code:&lt;/p&gt;
+
+&lt;p&gt;test.cpp&lt;/p&gt;
+
+&lt;figure class=&quot;highlight&quot;&gt;&lt;pre&gt;&lt;code class=&quot;language-c&quot; data-lang=&quot;c&quot;&gt;&lt;span class=&quot;cp&quot;&gt;#include &amp;lt;Arduino.h&amp;gt;
+&lt;/span&gt;
+&lt;span class=&quot;kt&quot;&gt;int&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;ledPin&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;mi&quot;&gt;4&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;;&lt;/span&gt; &lt;span class=&quot;c1&quot;&gt;// GPIO4
+&lt;/span&gt;
+&lt;span class=&quot;kt&quot;&gt;void&lt;/span&gt; &lt;span class=&quot;nf&quot;&gt;setup&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;()&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;{&lt;/span&gt;
+        &lt;span class=&quot;n&quot;&gt;pinMode&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;ledPin&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;OUTPUT&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;);&lt;/span&gt;
+&lt;span class=&quot;p&quot;&gt;}&lt;/span&gt;
+
+&lt;span class=&quot;kt&quot;&gt;void&lt;/span&gt; &lt;span class=&quot;nf&quot;&gt;loop&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;()&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;{&lt;/span&gt;
+        &lt;span class=&quot;n&quot;&gt;printf&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;s&quot;&gt;&quot;LED ON&lt;/span&gt;&lt;span class=&quot;se&quot;&gt;\n&lt;/span&gt;&lt;span class=&quot;s&quot;&gt;&quot;&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;);&lt;/span&gt;
+        &lt;span class=&quot;n&quot;&gt;digitalWrite&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;ledPin&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;HIGH&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;);&lt;/span&gt;
+        &lt;span class=&quot;n&quot;&gt;delay&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;mi&quot;&gt;1000&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;);&lt;/span&gt;
+        &lt;span class=&quot;n&quot;&gt;printf&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;s&quot;&gt;&quot;LED OFF&lt;/span&gt;&lt;span class=&quot;se&quot;&gt;\n&lt;/span&gt;&lt;span class=&quot;s&quot;&gt;&quot;&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;);&lt;/span&gt;
+        &lt;span class=&quot;n&quot;&gt;digitalWrite&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;ledPin&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;LOW&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;);&lt;/span&gt;
+        &lt;span class=&quot;n&quot;&gt;delay&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;mi&quot;&gt;1000&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;);&lt;/span&gt;
+&lt;span class=&quot;p&quot;&gt;}&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/figure&gt;
+
+&lt;p&gt;Compile it.&lt;/p&gt;
+
+&lt;div class=&quot;highlighter-rouge&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;g++ -lpiduino test.cpp -o test
+&lt;/code&gt;&lt;/pre&gt;
+&lt;/div&gt;
+
+&lt;p&gt;Now connect an LED with its proper resistor (e.g. 330 ohms) to RPi GPIO 4.
+See which pin is GPIO 4 in your board in the RPi Pinout tab.&lt;/p&gt;
+
+&lt;p&gt;Don’t forget to ground your circuit with your RPi board !!&lt;/p&gt;
+
+&lt;p&gt;Run your program.&lt;/p&gt;
+
+&lt;div class=&quot;highlighter-rouge&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;./test
+&lt;/code&gt;&lt;/pre&gt;
+&lt;/div&gt;
+
+&lt;p&gt;Enjoy.&lt;/p&gt;
+
+&lt;p&gt;See the &lt;a href=&quot;/reference/2000/02/02/Reference.html&quot;&gt;Reference&lt;/a&gt; to see all the functions ported.&lt;/p&gt;
+
+&lt;p&gt;&lt;strong&gt;Optional&lt;/strong&gt;&lt;/p&gt;
+
+&lt;p&gt;If you want to compile an .ino file you can do it like below and use either g++ or gcc.&lt;/p&gt;
+
+&lt;div class=&quot;highlighter-rouge&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;g++ -lpiduino -x c++ test.ino -o test 
+&lt;/code&gt;&lt;/pre&gt;
+&lt;/div&gt;
+
+&lt;p&gt;If you want to include main() in your code you can call “piDuino.h”. piDuino.h has already all the headers of the Piduino library included so you don’t need to type Wire.h or SPI.h like as if you use Arduino.h.&lt;/p&gt;
+
+&lt;figure class=&quot;highlight&quot;&gt;&lt;pre&gt;&lt;code class=&quot;language-c&quot; data-lang=&quot;c&quot;&gt;&lt;span class=&quot;cp&quot;&gt;#include &quot;piDuino.h&quot;
+&lt;/span&gt;
+&lt;span class=&quot;kt&quot;&gt;int&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;ledPin&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;mi&quot;&gt;4&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;;&lt;/span&gt; &lt;span class=&quot;c1&quot;&gt;// GPIO4
+&lt;/span&gt;
+&lt;span class=&quot;kt&quot;&gt;void&lt;/span&gt; &lt;span class=&quot;nf&quot;&gt;setup&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;()&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;{&lt;/span&gt;
+        &lt;span class=&quot;n&quot;&gt;pinMode&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;ledPin&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;OUTPUT&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;);&lt;/span&gt;
+&lt;span class=&quot;p&quot;&gt;}&lt;/span&gt;
+
+&lt;span class=&quot;kt&quot;&gt;void&lt;/span&gt; &lt;span class=&quot;nf&quot;&gt;loop&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;()&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;{&lt;/span&gt;
+        &lt;span class=&quot;n&quot;&gt;printf&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;s&quot;&gt;&quot;LED ON&lt;/span&gt;&lt;span class=&quot;se&quot;&gt;\n&lt;/span&gt;&lt;span class=&quot;s&quot;&gt;&quot;&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;);&lt;/span&gt;
+        &lt;span class=&quot;n&quot;&gt;digitalWrite&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;ledPin&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;HIGH&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;);&lt;/span&gt;
+        &lt;span class=&quot;n&quot;&gt;delay&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;mi&quot;&gt;1000&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;);&lt;/span&gt;
+        &lt;span class=&quot;n&quot;&gt;printf&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;s&quot;&gt;&quot;LED OFF&lt;/span&gt;&lt;span class=&quot;se&quot;&gt;\n&lt;/span&gt;&lt;span class=&quot;s&quot;&gt;&quot;&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;);&lt;/span&gt;
+        &lt;span class=&quot;n&quot;&gt;digitalWrite&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;ledPin&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;LOW&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;);&lt;/span&gt;
+        &lt;span class=&quot;n&quot;&gt;delay&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;mi&quot;&gt;1000&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;);&lt;/span&gt;
+&lt;span class=&quot;p&quot;&gt;}&lt;/span&gt;
+
+&lt;span class=&quot;kt&quot;&gt;int&lt;/span&gt; &lt;span class=&quot;nf&quot;&gt;main&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;()&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;{&lt;/span&gt;
+	&lt;span class=&quot;n&quot;&gt;setup&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;();&lt;/span&gt;
+	&lt;span class=&quot;k&quot;&gt;while&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;mi&quot;&gt;1&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;){&lt;/span&gt;
+		&lt;span class=&quot;n&quot;&gt;loop&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;();&lt;/span&gt;
+	&lt;span class=&quot;p&quot;&gt;}&lt;/span&gt;
+	&lt;span class=&quot;k&quot;&gt;return&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;mi&quot;&gt;0&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;);&lt;/span&gt;
+&lt;span class=&quot;p&quot;&gt;}&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/figure&gt;
+
+&lt;p&gt;Thank you!.&lt;/p&gt;</content><author><name>Jorge Garza</name></author><summary>About
+
+Piduino Library (libpiduino) is a C++ library that lets you write and compile Arduino programs for the Raspberry Pi. This library 
+targets the BCM283x SoC, all 54 pins, and not a specific set of pins of any Raspberry Pi (RPi) board.
+
+This library does not support Analog to Digital Conversion (ADC) functions as the BCM283x
+SoC does not have an integrated ADC and we don’t want to create hardware-dependant software. 
+If you need ADC is recomended to use external libraries.
+
+Finally most of this library code was built so it can be easily exported to other plataforms like the Artik/Exynos SoCs
+ or Snapdragon SoCs in the future, if you want to export this library to other plataforms send me an email.
+
+Install
+
+Open a terminal in your Raspberry Pi board and enter:
+
+sudo apt-get install TODO
+
+
+
+Setup
+
+To run this library correctly first setup the SPI, I2C and Serial Interfaces. To do this type:
+
+sudo raspi-config
+
+
+
+Go to Advanced options.
+
+
+
+Enable SPI and I2C Interfaces and disable Serial login shell.
+
+
+
+
+  Enable SPI Interface:    YES -&amp;gt; OK -&amp;gt; YES -&amp;gt; OK
+  Enable I2C Interface:    YES -&amp;gt; OK -&amp;gt; YES -&amp;gt; OK
+  Dsiable Serial login shell:    NO -&amp;gt; OK
+
+
+Reboot your system.
+
+Finally run this command to check that the SPI, I2C and Serial drivers are there.
+Note that the I2C number may be diferent depending on your board version.
+
+ls /dev/ | grep &#39;i2c-\|spidev\|ttyAMA0&#39;
+
+
+
+The outupt should be something like this:
+
+i2c-1
+spidev0.0
+spidev0.1
+ttyAMA0
+
+
+
+Run
+
+Once the setup is complete create a file, lets say test.cpp, and copy the following code:
+
+test.cpp
+
+#include &amp;lt;Arduino.h&amp;gt;
+
+int ledPin = 4; // GPIO4
+
+void setup() {
+        pinMode(ledPin, OUTPUT);
+}
+
+void loop() {
+        printf(&quot;LED ON &quot;);
+        digitalWrite(ledPin, HIGH);
+        delay(1000);
+        printf(&quot;LED OFF &quot;);
+        digitalWrite(ledPin, LOW);
+        delay(1000);
+}
+
+Compile it.
+
+g++ -lpiduino test.cpp -o test
+
+
+
+Now connect an LED with its proper resistor (e.g. 330 ohms) to RPi GPIO 4.
+See which pin is GPIO 4 in your board in the RPi Pinout tab.
+
+Don’t forget to ground your circuit with your RPi board !!
+
+Run your program.
+
+./test
+
+
+
+Enjoy.
+
+See the Reference to see all the functions ported.
+
+Optional
+
+If you want to compile an .ino file you can do it like below and use either g++ or gcc.
+
+g++ -lpiduino -x c++ test.ino -o test 
+
+
+
+If you want to include main() in your code you can call “piDuino.h”. piDuino.h has already all the headers of the Piduino library included so you don’t need to type Wire.h or SPI.h like as if you use Arduino.h.
+
+#include &quot;piDuino.h&quot;
+
+int ledPin = 4; // GPIO4
+
+void setup() {
+        pinMode(ledPin, OUTPUT);
+}
+
+void loop() {
+        printf(&quot;LED ON &quot;);
+        digitalWrite(ledPin, HIGH);
+        delay(1000);
+        printf(&quot;LED OFF &quot;);
+        digitalWrite(ledPin, LOW);
+        delay(1000);
+}
+
+int main () {
+	setup();
+	while(1){
+		loop();
+	}
+	return (0);
+}
+
+Thank you!.</summary></entry><entry><title>pinMode</title><link href="https://github.com/NVSL/PiDuino_Library/function/2000/02/02/pinMode.html" rel="alternate" type="text/html" title="pinMode" /><published>2000-02-02T00:00:00-08:00</published><updated>2000-02-02T00:00:00-08:00</updated><id>https://github.com/NVSL/PiDuino_Library/function/2000/02/02/pinMode</id><content type="html" xml:base="https://github.com/NVSL/PiDuino_Library/function/2000/02/02/pinMode.html">&lt;h3 id=&quot;pinmodepin-mode&quot;&gt;pinMode(pin, mode)&lt;/h3&gt;
+
+&lt;p&gt;TODO&lt;/p&gt;</content><author><name>Jorge Garza</name></author><summary>pinMode(pin, mode)
+
+TODO</summary></entry><entry><title>Reference</title><link href="https://github.com/NVSL/PiDuino_Library/reference/2000/02/02/Reference.html" rel="alternate" type="text/html" title="Reference" /><published>2000-02-02T00:00:00-08:00</published><updated>2000-02-02T00:00:00-08:00</updated><id>https://github.com/NVSL/PiDuino_Library/reference/2000/02/02/Reference</id><content type="html" xml:base="https://github.com/NVSL/PiDuino_Library/reference/2000/02/02/Reference.html">&lt;h3 id=&quot;reference&quot;&gt;Reference&lt;/h3&gt;
+
+&lt;p&gt;&lt;strong&gt;PiDuino Library (libpiduino)&lt;/strong&gt; aims to support the core official Arduino functions published in the &lt;a href=&quot;https://www.arduino.cc/en/Reference/Libraries&quot;&gt;Arduino official website&lt;/a&gt; as of April 2016. Note that the Arduino API has many legacy functions that although keeped no longer used, the ported libraries and functions are only the ones published on the official website.&lt;/p&gt;
+
+&lt;p&gt;&lt;strong&gt;libpiduino 1.0.0&lt;/strong&gt; has 101 functions implemented out of 111 functions, this means that about &lt;strong&gt;90%&lt;/strong&gt; of the official Arduino functions are implemented. Also 10 (EXTRA) functions which give more functionality to the library were included.&lt;/p&gt;
+
+&lt;hr /&gt;
+
+&lt;h4 id=&quot;digital-io&quot;&gt;- Digital I/O&lt;/h4&gt;
+
+&lt;table&gt;
+  &lt;thead&gt;
+    &lt;tr&gt;
+      &lt;th&gt;Function&lt;/th&gt;
+      &lt;th&gt;Implemented (YES/NO-Comment/In Progress)&lt;/th&gt;
+    &lt;/tr&gt;
+  &lt;/thead&gt;
+  &lt;tbody&gt;
+    &lt;tr&gt;
+      &lt;td&gt;&lt;a href=&quot;/function/2000/02/02/pinMode.html&quot;&gt;pinMode(pin, mode)&lt;/a&gt;&lt;/td&gt;
+      &lt;td&gt;YES&lt;/td&gt;
+    &lt;/tr&gt;
+    &lt;tr&gt;
+      &lt;td&gt;digitalWrite(pin, value)&lt;/td&gt;
+      &lt;td&gt;YES&lt;/td&gt;
+    &lt;/tr&gt;
+    &lt;tr&gt;
+      &lt;td&gt;digitalRead(pin)&lt;/td&gt;
+      &lt;td&gt;YES&lt;/td&gt;
+    &lt;/tr&gt;
+  &lt;/tbody&gt;
+&lt;/table&gt;
+
+&lt;h4 id=&quot;analog-io-adc-and-pwm&quot;&gt;- Analog I/O (ADC and PWM)&lt;/h4&gt;
+
+&lt;table&gt;
+  &lt;thead&gt;
+    &lt;tr&gt;
+      &lt;th&gt;Function&lt;/th&gt;
+      &lt;th&gt;Implemented (YES/NO-Comment/In Progress)&lt;/th&gt;
+    &lt;/tr&gt;
+  &lt;/thead&gt;
+  &lt;tbody&gt;
+    &lt;tr&gt;
+      &lt;td&gt;analogReference(type)&lt;/td&gt;
+      &lt;td&gt;NO - No hardware support for RPi&lt;/td&gt;
+    &lt;/tr&gt;
+    &lt;tr&gt;
+      &lt;td&gt;analogRead(pin)&lt;/td&gt;
+      &lt;td&gt;NO - No hardware support for RPi&lt;/td&gt;
+    &lt;/tr&gt;
+    &lt;tr&gt;
+      &lt;td&gt;analogWrite(pin, value) - PWM&lt;/td&gt;
+      &lt;td&gt;YES&lt;/td&gt;
+    &lt;/tr&gt;
+    &lt;tr&gt;
+      &lt;td&gt;(EXTRA) setPwmDutyCycle (pin, dutycycle)&lt;/td&gt;
+      &lt;td&gt;YES&lt;/td&gt;
+    &lt;/tr&gt;
+    &lt;tr&gt;
+      &lt;td&gt;(EXTRA) setPwmFrequency (pin, frequency, dutycycle)&lt;/td&gt;
+      &lt;td&gt;YES&lt;/td&gt;
+    &lt;/tr&gt;
+    &lt;tr&gt;
+      &lt;td&gt;(EXTRA) setPwmFrequency (pin, frequency)&lt;/td&gt;
+      &lt;td&gt;YES&lt;/td&gt;
+    &lt;/tr&gt;
+    &lt;tr&gt;
+      &lt;td&gt;(EXTRA) setPwmPeriod (pin, microseconds)&lt;/td&gt;
+      &lt;td&gt;YES&lt;/td&gt;
+    &lt;/tr&gt;
+  &lt;/tbody&gt;
+&lt;/table&gt;
+
+&lt;h4 id=&quot;advanced-io&quot;&gt;- Advanced I/O&lt;/h4&gt;
+
+&lt;table&gt;
+  &lt;thead&gt;
+    &lt;tr&gt;
+      &lt;th&gt;Function&lt;/th&gt;
+      &lt;th&gt;Implemented (YES/NO-Comment/In Progress)&lt;/th&gt;
+    &lt;/tr&gt;
+  &lt;/thead&gt;
+  &lt;tbody&gt;
+    &lt;tr&gt;
+      &lt;td&gt;tone(pin, frequency)&lt;/td&gt;
+      &lt;td&gt;YES&lt;/td&gt;
+    &lt;/tr&gt;
+    &lt;tr&gt;
+      &lt;td&gt;tone(pin, frequency, duration)&lt;/td&gt;
+      &lt;td&gt;YES&lt;/td&gt;
+    &lt;/tr&gt;
+    &lt;tr&gt;
+      &lt;td&gt;noTone(pin)&lt;/td&gt;
+      &lt;td&gt;YES&lt;/td&gt;
+    &lt;/tr&gt;
+    &lt;tr&gt;
+      &lt;td&gt;shiftOut(dataPin, clockPin, bitOrder, value)&lt;/td&gt;
+      &lt;td&gt;YES&lt;/td&gt;
+    &lt;/tr&gt;
+    &lt;tr&gt;
+      &lt;td&gt;byte incoming = shiftIn(dataPin, clockPin, bitOrder)&lt;/td&gt;
+      &lt;td&gt;YES&lt;/td&gt;
+    &lt;/tr&gt;
+    &lt;tr&gt;
+      &lt;td&gt;pulseIn(pin, value)&lt;/td&gt;
+      &lt;td&gt;YES&lt;/td&gt;
+    &lt;/tr&gt;
+    &lt;tr&gt;
+      &lt;td&gt;pulseIn(pin, value, timeout)&lt;/td&gt;
+      &lt;td&gt;YES&lt;/td&gt;
+    &lt;/tr&gt;
+  &lt;/tbody&gt;
+&lt;/table&gt;
+
+&lt;h4 id=&quot;time&quot;&gt;- Time&lt;/h4&gt;
+
+&lt;table&gt;
+  &lt;thead&gt;
+    &lt;tr&gt;
+      &lt;th&gt;Function&lt;/th&gt;
+      &lt;th&gt;Implemented (YES/NO-Comment/In Progress)&lt;/th&gt;
+    &lt;/tr&gt;
+  &lt;/thead&gt;
+  &lt;tbody&gt;
+    &lt;tr&gt;
+      &lt;td&gt;time = millis()&lt;/td&gt;
+      &lt;td&gt;YES&lt;/td&gt;
+    &lt;/tr&gt;
+    &lt;tr&gt;
+      &lt;td&gt;time = micros()&lt;/td&gt;
+      &lt;td&gt;YES&lt;/td&gt;
+    &lt;/tr&gt;
+    &lt;tr&gt;
+      &lt;td&gt;delay(ms)&lt;/td&gt;
+      &lt;td&gt;YES&lt;/td&gt;
+    &lt;/tr&gt;
+    &lt;tr&gt;
+      &lt;td&gt;delayMicroseconds(us)&lt;/td&gt;
+      &lt;td&gt;YES&lt;/td&gt;
+    &lt;/tr&gt;
+  &lt;/tbody&gt;
+&lt;/table&gt;
+
+&lt;h4 id=&quot;math&quot;&gt;- Math&lt;/h4&gt;
+
+&lt;table&gt;
+  &lt;thead&gt;
+    &lt;tr&gt;
+      &lt;th&gt;Function&lt;/th&gt;
+      &lt;th&gt;Implemented (YES/NO-Comment/In Progress)&lt;/th&gt;
+    &lt;/tr&gt;
+  &lt;/thead&gt;
+  &lt;tbody&gt;
+    &lt;tr&gt;
+      &lt;td&gt;min(x, y)&lt;/td&gt;
+      &lt;td&gt;YES&lt;/td&gt;
+    &lt;/tr&gt;
+    &lt;tr&gt;
+      &lt;td&gt;max(x, y)&lt;/td&gt;
+      &lt;td&gt;YES&lt;/td&gt;
+    &lt;/tr&gt;
+    &lt;tr&gt;
+      &lt;td&gt;abs(x)&lt;/td&gt;
+      &lt;td&gt;YES&lt;/td&gt;
+    &lt;/tr&gt;
+    &lt;tr&gt;
+      &lt;td&gt;constrain(x, a, b)&lt;/td&gt;
+      &lt;td&gt;YES&lt;/td&gt;
+    &lt;/tr&gt;
+    &lt;tr&gt;
+      &lt;td&gt;map(value, fromLow, fromHigh, toLow, toHigh)&lt;/td&gt;
+      &lt;td&gt;YES&lt;/td&gt;
+    &lt;/tr&gt;
+    &lt;tr&gt;
+      &lt;td&gt;pow(base, exponent)&lt;/td&gt;
+      &lt;td&gt;YES&lt;/td&gt;
+    &lt;/tr&gt;
+    &lt;tr&gt;
+      &lt;td&gt;radians(deg)&lt;/td&gt;
+      &lt;td&gt;YES&lt;/td&gt;
+    &lt;/tr&gt;
+    &lt;tr&gt;
+      &lt;td&gt;degrees(rad)&lt;/td&gt;
+      &lt;td&gt;YES&lt;/td&gt;
+    &lt;/tr&gt;
+    &lt;tr&gt;
+      &lt;td&gt;sqrt(x)&lt;/td&gt;
+      &lt;td&gt;YES&lt;/td&gt;
+    &lt;/tr&gt;
+    &lt;tr&gt;
+      &lt;td&gt;sq(x)&lt;/td&gt;
+      &lt;td&gt;YES&lt;/td&gt;
+    &lt;/tr&gt;
+  &lt;/tbody&gt;
+&lt;/table&gt;
+
+&lt;h4 id=&quot;trigonometry&quot;&gt;- Trigonometry&lt;/h4&gt;
+
+&lt;table&gt;
+  &lt;thead&gt;
+    &lt;tr&gt;
+      &lt;th&gt;Function&lt;/th&gt;
+      &lt;th&gt;Implemented (YES/NO-Comment/In Progress)&lt;/th&gt;
+    &lt;/tr&gt;
+  &lt;/thead&gt;
+  &lt;tbody&gt;
+    &lt;tr&gt;
+      &lt;td&gt;sin(rad)&lt;/td&gt;
+      &lt;td&gt;YES&lt;/td&gt;
+    &lt;/tr&gt;
+    &lt;tr&gt;
+      &lt;td&gt;cos(rad)&lt;/td&gt;
+      &lt;td&gt;YES&lt;/td&gt;
+    &lt;/tr&gt;
+    &lt;tr&gt;
+      &lt;td&gt;tan(rad)&lt;/td&gt;
+      &lt;td&gt;YES&lt;/td&gt;
+    &lt;/tr&gt;
+  &lt;/tbody&gt;
+&lt;/table&gt;
+
+&lt;h4 id=&quot;characters&quot;&gt;- Characters&lt;/h4&gt;
+
+&lt;table&gt;
+  &lt;thead&gt;
+    &lt;tr&gt;
+      &lt;th&gt;Function&lt;/th&gt;
+      &lt;th&gt;Implemented (YES/NO-Comment/In Progress)&lt;/th&gt;
+    &lt;/tr&gt;
+  &lt;/thead&gt;
+  &lt;tbody&gt;
+    &lt;tr&gt;
+      &lt;td&gt;isAlphaNumeric(thisChar)&lt;/td&gt;
+      &lt;td&gt;YES&lt;/td&gt;
+    &lt;/tr&gt;
+    &lt;tr&gt;
+      &lt;td&gt;isAlpha(thisChar)&lt;/td&gt;
+      &lt;td&gt;YES&lt;/td&gt;
+    &lt;/tr&gt;
+    &lt;tr&gt;
+      &lt;td&gt;isAscii(thisChar)&lt;/td&gt;
+      &lt;td&gt;YES&lt;/td&gt;
+    &lt;/tr&gt;
+    &lt;tr&gt;
+      &lt;td&gt;isWhitespace(thisChar)&lt;/td&gt;
+      &lt;td&gt;YES&lt;/td&gt;
+    &lt;/tr&gt;
+    &lt;tr&gt;
+      &lt;td&gt;isControl(thisChar)&lt;/td&gt;
+      &lt;td&gt;YES&lt;/td&gt;
+    &lt;/tr&gt;
+    &lt;tr&gt;
+      &lt;td&gt;isDigit(thisChar)&lt;/td&gt;
+      &lt;td&gt;YES&lt;/td&gt;
+    &lt;/tr&gt;
+    &lt;tr&gt;
+      &lt;td&gt;isGraph(thisChar)&lt;/td&gt;
+      &lt;td&gt;YES&lt;/td&gt;
+    &lt;/tr&gt;
+    &lt;tr&gt;
+      &lt;td&gt;isLowerCase(thisChar)&lt;/td&gt;
+      &lt;td&gt;YES&lt;/td&gt;
+    &lt;/tr&gt;
+    &lt;tr&gt;
+      &lt;td&gt;isPrintable(thisChar)&lt;/td&gt;
+      &lt;td&gt;YES&lt;/td&gt;
+    &lt;/tr&gt;
+    &lt;tr&gt;
+      &lt;td&gt;isPunct(thisChar)&lt;/td&gt;
+      &lt;td&gt;YES&lt;/td&gt;
+    &lt;/tr&gt;
+    &lt;tr&gt;
+      &lt;td&gt;isSpace(thisChar)&lt;/td&gt;
+      &lt;td&gt;YES&lt;/td&gt;
+    &lt;/tr&gt;
+    &lt;tr&gt;
+      &lt;td&gt;isUpperCase(thisChar)&lt;/td&gt;
+      &lt;td&gt;YES&lt;/td&gt;
+    &lt;/tr&gt;
+    &lt;tr&gt;
+      &lt;td&gt;isHexadecimalDigit(thisChar)&lt;/td&gt;
+      &lt;td&gt;YES&lt;/td&gt;
+    &lt;/tr&gt;
+  &lt;/tbody&gt;
+&lt;/table&gt;
+
+&lt;h4 id=&quot;random-numbers&quot;&gt;- Random Numbers&lt;/h4&gt;
+
+&lt;table&gt;
+  &lt;thead&gt;
+    &lt;tr&gt;
+      &lt;th&gt;Function&lt;/th&gt;
+      &lt;th&gt;Implemented (YES/NO-Comment/In Progress)&lt;/th&gt;
+    &lt;/tr&gt;
+  &lt;/thead&gt;
+  &lt;tbody&gt;
+    &lt;tr&gt;
+      &lt;td&gt;randomSeed(seed)&lt;/td&gt;
+      &lt;td&gt;YES&lt;/td&gt;
+    &lt;/tr&gt;
+    &lt;tr&gt;
+      &lt;td&gt;random(max)&lt;/td&gt;
+      &lt;td&gt;YES&lt;/td&gt;
+    &lt;/tr&gt;
+    &lt;tr&gt;
+      &lt;td&gt;random(min, max)&lt;/td&gt;
+      &lt;td&gt;YES&lt;/td&gt;
+    &lt;/tr&gt;
+  &lt;/tbody&gt;
+&lt;/table&gt;
+
+&lt;h4 id=&quot;bits-and-bytes&quot;&gt;- Bits and Bytes&lt;/h4&gt;
+
+&lt;table&gt;
+  &lt;thead&gt;
+    &lt;tr&gt;
+      &lt;th&gt;Function&lt;/th&gt;
+      &lt;th&gt;Implemented (YES/NO-Comment/In Progress)&lt;/th&gt;
+    &lt;/tr&gt;
+  &lt;/thead&gt;
+  &lt;tbody&gt;
+    &lt;tr&gt;
+      &lt;td&gt;lowByte(x)&lt;/td&gt;
+      &lt;td&gt;YES&lt;/td&gt;
+    &lt;/tr&gt;
+    &lt;tr&gt;
+      &lt;td&gt;highByte(x)&lt;/td&gt;
+      &lt;td&gt;YES&lt;/td&gt;
+    &lt;/tr&gt;
+    &lt;tr&gt;
+      &lt;td&gt;bitRead(x, n)&lt;/td&gt;
+      &lt;td&gt;YES&lt;/td&gt;
+    &lt;/tr&gt;
+    &lt;tr&gt;
+      &lt;td&gt;bitWrite(x, n, b)&lt;/td&gt;
+      &lt;td&gt;YES&lt;/td&gt;
+    &lt;/tr&gt;
+    &lt;tr&gt;
+      &lt;td&gt;bitSet(x, n)&lt;/td&gt;
+      &lt;td&gt;YES&lt;/td&gt;
+    &lt;/tr&gt;
+    &lt;tr&gt;
+      &lt;td&gt;bitClear(x, n)&lt;/td&gt;
+      &lt;td&gt;YES&lt;/td&gt;
+    &lt;/tr&gt;
+    &lt;tr&gt;
+      &lt;td&gt;bit(n)&lt;/td&gt;
+      &lt;td&gt;YES&lt;/td&gt;
+    &lt;/tr&gt;
+  &lt;/tbody&gt;
+&lt;/table&gt;
+
+&lt;h4 id=&quot;external-interrupts&quot;&gt;- External Interrupts&lt;/h4&gt;
+
+&lt;table&gt;
+  &lt;thead&gt;
+    &lt;tr&gt;
+      &lt;th&gt;Function&lt;/th&gt;
+      &lt;th&gt;Implemented (YES/NO-Comment/In Progress)&lt;/th&gt;
+    &lt;/tr&gt;
+  &lt;/thead&gt;
+  &lt;tbody&gt;
+    &lt;tr&gt;
+      &lt;td&gt;attachInterrupt(digitalPinToInterrupt(pin), ISR, mode)&lt;/td&gt;
+      &lt;td&gt;YES&lt;/td&gt;
+    &lt;/tr&gt;
+    &lt;tr&gt;
+      &lt;td&gt;detachInterrupt(interrupt)&lt;/td&gt;
+      &lt;td&gt;YES&lt;/td&gt;
+    &lt;/tr&gt;
+    &lt;tr&gt;
+      &lt;td&gt;detachInterrupt(digitalPinToInterrupt(pin))&lt;/td&gt;
+      &lt;td&gt;YES&lt;/td&gt;
+    &lt;/tr&gt;
+  &lt;/tbody&gt;
+&lt;/table&gt;
+
+&lt;h4 id=&quot;interrupts&quot;&gt;- Interrupts&lt;/h4&gt;
+
+&lt;table&gt;
+  &lt;thead&gt;
+    &lt;tr&gt;
+      &lt;th&gt;Function&lt;/th&gt;
+      &lt;th&gt;Implemented (YES/NO-Comment/In Progress)&lt;/th&gt;
+    &lt;/tr&gt;
+  &lt;/thead&gt;
+  &lt;tbody&gt;
+    &lt;tr&gt;
+      &lt;td&gt;interrupts()&lt;/td&gt;
+      &lt;td&gt;In Progress&lt;/td&gt;
+    &lt;/tr&gt;
+    &lt;tr&gt;
+      &lt;td&gt;noInterrupts()&lt;/td&gt;
+      &lt;td&gt;In Progress&lt;/td&gt;
+    &lt;/tr&gt;
+  &lt;/tbody&gt;
+&lt;/table&gt;
+
+&lt;h4 id=&quot;serial&quot;&gt;- Serial&lt;/h4&gt;
+
+&lt;table&gt;
+  &lt;thead&gt;
+    &lt;tr&gt;
+      &lt;th&gt;Function&lt;/th&gt;
+      &lt;th&gt;Implemented (YES/NO-Comment/In Progress)&lt;/th&gt;
+    &lt;/tr&gt;
+  &lt;/thead&gt;
+  &lt;tbody&gt;
+    &lt;tr&gt;
+      &lt;td&gt;if (Serial)&lt;/td&gt;
+      &lt;td&gt;YES&lt;/td&gt;
+    &lt;/tr&gt;
+    &lt;tr&gt;
+      &lt;td&gt;Serial.available()&lt;/td&gt;
+      &lt;td&gt;YES&lt;/td&gt;
+    &lt;/tr&gt;
+    &lt;tr&gt;
+      &lt;td&gt;Serial.availableForWrite()&lt;/td&gt;
+      &lt;td&gt;YES&lt;/td&gt;
+    &lt;/tr&gt;
+    &lt;tr&gt;
+      &lt;td&gt;Serial.begin(speed)&lt;/td&gt;
+      &lt;td&gt;YES&lt;/td&gt;
+    &lt;/tr&gt;
+    &lt;tr&gt;
+      &lt;td&gt;Serial.begin(speed, config)&lt;/td&gt;
+      &lt;td&gt;YES&lt;/td&gt;
+    &lt;/tr&gt;
+    &lt;tr&gt;
+      &lt;td&gt;(EXTRA) Serial.begin(driverName, speed)&lt;/td&gt;
+      &lt;td&gt;YES&lt;/td&gt;
+    &lt;/tr&gt;
+    &lt;tr&gt;
+      &lt;td&gt;(EXTRA) Serial.begin(driverName, speed, config)&lt;/td&gt;
+      &lt;td&gt;YES&lt;/td&gt;
+    &lt;/tr&gt;
+    &lt;tr&gt;
+      &lt;td&gt;Serial.end()&lt;/td&gt;
+      &lt;td&gt;YES&lt;/td&gt;
+    &lt;/tr&gt;
+    &lt;tr&gt;
+      &lt;td&gt;Serial.find(target)&lt;/td&gt;
+      &lt;td&gt;YES&lt;/td&gt;
+    &lt;/tr&gt;
+    &lt;tr&gt;
+      &lt;td&gt;Serial.findUntil(target, terminal)&lt;/td&gt;
+      &lt;td&gt;YES&lt;/td&gt;
+    &lt;/tr&gt;
+    &lt;tr&gt;
+      &lt;td&gt;Serial.flush()&lt;/td&gt;
+      &lt;td&gt;YES&lt;/td&gt;
+    &lt;/tr&gt;
+    &lt;tr&gt;
+      &lt;td&gt;Serial.parseFloat()&lt;/td&gt;
+      &lt;td&gt;YES&lt;/td&gt;
+    &lt;/tr&gt;
+    &lt;tr&gt;
+      &lt;td&gt;Serial.parseInt()&lt;/td&gt;
+      &lt;td&gt;YES&lt;/td&gt;
+    &lt;/tr&gt;
+    &lt;tr&gt;
+      &lt;td&gt;Serial.parseInt(char skipChar)&lt;/td&gt;
+      &lt;td&gt;YES&lt;/td&gt;
+    &lt;/tr&gt;
+    &lt;tr&gt;
+      &lt;td&gt;Serial.peek()&lt;/td&gt;
+      &lt;td&gt;YES&lt;/td&gt;
+    &lt;/tr&gt;
+    &lt;tr&gt;
+      &lt;td&gt;Serial.print(val)&lt;/td&gt;
+      &lt;td&gt;YES&lt;/td&gt;
+    &lt;/tr&gt;
+    &lt;tr&gt;
+      &lt;td&gt;Serial.print(val, format)&lt;/td&gt;
+      &lt;td&gt;YES&lt;/td&gt;
+    &lt;/tr&gt;
+    &lt;tr&gt;
+      &lt;td&gt;Serial.println(val)&lt;/td&gt;
+      &lt;td&gt;YES&lt;/td&gt;
+    &lt;/tr&gt;
+    &lt;tr&gt;
+      &lt;td&gt;Serial.println(val, format)&lt;/td&gt;
+      &lt;td&gt;YES&lt;/td&gt;
+    &lt;/tr&gt;
+    &lt;tr&gt;
+      &lt;td&gt;(EXTRA) Serial.printf(format, …)&lt;/td&gt;
+      &lt;td&gt;YES&lt;/td&gt;
+    &lt;/tr&gt;
+    &lt;tr&gt;
+      &lt;td&gt;Serial.read()&lt;/td&gt;
+      &lt;td&gt;YES&lt;/td&gt;
+    &lt;/tr&gt;
+    &lt;tr&gt;
+      &lt;td&gt;Serial.readBytes(buffer, length)&lt;/td&gt;
+      &lt;td&gt;YES&lt;/td&gt;
+    &lt;/tr&gt;
+    &lt;tr&gt;
+      &lt;td&gt;Serial.readBytesUntil(character, buffer, length)&lt;/td&gt;
+      &lt;td&gt;YES&lt;/td&gt;
+    &lt;/tr&gt;
+    &lt;tr&gt;
+      &lt;td&gt;Serial.readString()&lt;/td&gt;
+      &lt;td&gt;YES&lt;/td&gt;
+    &lt;/tr&gt;
+    &lt;tr&gt;
+      &lt;td&gt;Serial.readStringUntil(terminator)&lt;/td&gt;
+      &lt;td&gt;YES&lt;/td&gt;
+    &lt;/tr&gt;
+    &lt;tr&gt;
+      &lt;td&gt;(EXRTA) Serial.readStringCommand(character, buffer, length)&lt;/td&gt;
+      &lt;td&gt;YES&lt;/td&gt;
+    &lt;/tr&gt;
+    &lt;tr&gt;
+      &lt;td&gt;Serial.setTimeout(time)&lt;/td&gt;
+      &lt;td&gt;YES&lt;/td&gt;
+    &lt;/tr&gt;
+    &lt;tr&gt;
+      &lt;td&gt;Serial.write(val)&lt;/td&gt;
+      &lt;td&gt;YES&lt;/td&gt;
+    &lt;/tr&gt;
+    &lt;tr&gt;
+      &lt;td&gt;Serial.write(str)&lt;/td&gt;
+      &lt;td&gt;YES&lt;/td&gt;
+    &lt;/tr&gt;
+    &lt;tr&gt;
+      &lt;td&gt;Serial.write(buf, len)&lt;/td&gt;
+      &lt;td&gt;YES&lt;/td&gt;
+    &lt;/tr&gt;
+    &lt;tr&gt;
+      &lt;td&gt;serialEvent()&lt;/td&gt;
+      &lt;td&gt;In Progress&lt;/td&gt;
+    &lt;/tr&gt;
+  &lt;/tbody&gt;
+&lt;/table&gt;
+
+&lt;h4 id=&quot;wire-i2c&quot;&gt;- Wire (I2C)&lt;/h4&gt;
+
+&lt;table&gt;
+  &lt;thead&gt;
+    &lt;tr&gt;
+      &lt;th&gt;Function&lt;/th&gt;
+      &lt;th&gt;Implemented (YES/NO-Comment/In Progress)&lt;/th&gt;
+    &lt;/tr&gt;
+  &lt;/thead&gt;
+  &lt;tbody&gt;
+    &lt;tr&gt;
+      &lt;td&gt;Wire.begin()&lt;/td&gt;
+      &lt;td&gt;YES&lt;/td&gt;
+    &lt;/tr&gt;
+    &lt;tr&gt;
+      &lt;td&gt;(EXTRA) Wire.begin(driverName)&lt;/td&gt;
+      &lt;td&gt;YES&lt;/td&gt;
+    &lt;/tr&gt;
+    &lt;tr&gt;
+      &lt;td&gt;Wire.begin(address)&lt;/td&gt;
+      &lt;td&gt;NO/In Progress - Linux I2C Slave driver was added recently, still verifying&lt;/td&gt;
+    &lt;/tr&gt;
+    &lt;tr&gt;
+      &lt;td&gt;Wire.requestFrom(address, quantity)&lt;/td&gt;
+      &lt;td&gt;YES&lt;/td&gt;
+    &lt;/tr&gt;
+    &lt;tr&gt;
+      &lt;td&gt;Wire.requestFrom(address, quantity, stop)&lt;/td&gt;
+      &lt;td&gt;NO - There is no way to send an I2C stop msg to the driver&lt;/td&gt;
+    &lt;/tr&gt;
+    &lt;tr&gt;
+      &lt;td&gt;Wire.beginTransmission(address)&lt;/td&gt;
+      &lt;td&gt;YES&lt;/td&gt;
+    &lt;/tr&gt;
+    &lt;tr&gt;
+      &lt;td&gt;Wire.endTransmission()&lt;/td&gt;
+      &lt;td&gt;YES&lt;/td&gt;
+    &lt;/tr&gt;
+    &lt;tr&gt;
+      &lt;td&gt;Wire.endTransmission(stop)&lt;/td&gt;
+      &lt;td&gt;NO - There is no way to send an I2C stop msg to the driver&lt;/td&gt;
+    &lt;/tr&gt;
+    &lt;tr&gt;
+      &lt;td&gt;Wire.write(value)&lt;/td&gt;
+      &lt;td&gt;YES&lt;/td&gt;
+    &lt;/tr&gt;
+    &lt;tr&gt;
+      &lt;td&gt;Wire.write(string)&lt;/td&gt;
+      &lt;td&gt;YES&lt;/td&gt;
+    &lt;/tr&gt;
+    &lt;tr&gt;
+      &lt;td&gt;Wire.write(data, length)&lt;/td&gt;
+      &lt;td&gt;YES&lt;/td&gt;
+    &lt;/tr&gt;
+    &lt;tr&gt;
+      &lt;td&gt;Wire.available()&lt;/td&gt;
+      &lt;td&gt;YES&lt;/td&gt;
+    &lt;/tr&gt;
+    &lt;tr&gt;
+      &lt;td&gt;Wire.read()&lt;/td&gt;
+      &lt;td&gt;YES&lt;/td&gt;
+    &lt;/tr&gt;
+    &lt;tr&gt;
+      &lt;td&gt;Wire.onReceive(handler)&lt;/td&gt;
+      &lt;td&gt;NO/In Progress - Linux I2C Slave driver was added recently, still verifying&lt;/td&gt;
+    &lt;/tr&gt;
+    &lt;tr&gt;
+      &lt;td&gt;Wire.onRequest(handler)&lt;/td&gt;
+      &lt;td&gt;NO/In Progress - Linux I2C Slave driver was added recently, still verifying&lt;/td&gt;
+    &lt;/tr&gt;
+  &lt;/tbody&gt;
+&lt;/table&gt;
+
+&lt;h4 id=&quot;spi&quot;&gt;- SPI&lt;/h4&gt;
+
+&lt;table&gt;
+  &lt;thead&gt;
+    &lt;tr&gt;
+      &lt;th&gt;Function&lt;/th&gt;
+      &lt;th&gt;Implemented (YES/NO-Comment/In Progress)&lt;/th&gt;
+    &lt;/tr&gt;
+  &lt;/thead&gt;
+  &lt;tbody&gt;
+    &lt;tr&gt;
+      &lt;td&gt;SPISettings&lt;/td&gt;
+      &lt;td&gt;YES&lt;/td&gt;
+    &lt;/tr&gt;
+    &lt;tr&gt;
+      &lt;td&gt;SPI.begin()&lt;/td&gt;
+      &lt;td&gt;YES&lt;/td&gt;
+    &lt;/tr&gt;
+    &lt;tr&gt;
+      &lt;td&gt;(EXTRA) SPI.begin(driverName)&lt;/td&gt;
+      &lt;td&gt;YES&lt;/td&gt;
+    &lt;/tr&gt;
+    &lt;tr&gt;
+      &lt;td&gt;SPI.end()&lt;/td&gt;
+      &lt;td&gt;YES&lt;/td&gt;
+    &lt;/tr&gt;
+    &lt;tr&gt;
+      &lt;td&gt;SPI.beginTransaction(mySettings)&lt;/td&gt;
+      &lt;td&gt;YES&lt;/td&gt;
+    &lt;/tr&gt;
+    &lt;tr&gt;
+      &lt;td&gt;SPI.endTransaction()&lt;/td&gt;
+      &lt;td&gt;YES&lt;/td&gt;
+    &lt;/tr&gt;
+    &lt;tr&gt;
+      &lt;td&gt;SPI.setBitOrder(order)&lt;/td&gt;
+      &lt;td&gt;YES&lt;/td&gt;
+    &lt;/tr&gt;
+    &lt;tr&gt;
+      &lt;td&gt;SPI.setClockDivider(divider)&lt;/td&gt;
+      &lt;td&gt;YES - Sets clock or if you use dividers (e.g SPI_CLOCK_DIV4) then sets clock at the divider speed for a 16Mhz Arduino microcontroller&lt;/td&gt;
+    &lt;/tr&gt;
+    &lt;tr&gt;
+      &lt;td&gt;SPI.setDataMode(mode)&lt;/td&gt;
+      &lt;td&gt;YES&lt;/td&gt;
+    &lt;/tr&gt;
+    &lt;tr&gt;
+      &lt;td&gt;receivedVal = SPI.transfer(val)&lt;/td&gt;
+      &lt;td&gt;YES&lt;/td&gt;
+    &lt;/tr&gt;
+    &lt;tr&gt;
+      &lt;td&gt;receivedVal16 = SPI.transfer16(val16)&lt;/td&gt;
+      &lt;td&gt;NO - Is almost depreceated and could be fixed better adding a bitsPerWord in settings that includes 16 bits and 32 bits&lt;/td&gt;
+    &lt;/tr&gt;
+    &lt;tr&gt;
+      &lt;td&gt;SPI.transfer(buffer, size)&lt;/td&gt;
+      &lt;td&gt;YES&lt;/td&gt;
+    &lt;/tr&gt;
+    &lt;tr&gt;
+      &lt;td&gt;SPI.usingInterrupt(interruptNumber)&lt;/td&gt;
+      &lt;td&gt;In Progress&lt;/td&gt;
+    &lt;/tr&gt;
+  &lt;/tbody&gt;
+&lt;/table&gt;
+
+&lt;p&gt;&lt;strong&gt;Notes:&lt;/strong&gt;&lt;/p&gt;
+
+&lt;p&gt;&lt;strong&gt;B&lt;/strong&gt; binary representation (e.g  &lt;strong&gt;B1000000&lt;/strong&gt;[7 bits] and  &lt;strong&gt;B110&lt;/strong&gt;[3 bits]) conflicts with some termios.h definitions so only 8 bit binary representations are supported (e.g &lt;strong&gt;B01000000&lt;/strong&gt;[8 bits], &lt;strong&gt;B00010001&lt;/strong&gt;[8 bits], etc). To represent a binary with less or more than 8 bits please use &lt;strong&gt;0b&lt;/strong&gt; instead.&lt;/p&gt;</content><author><name>Jorge Garza</name></author><summary>Reference
+
+PiDuino Library (libpiduino) aims to support the core official Arduino functions published in the Arduino official website as of April 2016. Note that the Arduino API has many legacy functions that although keeped no longer used, the ported libraries and functions are only the ones published on the official website.
+
+libpiduino 1.0.0 has 101 functions implemented out of 111 functions, this means that about 90% of the official Arduino functions are implemented. Also 10 (EXTRA) functions which give more functionality to the library were included.
+
+
+
+- Digital I/O
+
+
+  
+    
+      Function
+      Implemented (YES/NO-Comment/In Progress)
+    
+  
+  
+    
+      pinMode(pin, mode)
+      YES
+    
+    
+      digitalWrite(pin, value)
+      YES
+    
+    
+      digitalRead(pin)
+      YES
+    
+  
+
+
+- Analog I/O (ADC and PWM)
+
+
+  
+    
+      Function
+      Implemented (YES/NO-Comment/In Progress)
+    
+  
+  
+    
+      analogReference(type)
+      NO - No hardware support for RPi
+    
+    
+      analogRead(pin)
+      NO - No hardware support for RPi
+    
+    
+      analogWrite(pin, value) - PWM
+      YES
+    
+    
+      (EXTRA) setPwmDutyCycle (pin, dutycycle)
+      YES
+    
+    
+      (EXTRA) setPwmFrequency (pin, frequency, dutycycle)
+      YES
+    
+    
+      (EXTRA) setPwmFrequency (pin, frequency)
+      YES
+    
+    
+      (EXTRA) setPwmPeriod (pin, microseconds)
+      YES
+    
+  
+
+
+- Advanced I/O
+
+
+  
+    
+      Function
+      Implemented (YES/NO-Comment/In Progress)
+    
+  
+  
+    
+      tone(pin, frequency)
+      YES
+    
+    
+      tone(pin, frequency, duration)
+      YES
+    
+    
+      noTone(pin)
+      YES
+    
+    
+      shiftOut(dataPin, clockPin, bitOrder, value)
+      YES
+    
+    
+      byte incoming = shiftIn(dataPin, clockPin, bitOrder)
+      YES
+    
+    
+      pulseIn(pin, value)
+      YES
+    
+    
+      pulseIn(pin, value, timeout)
+      YES
+    
+  
+
+
+- Time
+
+
+  
+    
+      Function
+      Implemented (YES/NO-Comment/In Progress)
+    
+  
+  
+    
+      time = millis()
+      YES
+    
+    
+      time = micros()
+      YES
+    
+    
+      delay(ms)
+      YES
+    
+    
+      delayMicroseconds(us)
+      YES
+    
+  
+
+
+- Math
+
+
+  
+    
+      Function
+      Implemented (YES/NO-Comment/In Progress)
+    
+  
+  
+    
+      min(x, y)
+      YES
+    
+    
+      max(x, y)
+      YES
+    
+    
+      abs(x)
+      YES
+    
+    
+      constrain(x, a, b)
+      YES
+    
+    
+      map(value, fromLow, fromHigh, toLow, toHigh)
+      YES
+    
+    
+      pow(base, exponent)
+      YES
+    
+    
+      radians(deg)
+      YES
+    
+    
+      degrees(rad)
+      YES
+    
+    
+      sqrt(x)
+      YES
+    
+    
+      sq(x)
+      YES
+    
+  
+
+
+- Trigonometry
+
+
+  
+    
+      Function
+      Implemented (YES/NO-Comment/In Progress)
+    
+  
+  
+    
+      sin(rad)
+      YES
+    
+    
+      cos(rad)
+      YES
+    
+    
+      tan(rad)
+      YES
+    
+  
+
+
+- Characters
+
+
+  
+    
+      Function
+      Implemented (YES/NO-Comment/In Progress)
+    
+  
+  
+    
+      isAlphaNumeric(thisChar)
+      YES
+    
+    
+      isAlpha(thisChar)
+      YES
+    
+    
+      isAscii(thisChar)
+      YES
+    
+    
+      isWhitespace(thisChar)
+      YES
+    
+    
+      isControl(thisChar)
+      YES
+    
+    
+      isDigit(thisChar)
+      YES
+    
+    
+      isGraph(thisChar)
+      YES
+    
+    
+      isLowerCase(thisChar)
+      YES
+    
+    
+      isPrintable(thisChar)
+      YES
+    
+    
+      isPunct(thisChar)
+      YES
+    
+    
+      isSpace(thisChar)
+      YES
+    
+    
+      isUpperCase(thisChar)
+      YES
+    
+    
+      isHexadecimalDigit(thisChar)
+      YES
+    
+  
+
+
+- Random Numbers
+
+
+  
+    
+      Function
+      Implemented (YES/NO-Comment/In Progress)
+    
+  
+  
+    
+      randomSeed(seed)
+      YES
+    
+    
+      random(max)
+      YES
+    
+    
+      random(min, max)
+      YES
+    
+  
+
+
+- Bits and Bytes
+
+
+  
+    
+      Function
+      Implemented (YES/NO-Comment/In Progress)
+    
+  
+  
+    
+      lowByte(x)
+      YES
+    
+    
+      highByte(x)
+      YES
+    
+    
+      bitRead(x, n)
+      YES
+    
+    
+      bitWrite(x, n, b)
+      YES
+    
+    
+      bitSet(x, n)
+      YES
+    
+    
+      bitClear(x, n)
+      YES
+    
+    
+      bit(n)
+      YES
+    
+  
+
+
+- External Interrupts
+
+
+  
+    
+      Function
+      Implemented (YES/NO-Comment/In Progress)
+    
+  
+  
+    
+      attachInterrupt(digitalPinToInterrupt(pin), ISR, mode)
+      YES
+    
+    
+      detachInterrupt(interrupt)
+      YES
+    
+    
+      detachInterrupt(digitalPinToInterrupt(pin))
+      YES
+    
+  
+
+
+- Interrupts
+
+
+  
+    
+      Function
+      Implemented (YES/NO-Comment/In Progress)
+    
+  
+  
+    
+      interrupts()
+      In Progress
+    
+    
+      noInterrupts()
+      In Progress
+    
+  
+
+
+- Serial
+
+
+  
+    
+      Function
+      Implemented (YES/NO-Comment/In Progress)
+    
+  
+  
+    
+      if (Serial)
+      YES
+    
+    
+      Serial.available()
+      YES
+    
+    
+      Serial.availableForWrite()
+      YES
+    
+    
+      Serial.begin(speed)
+      YES
+    
+    
+      Serial.begin(speed, config)
+      YES
+    
+    
+      (EXTRA) Serial.begin(driverName, speed)
+      YES
+    
+    
+      (EXTRA) Serial.begin(driverName, speed, config)
+      YES
+    
+    
+      Serial.end()
+      YES
+    
+    
+      Serial.find(target)
+      YES
+    
+    
+      Serial.findUntil(target, terminal)
+      YES
+    
+    
+      Serial.flush()
+      YES
+    
+    
+      Serial.parseFloat()
+      YES
+    
+    
+      Serial.parseInt()
+      YES
+    
+    
+      Serial.parseInt(char skipChar)
+      YES
+    
+    
+      Serial.peek()
+      YES
+    
+    
+      Serial.print(val)
+      YES
+    
+    
+      Serial.print(val, format)
+      YES
+    
+    
+      Serial.println(val)
+      YES
+    
+    
+      Serial.println(val, format)
+      YES
+    
+    
+      (EXTRA) Serial.printf(format, …)
+      YES
+    
+    
+      Serial.read()
+      YES
+    
+    
+      Serial.readBytes(buffer, length)
+      YES
+    
+    
+      Serial.readBytesUntil(character, buffer, length)
+      YES
+    
+    
+      Serial.readString()
+      YES
+    
+    
+      Serial.readStringUntil(terminator)
+      YES
+    
+    
+      (EXRTA) Serial.readStringCommand(character, buffer, length)
+      YES
+    
+    
+      Serial.setTimeout(time)
+      YES
+    
+    
+      Serial.write(val)
+      YES
+    
+    
+      Serial.write(str)
+      YES
+    
+    
+      Serial.write(buf, len)
+      YES
+    
+    
+      serialEvent()
+      In Progress
+    
+  
+
+
+- Wire (I2C)
+
+
+  
+    
+      Function
+      Implemented (YES/NO-Comment/In Progress)
+    
+  
+  
+    
+      Wire.begin()
+      YES
+    
+    
+      (EXTRA) Wire.begin(driverName)
+      YES
+    
+    
+      Wire.begin(address)
+      NO/In Progress - Linux I2C Slave driver was added recently, still verifying
+    
+    
+      Wire.requestFrom(address, quantity)
+      YES
+    
+    
+      Wire.requestFrom(address, quantity, stop)
+      NO - There is no way to send an I2C stop msg to the driver
+    
+    
+      Wire.beginTransmission(address)
+      YES
+    
+    
+      Wire.endTransmission()
+      YES
+    
+    
+      Wire.endTransmission(stop)
+      NO - There is no way to send an I2C stop msg to the driver
+    
+    
+      Wire.write(value)
+      YES
+    
+    
+      Wire.write(string)
+      YES
+    
+    
+      Wire.write(data, length)
+      YES
+    
+    
+      Wire.available()
+      YES
+    
+    
+      Wire.read()
+      YES
+    
+    
+      Wire.onReceive(handler)
+      NO/In Progress - Linux I2C Slave driver was added recently, still verifying
+    
+    
+      Wire.onRequest(handler)
+      NO/In Progress - Linux I2C Slave driver was added recently, still verifying
+    
+  
+
+
+- SPI
+
+
+  
+    
+      Function
+      Implemented (YES/NO-Comment/In Progress)
+    
+  
+  
+    
+      SPISettings
+      YES
+    
+    
+      SPI.begin()
+      YES
+    
+    
+      (EXTRA) SPI.begin(driverName)
+      YES
+    
+    
+      SPI.end()
+      YES
+    
+    
+      SPI.beginTransaction(mySettings)
+      YES
+    
+    
+      SPI.endTransaction()
+      YES
+    
+    
+      SPI.setBitOrder(order)
+      YES
+    
+    
+      SPI.setClockDivider(divider)
+      YES - Sets clock or if you use dividers (e.g SPI_CLOCK_DIV4) then sets clock at the divider speed for a 16Mhz Arduino microcontroller
+    
+    
+      SPI.setDataMode(mode)
+      YES
+    
+    
+      receivedVal = SPI.transfer(val)
+      YES
+    
+    
+      receivedVal16 = SPI.transfer16(val16)
+      NO - Is almost depreceated and could be fixed better adding a bitsPerWord in settings that includes 16 bits and 32 bits
+    
+    
+      SPI.transfer(buffer, size)
+      YES
+    
+    
+      SPI.usingInterrupt(interruptNumber)
+      In Progress
+    
+  
+
+
+Notes:
+
+B binary representation (e.g  B1000000[7 bits] and  B110[3 bits]) conflicts with some termios.h definitions so only 8 bit binary representations are supported (e.g B01000000[8 bits], B00010001[8 bits], etc). To represent a binary with less or more than 8 bits please use 0b instead.</summary></entry></feed>

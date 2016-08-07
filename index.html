@@ -1,0 +1,17 @@
+---
+layout: blank
+---
+    {% for page in site.categories.index %}
+      <article>
+        <header>
+          <!-- <h2>{{ page.title }}</h2> -->
+        </header>
+        <div>
+  {{ page.excerpt }}
+        </div>
+        <p>By {% if page.author %}{{ page.author }}{% endif %} , Updated on: {% if page.date %}
+        <time datetime="{{ page.date | date_to_xmlschema }}">{{ page.date | date: "%b %-d, %Y" }}</time>{% endif %}
+        </p>
+      </article>
+    {% endfor %}
+

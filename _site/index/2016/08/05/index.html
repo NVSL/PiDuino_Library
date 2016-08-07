@@ -1,0 +1,183 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <!-- Niklas Buschmann 2015 MIT <http://github.com/niklasbuschmann> -->
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta charset="utf-8">
+    <meta name="author" content="Jorge Garza">
+    <meta name="description" content="Arduino library for Raspberry Pi">
+    <title> Piduino Library (libpiduino) › PiDuino Library</title>
+    <link rel="canonical" href="https://github.com/NVSL/PiDuino_Library/index/2016/08/05/index.html">
+    <link href="/main.css" rel="stylesheet" type="text/css">
+    <link href='//fonts.googleapis.com/css?family=Source+Sans+Pro:200,300,400,600,700,200italic,300italic,400italic,600italic,700italic' rel='stylesheet' type='text/css'>
+    <link href='//fonts.googleapis.com/css?family=Gentium+Basic:400,700,400italic,700italic' rel='stylesheet' type='text/css'>
+    <link href='//maxcdn.bootstrapcdn.com/font-awesome/4.2.0/css/font-awesome.min.css' rel='stylesheet' type='text/css'>
+    <link type="application/atom+xml" rel="alternate" href="https://github.com/NVSL/PiDuino_Library/feed.xml" title="PiDuino Library" />
+    
+    
+  </head>
+  <body>
+    <header>
+      <h1><a href="/">PiDuino Library</a></h1>
+      <nav>
+        <ul>
+          <li><a href="/">Home</a></li><li><a href="/Reference.html">Reference</a></li>
+        </ul>
+      </nav>
+    </header>
+    
+    
+    <article>
+          <p><strong>About</strong></p>
+
+<p><strong>Piduino Library (libpiduino)</strong> is a C++ library that lets you write and compile Arduino programs for the Raspberry Pi. This library 
+targets the BCM283x SoC, all 54 pins, and not a specific set of pins of any Raspberry Pi (RPi) board.</p>
+
+<p>This library <strong>does not support Analog to Digital Conversion (ADC)</strong> functions as the BCM283x
+SoC does not have an integrated ADC and we don’t want to create hardware-dependant software. 
+If you need ADC is recomended to use external libraries.</p>
+
+<p>Finally most of this library code was built so it can be easily exported to other plataforms like the Artik/Exynos SoCs
+ or Snapdragon SoCs in the future, if you want to export this library to other plataforms send me an email.</p>
+
+<p><strong>Install</strong></p>
+
+<p>Open a terminal in your Raspberry Pi board and enter:</p>
+
+<div class="highlighter-rouge"><pre class="highlight"><code>sudo apt-get install TODO
+</code></pre>
+</div>
+
+<p><strong>Setup</strong></p>
+
+<p>To run this library correctly first setup the SPI, I2C and Serial Interfaces. To do this type:</p>
+
+<div class="highlighter-rouge"><pre class="highlight"><code>sudo raspi-config
+</code></pre>
+</div>
+
+<p>Go to Advanced options.</p>
+
+<p><img src="images/rpi_config_1.png" alt="rpi-advanced-options" class="img-responsive" /></p>
+
+<p>Enable SPI and I2C Interfaces and disable Serial login shell.</p>
+
+<p><img src="images/rpi_config_2.png" alt="rpi-enable-interfaces" class="img-responsive" /></p>
+
+<ul>
+  <li>Enable SPI Interface:    YES -&gt; OK -&gt; YES -&gt; OK</li>
+  <li>Enable I2C Interface:    YES -&gt; OK -&gt; YES -&gt; OK</li>
+  <li>Dsiable Serial login shell:    NO -&gt; OK</li>
+</ul>
+
+<p>Reboot your system.</p>
+
+<p>Finally run this command to check that the SPI, I2C and Serial drivers are there.
+Note that the I2C number may be diferent depending on your board version.</p>
+
+<div class="highlighter-rouge"><pre class="highlight"><code>ls /dev/ | grep 'i2c-\|spidev\|ttyAMA0'
+</code></pre>
+</div>
+
+<p>The outupt should be something like this:</p>
+
+<div class="highlighter-rouge"><pre class="highlight"><code>i2c-1
+spidev0.0
+spidev0.1
+ttyAMA0
+</code></pre>
+</div>
+
+<p><strong>Run</strong></p>
+
+<p>Once the setup is complete create a file, lets say test.cpp, and copy the following code:</p>
+
+<p>test.cpp</p>
+
+<figure class="highlight"><pre><code class="language-c" data-lang="c"><span class="cp">#include &lt;Arduino.h&gt;
+</span>
+<span class="kt">int</span> <span class="n">ledPin</span> <span class="o">=</span> <span class="mi">4</span><span class="p">;</span> <span class="c1">// GPIO4
+</span>
+<span class="kt">void</span> <span class="nf">setup</span><span class="p">()</span> <span class="p">{</span>
+        <span class="n">pinMode</span><span class="p">(</span><span class="n">ledPin</span><span class="p">,</span> <span class="n">OUTPUT</span><span class="p">);</span>
+<span class="p">}</span>
+
+<span class="kt">void</span> <span class="nf">loop</span><span class="p">()</span> <span class="p">{</span>
+        <span class="n">printf</span><span class="p">(</span><span class="s">"LED ON</span><span class="se">\n</span><span class="s">"</span><span class="p">);</span>
+        <span class="n">digitalWrite</span><span class="p">(</span><span class="n">ledPin</span><span class="p">,</span> <span class="n">HIGH</span><span class="p">);</span>
+        <span class="n">delay</span><span class="p">(</span><span class="mi">1000</span><span class="p">);</span>
+        <span class="n">printf</span><span class="p">(</span><span class="s">"LED OFF</span><span class="se">\n</span><span class="s">"</span><span class="p">);</span>
+        <span class="n">digitalWrite</span><span class="p">(</span><span class="n">ledPin</span><span class="p">,</span> <span class="n">LOW</span><span class="p">);</span>
+        <span class="n">delay</span><span class="p">(</span><span class="mi">1000</span><span class="p">);</span>
+<span class="p">}</span></code></pre></figure>
+
+<p>Compile it.</p>
+
+<div class="highlighter-rouge"><pre class="highlight"><code>g++ -lpiduino test.cpp -o test
+</code></pre>
+</div>
+
+<p>Now connect an LED with its proper resistor (e.g. 330 ohms) to RPi GPIO 4.
+See which pin is GPIO 4 in your board in the RPi Pinout tab.</p>
+
+<p>Don’t forget to ground your circuit with your RPi board !!</p>
+
+<p>Run your program.</p>
+
+<div class="highlighter-rouge"><pre class="highlight"><code>./test
+</code></pre>
+</div>
+
+<p>Enjoy.</p>
+
+<p>See the <a href="/reference/2000/02/02/Reference.html">Reference</a> to see all the functions ported.</p>
+
+<p><strong>Optional</strong></p>
+
+<p>If you want to compile an .ino file you can do it like below and use either g++ or gcc.</p>
+
+<div class="highlighter-rouge"><pre class="highlight"><code>g++ -lpiduino -x c++ test.ino -o test 
+</code></pre>
+</div>
+
+<p>If you want to include main() in your code you can call “piDuino.h”. piDuino.h has already all the headers of the Piduino library included so you don’t need to type Wire.h or SPI.h like as if you use Arduino.h.</p>
+
+<figure class="highlight"><pre><code class="language-c" data-lang="c"><span class="cp">#include "piDuino.h"
+</span>
+<span class="kt">int</span> <span class="n">ledPin</span> <span class="o">=</span> <span class="mi">4</span><span class="p">;</span> <span class="c1">// GPIO4
+</span>
+<span class="kt">void</span> <span class="nf">setup</span><span class="p">()</span> <span class="p">{</span>
+        <span class="n">pinMode</span><span class="p">(</span><span class="n">ledPin</span><span class="p">,</span> <span class="n">OUTPUT</span><span class="p">);</span>
+<span class="p">}</span>
+
+<span class="kt">void</span> <span class="nf">loop</span><span class="p">()</span> <span class="p">{</span>
+        <span class="n">printf</span><span class="p">(</span><span class="s">"LED ON</span><span class="se">\n</span><span class="s">"</span><span class="p">);</span>
+        <span class="n">digitalWrite</span><span class="p">(</span><span class="n">ledPin</span><span class="p">,</span> <span class="n">HIGH</span><span class="p">);</span>
+        <span class="n">delay</span><span class="p">(</span><span class="mi">1000</span><span class="p">);</span>
+        <span class="n">printf</span><span class="p">(</span><span class="s">"LED OFF</span><span class="se">\n</span><span class="s">"</span><span class="p">);</span>
+        <span class="n">digitalWrite</span><span class="p">(</span><span class="n">ledPin</span><span class="p">,</span> <span class="n">LOW</span><span class="p">);</span>
+        <span class="n">delay</span><span class="p">(</span><span class="mi">1000</span><span class="p">);</span>
+<span class="p">}</span>
+
+<span class="kt">int</span> <span class="nf">main</span> <span class="p">()</span> <span class="p">{</span>
+	<span class="n">setup</span><span class="p">();</span>
+	<span class="k">while</span><span class="p">(</span><span class="mi">1</span><span class="p">){</span>
+		<span class="n">loop</span><span class="p">();</span>
+	<span class="p">}</span>
+	<span class="k">return</span> <span class="p">(</span><span class="mi">0</span><span class="p">);</span>
+<span class="p">}</span></code></pre></figure>
+
+<p>Thank you!.</p>
+
+
+      
+      
+
+    </article>
+    <footer>
+      <span><a href="https://github.com/NVSL/PiDuino_Library">Github</a></span>
+      <span><a href="https://github.com/NVSL/PiDuino_Library"><i class="fa fa-github-square"></i></a></span>
+      <span>&copy; 2016</span>
+    </footer>
+  </body>
+</html>

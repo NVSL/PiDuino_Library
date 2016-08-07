@@ -1,0 +1,32 @@
+title: "PiDuino Library"
+github: "Github"
+url: "https://github.com/NVSL/PiDuino_Library"
+author: "Jorge Garza"
+description: "Arduino library for Raspberry Pi"
+#baseurl: "/contrast" # comment out if in root directory
+
+comments:
+#    disqus: "niklasbuschmann"
+#    isso: "comments.mysite.org"
+
+style:
+#    body: "whitesmoke"
+    padding: 33%
+    anchor: "#46f"
+    serif-heading: true
+#   nav: "#34495e"
+    nav: "#212121"
+#    headline: "#06f"
+    description: "white"
+    article:
+        odd: "#ffffff"
+        even: "#222222"
+
+links:
+  - github: "https://github.com/NVSL/PiDuino_Library"
+
+
+paginate: 10
+excerpt_separator: "\n\n\n" # excerpt ends after two blank lines
+defaults: [{scope: {path: ""}, values: {layout: "default"}}, {scope: {path: "", type: "posts"}, values: {comments: true}}]
+gems: [jekyll-feed, jekyll-paginate] # jekyll-feed support feeds, jekyll-paginate support paginations
