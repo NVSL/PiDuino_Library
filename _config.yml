@@ -3,7 +3,7 @@ github: "Github"
 url: "https://github.com/NVSL/PiDuino_Library"
 author: "Jorge Garza"
 description: "Arduino library for Raspberry Pi"
-#baseurl: "/contrast" # comment out if in root directory
+baseurl: "/PiDuino_Library" # comment out if in root directory
 
 comments:
 #    disqus: "niklasbuschmann"

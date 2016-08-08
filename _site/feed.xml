@@ -1,4 +1,4 @@
-<?xml version="1.0" encoding="utf-8"?><?xml-stylesheet type="text/xml" href="/feed.xslt.xml"?><feed xmlns="http://www.w3.org/2005/Atom"><generator uri="http://jekyllrb.com" version="3.1.6">Jekyll</generator><link href="https://github.com/NVSL/PiDuino_Library/feed.xml" rel="self" type="application/atom+xml" /><link href="https://github.com/NVSL/PiDuino_Library/" rel="alternate" type="text/html" /><updated>2016-08-07T01:21:12-07:00</updated><id>https://github.com/NVSL/PiDuino_Library/</id><title>PiDuino Library</title><subtitle>Arduino library for Raspberry Pi</subtitle><author><name>Jorge Garza</name></author><entry><title>Piduino Library (libpiduino)</title><link href="https://github.com/NVSL/PiDuino_Library/index/2016/08/05/index.html" rel="alternate" type="text/html" title="Piduino Library (libpiduino)" /><published>2016-08-05T00:00:00-07:00</published><updated>2016-08-05T00:00:00-07:00</updated><id>https://github.com/NVSL/PiDuino_Library/index/2016/08/05/index</id><content type="html" xml:base="https://github.com/NVSL/PiDuino_Library/index/2016/08/05/index.html">&lt;p&gt;&lt;strong&gt;About&lt;/strong&gt;&lt;/p&gt;
+<?xml version="1.0" encoding="utf-8"?><?xml-stylesheet type="text/xml" href="/feed.xslt.xml"?><feed xmlns="http://www.w3.org/2005/Atom"><generator uri="http://jekyllrb.com" version="3.1.6">Jekyll</generator><link href="https://github.com/NVSL/PiDuino_Library/PiDuino_Library/feed.xml" rel="self" type="application/atom+xml" /><link href="https://github.com/NVSL/PiDuino_Library/PiDuino_Library/" rel="alternate" type="text/html" /><updated>2016-08-07T19:42:58-07:00</updated><id>https://github.com/NVSL/PiDuino_Library/PiDuino_Library/</id><title>PiDuino Library</title><subtitle>Arduino library for Raspberry Pi</subtitle><author><name>Jorge Garza</name></author><entry><title>Piduino Library (libpiduino)</title><link href="https://github.com/NVSL/PiDuino_Library/PiDuino_Library/index/2016/08/05/index.html" rel="alternate" type="text/html" title="Piduino Library (libpiduino)" /><published>2016-08-05T00:00:00-07:00</published><updated>2016-08-05T00:00:00-07:00</updated><id>https://github.com/NVSL/PiDuino_Library/PiDuino_Library/index/2016/08/05/index</id><content type="html" xml:base="https://github.com/NVSL/PiDuino_Library/PiDuino_Library/index/2016/08/05/index.html">&lt;p&gt;&lt;strong&gt;About&lt;/strong&gt;&lt;/p&gt;
 
 &lt;p&gt;&lt;strong&gt;Piduino Library (libpiduino)&lt;/strong&gt; is a C++ library that lets you write and compile Arduino programs for the Raspberry Pi. This library 
 targets the BCM283x SoC, all 54 pins, and not a specific set of pins of any Raspberry Pi (RPi) board.&lt;/p&gt;
@@ -7,8 +7,8 @@ targets the BCM283x SoC, all 54 pins, and not a specific set of pins of any Rasp
 SoC does not have an integrated ADC and we don’t want to create hardware-dependant software. 
 If you need ADC is recomended to use external libraries.&lt;/p&gt;
 
-&lt;p&gt;Finally most of this library code was built so it can be easily exported to other plataforms like the Artik/Exynos SoCs
- or Snapdragon SoCs in the future, if you want to export this library to other plataforms send me an email.&lt;/p&gt;
+&lt;p&gt;Finally most of this library code was built so it can be easily ported to other plataforms like the Artik/Exynos SoCs
+ or Snapdragon SoCs in the future, if you want to port this library to other plataforms send me an email.&lt;/p&gt;
 
 &lt;p&gt;&lt;strong&gt;Install&lt;/strong&gt;&lt;/p&gt;
 
@@ -28,11 +28,11 @@ If you need ADC is recomended to use external libraries.&lt;/p&gt;
 
 &lt;p&gt;Go to Advanced options.&lt;/p&gt;
 
-&lt;p&gt;&lt;img src=&quot;images/rpi_config_1.png&quot; alt=&quot;rpi-advanced-options&quot; class=&quot;img-responsive&quot; /&gt;&lt;/p&gt;
+&lt;p&gt;&lt;img src=&quot;images/rpi_config_1.png&quot; alt=&quot;rpi-advanced-options&quot; class=&quot;center-image&quot; /&gt;&lt;/p&gt;
 
 &lt;p&gt;Enable SPI and I2C Interfaces and disable Serial login shell.&lt;/p&gt;
 
-&lt;p&gt;&lt;img src=&quot;images/rpi_config_2.png&quot; alt=&quot;rpi-enable-interfaces&quot; class=&quot;img-responsive&quot; /&gt;&lt;/p&gt;
+&lt;p&gt;&lt;img src=&quot;images/rpi_config_2.png&quot; alt=&quot;rpi-enable-interfaces&quot; class=&quot;center-image&quot; /&gt;&lt;/p&gt;
 
 &lt;ul&gt;
   &lt;li&gt;Enable SPI Interface:    YES -&amp;gt; OK -&amp;gt; YES -&amp;gt; OK&lt;/li&gt;
@@ -41,22 +41,6 @@ If you need ADC is recomended to use external libraries.&lt;/p&gt;
 &lt;/ul&gt;
 
 &lt;p&gt;Reboot your system.&lt;/p&gt;
-
-&lt;p&gt;Finally run this command to check that the SPI, I2C and Serial drivers are there.
-Note that the I2C number may be diferent depending on your board version.&lt;/p&gt;
-
-&lt;div class=&quot;highlighter-rouge&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;ls /dev/ | grep &#39;i2c-\|spidev\|ttyAMA0&#39;
-&lt;/code&gt;&lt;/pre&gt;
-&lt;/div&gt;
-
-&lt;p&gt;The outupt should be something like this:&lt;/p&gt;
-
-&lt;div class=&quot;highlighter-rouge&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;i2c-1
-spidev0.0
-spidev0.1
-ttyAMA0
-&lt;/code&gt;&lt;/pre&gt;
-&lt;/div&gt;
 
 &lt;p&gt;&lt;strong&gt;Run&lt;/strong&gt;&lt;/p&gt;
 
@@ -87,10 +71,10 @@ ttyAMA0
 &lt;/code&gt;&lt;/pre&gt;
 &lt;/div&gt;
 
-&lt;p&gt;Now connect an LED with its proper resistor (e.g. 330 ohms) to RPi GPIO 4.
-See which pin is GPIO 4 in your board in the RPi Pinout tab.&lt;/p&gt;
+&lt;p&gt;Now connect an LED with its proper resistor (e.g. 220 ohms) to RPi GPIO4.
+See which pin is GPIO4 in your board in the &lt;a href=&quot;/PiDuino_Library/RPi_Pinout.html&quot;&gt;RPi Pinout&lt;/a&gt; tab.&lt;/p&gt;
 
-&lt;p&gt;Don’t forget to ground your circuit with your RPi board !!&lt;/p&gt;
+&lt;p&gt;&lt;img src=&quot;images/LED_Example.png&quot; alt=&quot;LED-Example&quot; class=&quot;center-image&quot; /&gt;&lt;/p&gt;
 
 &lt;p&gt;Run your program.&lt;/p&gt;
 
@@ -98,9 +82,11 @@ See which pin is GPIO 4 in your board in the RPi Pinout tab.&lt;/p&gt;
 &lt;/code&gt;&lt;/pre&gt;
 &lt;/div&gt;
 
-&lt;p&gt;Enjoy.&lt;/p&gt;
+&lt;p&gt;Enjoy!!.&lt;/p&gt;
 
-&lt;p&gt;See the &lt;a href=&quot;/reference/2000/02/02/Reference.html&quot;&gt;Reference&lt;/a&gt; to see all the functions ported.&lt;/p&gt;
+&lt;p&gt;See the &lt;a href=&quot;/PiDuino_Library/Reference.html&quot;&gt;Reference&lt;/a&gt; tab to see all the functions ported.&lt;/p&gt;
+
+&lt;hr /&gt;
 
 &lt;p&gt;&lt;strong&gt;Optional&lt;/strong&gt;&lt;/p&gt;
 
@@ -137,6 +123,22 @@ See which pin is GPIO 4 in your board in the RPi Pinout tab.&lt;/p&gt;
 	&lt;span class=&quot;k&quot;&gt;return&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;mi&quot;&gt;0&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;);&lt;/span&gt;
 &lt;span class=&quot;p&quot;&gt;}&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/figure&gt;
 
+&lt;p&gt;If you want to check that the SPI, I2C drivers are enabled use the command below.
+Note that the I2C number may be diferent depending on your RPi board version.&lt;/p&gt;
+
+&lt;div class=&quot;highlighter-rouge&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;ls /dev/ | grep &#39;i2c-\|spidev\|ttyAMA0&#39;
+&lt;/code&gt;&lt;/pre&gt;
+&lt;/div&gt;
+
+&lt;p&gt;The outupt should be something like this:&lt;/p&gt;
+
+&lt;div class=&quot;highlighter-rouge&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;i2c-1
+spidev0.0
+spidev0.1
+ttyAMA0
+&lt;/code&gt;&lt;/pre&gt;
+&lt;/div&gt;
+
 &lt;p&gt;Thank you!.&lt;/p&gt;</content><author><name>Jorge Garza</name></author><summary>About
 
 Piduino Library (libpiduino) is a C++ library that lets you write and compile Arduino programs for the Raspberry Pi. This library 
@@ -146,8 +148,8 @@ This library does not support Analog to Digital Conversion (ADC) functions as th
 SoC does not have an integrated ADC and we don’t want to create hardware-dependant software. 
 If you need ADC is recomended to use external libraries.
 
-Finally most of this library code was built so it can be easily exported to other plataforms like the Artik/Exynos SoCs
- or Snapdragon SoCs in the future, if you want to export this library to other plataforms send me an email.
+Finally most of this library code was built so it can be easily ported to other plataforms like the Artik/Exynos SoCs
+ or Snapdragon SoCs in the future, if you want to port this library to other plataforms send me an email.
 
 Install
 
@@ -181,22 +183,6 @@ Enable SPI and I2C Interfaces and disable Serial login shell.
 
 Reboot your system.
 
-Finally run this command to check that the SPI, I2C and Serial drivers are there.
-Note that the I2C number may be diferent depending on your board version.
-
-ls /dev/ | grep &#39;i2c-\|spidev\|ttyAMA0&#39;
-
-
-
-The outupt should be something like this:
-
-i2c-1
-spidev0.0
-spidev0.1
-ttyAMA0
-
-
-
 Run
 
 Once the setup is complete create a file, lets say test.cpp, and copy the following code:
@@ -226,10 +212,10 @@ g++ -lpiduino test.cpp -o test
 
 
 
-Now connect an LED with its proper resistor (e.g. 330 ohms) to RPi GPIO 4.
-See which pin is GPIO 4 in your board in the RPi Pinout tab.
+Now connect an LED with its proper resistor (e.g. 220 ohms) to RPi GPIO4.
+See which pin is GPIO4 in your board in the RPi Pinout tab.
 
-Don’t forget to ground your circuit with your RPi board !!
+
 
 Run your program.
 
@@ -237,9 +223,11 @@ Run your program.
 
 
 
-Enjoy.
+Enjoy!!.
 
-See the Reference to see all the functions ported.
+See the Reference tab to see all the functions ported.
+
+
 
 Optional
 
@@ -276,11 +264,49 @@ int main () {
 	return (0);
 }
 
-Thank you!.</summary></entry><entry><title>pinMode</title><link href="https://github.com/NVSL/PiDuino_Library/function/2000/02/02/pinMode.html" rel="alternate" type="text/html" title="pinMode" /><published>2000-02-02T00:00:00-08:00</published><updated>2000-02-02T00:00:00-08:00</updated><id>https://github.com/NVSL/PiDuino_Library/function/2000/02/02/pinMode</id><content type="html" xml:base="https://github.com/NVSL/PiDuino_Library/function/2000/02/02/pinMode.html">&lt;h3 id=&quot;pinmodepin-mode&quot;&gt;pinMode(pin, mode)&lt;/h3&gt;
+If you want to check that the SPI, I2C drivers are enabled use the command below.
+Note that the I2C number may be diferent depending on your RPi board version.
+
+ls /dev/ | grep &#39;i2c-\|spidev\|ttyAMA0&#39;
+
+
+
+The outupt should be something like this:
+
+i2c-1
+spidev0.0
+spidev0.1
+ttyAMA0
+
+
+
+Thank you!.</summary></entry><entry><title>Reference</title><link href="https://github.com/NVSL/PiDuino_Library/PiDuino_Library/pinout/2000/02/02/pinout.html" rel="alternate" type="text/html" title="Reference" /><published>2000-02-02T00:00:00-08:00</published><updated>2000-02-02T00:00:00-08:00</updated><id>https://github.com/NVSL/PiDuino_Library/PiDuino_Library/pinout/2000/02/02/pinout</id><content type="html" xml:base="https://github.com/NVSL/PiDuino_Library/PiDuino_Library/pinout/2000/02/02/pinout.html">&lt;h3 id=&quot;pinout&quot;&gt;Pinout&lt;/h3&gt;
+
+&lt;p&gt;This libarary uses &lt;strong&gt;GPIOX&lt;/strong&gt; as reference where &lt;strong&gt;X&lt;/strong&gt; is the number of the pin (e.g. &lt;a href=&quot;/PiDuino_Library/function/2000/02/02/pinMode.html&quot;&gt;pinMode(X, mode)&lt;/a&gt;). This library doesn’t use the Physical pin numbering as those numbers are a reference of the PCB and not of the Broadcom BCM283x SoC.&lt;/p&gt;
+
+&lt;hr /&gt;
+
+&lt;h3 id=&quot;raspberry-pi-40-pin-gpio-connector&quot;&gt;Raspberry Pi 40-pin GPIO connector&lt;/h3&gt;
+
+&lt;p&gt;&lt;img src=&quot;images/Raspberry-Pi-GPIO.png&quot; alt=&quot;Raspberry-Pi-40-pin&quot; class=&quot;center-image&quot; /&gt;&lt;/p&gt;
+
+&lt;h3 id=&quot;raspberry-pi-26-pin-gpio-connector&quot;&gt;Raspberry Pi 26-pin GPIO connector&lt;/h3&gt;
+
+&lt;p&gt;&lt;img src=&quot;images/Pi-GPIO-26-pin.png&quot; alt=&quot;Raspberry-Pi-26-pin&quot; class=&quot;center-image&quot; /&gt;&lt;/p&gt;</content><author><name>Jorge Garza</name></author><summary>Pinout
+
+This libarary uses GPIOX as reference where X is the number of the pin (e.g. pinMode(X, mode)). This library doesn’t use the Physical pin numbering as those numbers are a reference of the PCB and not of the Broadcom BCM283x SoC.
+
+
+
+Raspberry Pi 40-pin GPIO connector
+
+
+
+Raspberry Pi 26-pin GPIO connector</summary></entry><entry><title>pinMode</title><link href="https://github.com/NVSL/PiDuino_Library/PiDuino_Library/function/2000/02/02/pinMode.html" rel="alternate" type="text/html" title="pinMode" /><published>2000-02-02T00:00:00-08:00</published><updated>2000-02-02T00:00:00-08:00</updated><id>https://github.com/NVSL/PiDuino_Library/PiDuino_Library/function/2000/02/02/pinMode</id><content type="html" xml:base="https://github.com/NVSL/PiDuino_Library/PiDuino_Library/function/2000/02/02/pinMode.html">&lt;h3 id=&quot;pinmodepin-mode&quot;&gt;pinMode(pin, mode)&lt;/h3&gt;
 
 &lt;p&gt;TODO&lt;/p&gt;</content><author><name>Jorge Garza</name></author><summary>pinMode(pin, mode)
 
-TODO</summary></entry><entry><title>Reference</title><link href="https://github.com/NVSL/PiDuino_Library/reference/2000/02/02/Reference.html" rel="alternate" type="text/html" title="Reference" /><published>2000-02-02T00:00:00-08:00</published><updated>2000-02-02T00:00:00-08:00</updated><id>https://github.com/NVSL/PiDuino_Library/reference/2000/02/02/Reference</id><content type="html" xml:base="https://github.com/NVSL/PiDuino_Library/reference/2000/02/02/Reference.html">&lt;h3 id=&quot;reference&quot;&gt;Reference&lt;/h3&gt;
+TODO</summary></entry><entry><title>Reference</title><link href="https://github.com/NVSL/PiDuino_Library/PiDuino_Library/reference/2000/02/02/Reference.html" rel="alternate" type="text/html" title="Reference" /><published>2000-02-02T00:00:00-08:00</published><updated>2000-02-02T00:00:00-08:00</updated><id>https://github.com/NVSL/PiDuino_Library/PiDuino_Library/reference/2000/02/02/Reference</id><content type="html" xml:base="https://github.com/NVSL/PiDuino_Library/PiDuino_Library/reference/2000/02/02/Reference.html">&lt;h3 id=&quot;reference&quot;&gt;Reference&lt;/h3&gt;
 
 &lt;p&gt;&lt;strong&gt;PiDuino Library (libpiduino)&lt;/strong&gt; aims to support the core official Arduino functions published in the &lt;a href=&quot;https://www.arduino.cc/en/Reference/Libraries&quot;&gt;Arduino official website&lt;/a&gt; as of April 2016. Note that the Arduino API has many legacy functions that although keeped no longer used, the ported libraries and functions are only the ones published on the official website.&lt;/p&gt;
 
@@ -299,7 +325,7 @@ TODO</summary></entry><entry><title>Reference</title><link href="https://github.
   &lt;/thead&gt;
   &lt;tbody&gt;
     &lt;tr&gt;
-      &lt;td&gt;&lt;a href=&quot;/function/2000/02/02/pinMode.html&quot;&gt;pinMode(pin, mode)&lt;/a&gt;&lt;/td&gt;
+      &lt;td&gt;&lt;a href=&quot;/PiDuino_Library/function/2000/02/02/pinMode.html&quot;&gt;pinMode(pin, mode)&lt;/a&gt;&lt;/td&gt;
       &lt;td&gt;YES&lt;/td&gt;
     &lt;/tr&gt;
     &lt;tr&gt;

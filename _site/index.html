@@ -7,21 +7,21 @@
     
     <meta name="description" content="Arduino library for Raspberry Pi">
     <title>PiDuino Library</title>
-    <link rel="canonical" href="https://github.com/NVSL/PiDuino_Library/">
-    <link href="/main.css" rel="stylesheet" type="text/css">
+    <link rel="canonical" href="https://github.com/NVSL/PiDuino_Library/PiDuino_Library/">
+    <link href="/PiDuino_Library/main.css" rel="stylesheet" type="text/css">
     <link href='//fonts.googleapis.com/css?family=Source+Sans+Pro:200,300,400,600,700,200italic,300italic,400italic,600italic,700italic' rel='stylesheet' type='text/css'>
     <link href='//fonts.googleapis.com/css?family=Gentium+Basic:400,700,400italic,700italic' rel='stylesheet' type='text/css'>
     <link href='//maxcdn.bootstrapcdn.com/font-awesome/4.2.0/css/font-awesome.min.css' rel='stylesheet' type='text/css'>
-    <link type="application/atom+xml" rel="alternate" href="https://github.com/NVSL/PiDuino_Library/feed.xml" title="PiDuino Library" />
+    <link type="application/atom+xml" rel="alternate" href="https://github.com/PiDuino_Library/feed.xml" title="PiDuino Library" />
     
     
   </head>
   <body>
     <header>
-      <h1><a href="/">PiDuino Library</a></h1>
+      <h1><a href="/PiDuino_Library/">PiDuino Library</a></h1>
       <nav>
         <ul>
-          <li><a href="/">Home</a></li><li><a href="/Reference.html">Reference</a></li>
+          <li><a href="/PiDuino_Library/">Home</a></li><li><a href="/PiDuino_Library/RPi_Pinout.html">RPi_Pinout</a></li><li><a href="/PiDuino_Library/Reference.html">Reference</a></li>
         </ul>
       </nav>
     </header>
@@ -43,8 +43,8 @@ targets the BCM283x SoC, all 54 pins, and not a specific set of pins of any Rasp
 SoC does not have an integrated ADC and we don’t want to create hardware-dependant software. 
 If you need ADC is recomended to use external libraries.</p>
 
-<p>Finally most of this library code was built so it can be easily exported to other plataforms like the Artik/Exynos SoCs
- or Snapdragon SoCs in the future, if you want to export this library to other plataforms send me an email.</p>
+<p>Finally most of this library code was built so it can be easily ported to other plataforms like the Artik/Exynos SoCs
+ or Snapdragon SoCs in the future, if you want to port this library to other plataforms send me an email.</p>
 
 <p><strong>Install</strong></p>
 
@@ -64,11 +64,11 @@ If you need ADC is recomended to use external libraries.</p>
 
 <p>Go to Advanced options.</p>
 
-<p><img src="images/rpi_config_1.png" alt="rpi-advanced-options" class="img-responsive" /></p>
+<p><img src="images/rpi_config_1.png" alt="rpi-advanced-options" class="center-image" /></p>
 
 <p>Enable SPI and I2C Interfaces and disable Serial login shell.</p>
 
-<p><img src="images/rpi_config_2.png" alt="rpi-enable-interfaces" class="img-responsive" /></p>
+<p><img src="images/rpi_config_2.png" alt="rpi-enable-interfaces" class="center-image" /></p>
 
 <ul>
   <li>Enable SPI Interface:    YES -&gt; OK -&gt; YES -&gt; OK</li>
@@ -77,22 +77,6 @@ If you need ADC is recomended to use external libraries.</p>
 </ul>
 
 <p>Reboot your system.</p>
-
-<p>Finally run this command to check that the SPI, I2C and Serial drivers are there.
-Note that the I2C number may be diferent depending on your board version.</p>
-
-<div class="highlighter-rouge"><pre class="highlight"><code>ls /dev/ | grep 'i2c-\|spidev\|ttyAMA0'
-</code></pre>
-</div>
-
-<p>The outupt should be something like this:</p>
-
-<div class="highlighter-rouge"><pre class="highlight"><code>i2c-1
-spidev0.0
-spidev0.1
-ttyAMA0
-</code></pre>
-</div>
 
 <p><strong>Run</strong></p>
 
@@ -123,10 +107,10 @@ ttyAMA0
 </code></pre>
 </div>
 
-<p>Now connect an LED with its proper resistor (e.g. 330 ohms) to RPi GPIO 4.
-See which pin is GPIO 4 in your board in the RPi Pinout tab.</p>
+<p>Now connect an LED with its proper resistor (e.g. 220 ohms) to RPi GPIO4.
+See which pin is GPIO4 in your board in the <a href="/PiDuino_Library/RPi_Pinout.html">RPi Pinout</a> tab.</p>
 
-<p>Don’t forget to ground your circuit with your RPi board !!</p>
+<p><img src="images/LED_Example.png" alt="LED-Example" class="center-image" /></p>
 
 <p>Run your program.</p>
 
@@ -134,9 +118,11 @@ See which pin is GPIO 4 in your board in the RPi Pinout tab.</p>
 </code></pre>
 </div>
 
-<p>Enjoy.</p>
+<p>Enjoy!!.</p>
 
-<p>See the <a href="/reference/2000/02/02/Reference.html">Reference</a> to see all the functions ported.</p>
+<p>See the <a href="/PiDuino_Library/Reference.html">Reference</a> tab to see all the functions ported.</p>
+
+<hr />
 
 <p><strong>Optional</strong></p>
 
@@ -172,6 +158,22 @@ See which pin is GPIO 4 in your board in the RPi Pinout tab.</p>
 	<span class="p">}</span>
 	<span class="k">return</span> <span class="p">(</span><span class="mi">0</span><span class="p">);</span>
 <span class="p">}</span></code></pre></figure>
+
+<p>If you want to check that the SPI, I2C drivers are enabled use the command below.
+Note that the I2C number may be diferent depending on your RPi board version.</p>
+
+<div class="highlighter-rouge"><pre class="highlight"><code>ls /dev/ | grep 'i2c-\|spidev\|ttyAMA0'
+</code></pre>
+</div>
+
+<p>The outupt should be something like this:</p>
+
+<div class="highlighter-rouge"><pre class="highlight"><code>i2c-1
+spidev0.0
+spidev0.1
+ttyAMA0
+</code></pre>
+</div>
 
 <p>Thank you!.</p>
 
