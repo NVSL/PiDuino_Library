@@ -1,3 +1,8 @@
-lib_LIBRARIES = libpiDuino.a
-libpiDuino_a_SOURCES = piDuino.h Core.cpp Core.h Serial.cpp Serial.h SPI.cpp SPI.h Wire.cpp Wire.h WString.cpp WString.h
-libpiduino_CXXFLAGS = "lpthread"
+ACLOCAL_AMFLAGS = -I m4
+
+# PiDuino Library
+lib_LTLIBRARIES = libpiduino.la
+libpiduino_la_SOURCES =  Core.cpp  Serial.cpp  SPI.cpp  Wire.cpp  WString.cpp 
+include_HEADERS = Arduinoh/Arduino.h piDuino.h Core.h Serial.h SPI.h Wire.h WString.h
+libpiduino_la_LDFLAGS = -no-undefined -version-info 1:0:0
+libpiduino_la_LIBADD = -lpthread -lm

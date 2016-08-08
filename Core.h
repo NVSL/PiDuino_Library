@@ -25,8 +25,22 @@
 #include <time.h>
 
 
+// General Library Version 
+#define LINUXDUINO_VERSION "1.0.0"
+
 // Total Number of GPIOs Pins in BCM283x SoC chips
-#define SOC_GPIO_PINS   54   
+#define SOC_GPIO_PINS   54
+
+// For ARM devices or devices without 
+// floating point unit the following is needed
+
+// This will enable you to parse floats with scanf() 
+// e.g(sscanf("1.618", "%f", &f);)
+asm(".global _printf_float");
+// This will enable you to print floats with printf() 
+// e.g(printf("%f", 1.618);)
+asm(".global _scanf_float");
+
 
 // Remove some PROGMEM space macros if posible
 #define PROGMEM
@@ -300,7 +314,7 @@ typedef unsigned int word;
 
 
 /////////////////////////////////////////////
-//          Digital I/O           		  //
+//          Digital I/O           		    //
 ////////////////////////////////////////////
 // Pin logic states
 #define HIGH 0x1
@@ -321,7 +335,7 @@ void digitalWrite(uint8_t pin, uint8_t value);
 int digitalRead(uint8_t pin);
 
 /////////////////////////////////////////////
-//          Analog I/O           		  //
+//          Analog I/O           		      //
 ////////////////////////////////////////////
 extern char PWM_DRIVER_NAME[];
 extern uint32_t PWM_DUTYCYCLE_RESOLUTION;
@@ -336,7 +350,7 @@ void setPwmFrequency (uint8_t pin, uint32_t frequency);
 void setPwmFrequency (uint8_t pin, uint32_t frequency, uint32_t dutycycle);
 
 /////////////////////////////////////////////
-//          Advanced I/O           		  //
+//          Advanced I/O           		    //
 ////////////////////////////////////////////
 #ifndef LSBFIRST
 #define LSBFIRST 1
@@ -352,7 +366,7 @@ void shiftOut(uint8_t dataPin, uint8_t clockPin, uint8_t bitOrder, uint8_t val);
 unsigned long pulseIn(uint8_t pin, uint8_t state, unsigned long timeout = 1000000L);
 
 /////////////////////////////////////////////
-//          Time      		     		  //
+//          Time      		     		        //
 ////////////////////////////////////////////
 
 unsigned long millis(void);
@@ -361,7 +375,7 @@ void delay(unsigned long millis);
 void delayMicroseconds(unsigned int us);
 
 /////////////////////////////////////////////
-//          Math           				  //
+//          Math           				        //
 ////////////////////////////////////////////
 
 #define PI 3.1415926535897932384626433832795
@@ -392,7 +406,7 @@ long map(long x, long in_min, long in_max, long out_min, long out_max);
 // pow() already in <math.h>...
 
 /////////////////////////////////////////////
-//          Trigonometry          		  //
+//          Trigonometry          		    //
 ////////////////////////////////////////////
 
 // sin(rad) already in <math.h>...
@@ -400,28 +414,28 @@ long map(long x, long in_min, long in_max, long out_min, long out_max);
 // tan(rad) already in <math.h>...
 
 /////////////////////////////////////////////
-//          Characters           		  //
+//          Characters           		      //
 ////////////////////////////////////////////
 
-inline boolean isAlphaNumeric(int c) __attribute__((always_inline));
-inline boolean isAlpha(int c) __attribute__((always_inline));
-inline boolean isAscii(int c) __attribute__((always_inline));
-inline boolean isWhitespace(int c) __attribute__((always_inline));
-inline boolean isControl(int c) __attribute__((always_inline));
-inline boolean isDigit(int c) __attribute__((always_inline));
-inline boolean isGraph(int c) __attribute__((always_inline));
-inline boolean isLowerCase(int c) __attribute__((always_inline));
-inline boolean isPrintable(int c) __attribute__((always_inline));
-inline boolean isPunct(int c) __attribute__((always_inline));
-inline boolean isSpace(int c) __attribute__((always_inline));
-inline boolean isUpperCase(int c) __attribute__((always_inline));
-inline boolean isHexadecimalDigit(int c) __attribute__((always_inline));
-inline int toAscii(int c) __attribute__((always_inline));
-inline int toLowerCase(int c) __attribute__((always_inline));
-inline int toUpperCase(int c)__attribute__((always_inline));
+boolean isAlphaNumeric(int c);
+boolean isAlpha(int c);
+boolean isAscii(int c);
+boolean isWhitespace(int c);
+boolean isControl(int c);
+boolean isDigit(int c);
+boolean isGraph(int c);
+boolean isLowerCase(int c);
+boolean isPrintable(int c);
+boolean isPunct(int c);
+boolean isSpace(int c);
+boolean isUpperCase(int c);
+boolean isHexadecimalDigit(int c);
+int toAscii(int c);
+int toLowerCase(int c);
+int toUpperCase(int c);
 
 /////////////////////////////////////////////
-//          Random Functions       		  //
+//          Random Functions       		    //
 ////////////////////////////////////////////
 
 void randomSeed(unsigned long);
@@ -429,7 +443,7 @@ long random(long);
 long random(long, long);
 
 /////////////////////////////////////////////
-//          Bits and Bytes         		  //
+//          Bits and Bytes         		    //
 ////////////////////////////////////////////
 
 #define lowByte(w) ((uint8_t) ((w) & 0xff))
@@ -441,7 +455,7 @@ long random(long, long);
 #define bit(b) (1UL << (b))
 
 /////////////////////////////////////////////
-//          External Interrupts    		  //
+//          External Interrupts    		    //
 ////////////////////////////////////////////
 
 // Interrupt modes
