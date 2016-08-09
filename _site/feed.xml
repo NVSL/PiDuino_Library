@@ -1,10 +1,10 @@
-<?xml version="1.0" encoding="utf-8"?><?xml-stylesheet type="text/xml" href="/feed.xslt.xml"?><feed xmlns="http://www.w3.org/2005/Atom"><generator uri="http://jekyllrb.com" version="3.1.6">Jekyll</generator><link href="https://github.com/NVSL/PiDuino_Library/PiDuino_Library/feed.xml" rel="self" type="application/atom+xml" /><link href="https://github.com/NVSL/PiDuino_Library/PiDuino_Library/" rel="alternate" type="text/html" /><updated>2016-08-07T19:42:58-07:00</updated><id>https://github.com/NVSL/PiDuino_Library/PiDuino_Library/</id><title>PiDuino Library</title><subtitle>Arduino library for Raspberry Pi</subtitle><author><name>Jorge Garza</name></author><entry><title>Piduino Library (libpiduino)</title><link href="https://github.com/NVSL/PiDuino_Library/PiDuino_Library/index/2016/08/05/index.html" rel="alternate" type="text/html" title="Piduino Library (libpiduino)" /><published>2016-08-05T00:00:00-07:00</published><updated>2016-08-05T00:00:00-07:00</updated><id>https://github.com/NVSL/PiDuino_Library/PiDuino_Library/index/2016/08/05/index</id><content type="html" xml:base="https://github.com/NVSL/PiDuino_Library/PiDuino_Library/index/2016/08/05/index.html">&lt;p&gt;&lt;strong&gt;About&lt;/strong&gt;&lt;/p&gt;
+<?xml version="1.0" encoding="utf-8"?><?xml-stylesheet type="text/xml" href="/feed.xslt.xml"?><feed xmlns="http://www.w3.org/2005/Atom"><generator uri="http://jekyllrb.com" version="3.1.6">Jekyll</generator><link href="https://github.com/NVSL/PiDuino_Library/PiDuino_Library/feed.xml" rel="self" type="application/atom+xml" /><link href="https://github.com/NVSL/PiDuino_Library/PiDuino_Library/" rel="alternate" type="text/html" /><updated>2016-08-08T21:23:48-07:00</updated><id>https://github.com/NVSL/PiDuino_Library/PiDuino_Library/</id><title>PiDuino Library</title><subtitle>Arduino library for Raspberry Pi</subtitle><author><name>Jorge Garza</name></author><entry><title>Piduino Library (libpiduino)</title><link href="https://github.com/NVSL/PiDuino_Library/PiDuino_Library/index/2016/08/05/index.html" rel="alternate" type="text/html" title="Piduino Library (libpiduino)" /><published>2016-08-05T00:00:00-07:00</published><updated>2016-08-05T00:00:00-07:00</updated><id>https://github.com/NVSL/PiDuino_Library/PiDuino_Library/index/2016/08/05/index</id><content type="html" xml:base="https://github.com/NVSL/PiDuino_Library/PiDuino_Library/index/2016/08/05/index.html">&lt;p&gt;&lt;strong&gt;About&lt;/strong&gt;&lt;/p&gt;
 
-&lt;p&gt;&lt;strong&gt;Piduino Library (libpiduino)&lt;/strong&gt; is a C++ library that lets you write and compile Arduino programs for the Raspberry Pi. This library 
+&lt;p&gt;&lt;strong&gt;Piduino Library (libpiduino)&lt;/strong&gt; is a C++ library that lets you write and compile Arduino programs in the Raspberry Pi. This library 
 targets the BCM283x SoC, all 54 pins, and not a specific set of pins of any Raspberry Pi (RPi) board.&lt;/p&gt;
 
 &lt;p&gt;This library &lt;strong&gt;does not support Analog to Digital Conversion (ADC)&lt;/strong&gt; functions as the BCM283x
-SoC does not have an integrated ADC and we don’t want to create hardware-dependant software. 
+SoC does not have an integrated ADC and I don’t want to create hardware-dependant software. 
 If you need ADC is recomended to use external libraries.&lt;/p&gt;
 
 &lt;p&gt;Finally most of this library code was built so it can be easily ported to other plataforms like the Artik/Exynos SoCs
@@ -14,9 +14,10 @@ If you need ADC is recomended to use external libraries.&lt;/p&gt;
 
 &lt;p&gt;Open a terminal in your Raspberry Pi board and enter:&lt;/p&gt;
 
-&lt;div class=&quot;highlighter-rouge&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;sudo apt-get install TODO
+&lt;div class=&quot;highlighter-rouge&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;sudo apt-get install libpiduino-dev
 &lt;/code&gt;&lt;/pre&gt;
 &lt;/div&gt;
+&lt;p style=&quot;text-align: right;&quot;&gt;-&amp;gt; &lt;a href=&quot;https://github.com/NVSL/PiDuino_Library&quot;&gt;source code&lt;/a&gt; &amp;lt;-&lt;/p&gt;
 
 &lt;p&gt;&lt;strong&gt;Setup&lt;/strong&gt;&lt;/p&gt;
 
@@ -141,11 +142,11 @@ ttyAMA0
 
 &lt;p&gt;Thank you!.&lt;/p&gt;</content><author><name>Jorge Garza</name></author><summary>About
 
-Piduino Library (libpiduino) is a C++ library that lets you write and compile Arduino programs for the Raspberry Pi. This library 
+Piduino Library (libpiduino) is a C++ library that lets you write and compile Arduino programs in the Raspberry Pi. This library 
 targets the BCM283x SoC, all 54 pins, and not a specific set of pins of any Raspberry Pi (RPi) board.
 
 This library does not support Analog to Digital Conversion (ADC) functions as the BCM283x
-SoC does not have an integrated ADC and we don’t want to create hardware-dependant software. 
+SoC does not have an integrated ADC and I don’t want to create hardware-dependant software. 
 If you need ADC is recomended to use external libraries.
 
 Finally most of this library code was built so it can be easily ported to other plataforms like the Artik/Exynos SoCs
@@ -155,9 +156,10 @@ Install
 
 Open a terminal in your Raspberry Pi board and enter:
 
-sudo apt-get install TODO
+sudo apt-get install libpiduino-dev
 
 
+-&amp;gt; source code &amp;lt;-
 
 Setup
 
