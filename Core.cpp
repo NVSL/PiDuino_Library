@@ -97,8 +97,8 @@ static volatile uint32_t *clk_map = NULL;
 static bool g_open_pwmmem_flag = false;
 int g_pwm_pin_set[SOC_GPIO_PINS];               // Used to know which pwm pins are set (HIGH) or not set (LOW)
 int g_pwm_dutycycle_value[SOC_GPIO_PINS];       // Pwm duty cycle value of pwm pins
-uint32_t PWM_DUTYCYCLE_RESOLUTION = 256;             // Set pwm duty cycle resolution to 256 buts
-uint32_t PWM_DEFAULT_FREQUENCY = 490;                // Set default pwm frequency to 490 Hz (Arduino default pwm freq)
+uint32_t PWM_DUTYCYCLE_RESOLUTION = 256;        // Set pwm duty cycle resolution between 0 and 255 bits
+uint32_t PWM_DEFAULT_FREQUENCY = 490;           // Set default pwm frequency to 490 Hz (Arduino default pwm freq)
 char PWM_DRIVER_NAME[128] = "/dev/mem";
 
 // Sets pin (gpio) mode as INPUT,INTPUT_PULLUP,INTPUT_PULLDOWN,OUTPUT,PWM_OUTPUT
@@ -145,11 +145,11 @@ void pinMode(uint8_t pin, uint8_t mode)
         || mode == INPUT_PULLDOWN || mode == OUTPUT) {
 
         // Save gpio pin number so at program close we put it to default state
-        // Also clear pwm pin to prevent any errro if difenrent pin mode is set multiple times
+        // Also clear pwm pin to prevent any errro if different pin mode is set multiple times
         g_gpio_pin_set[pin] = HIGH;
         g_pwm_pin_set[pin] = LOW;
 
-        // Set resistor mode PULLUP, PULLDOWN or PULLOFF resitor (OUTPUT always PULLOFF)
+        // Set resistor mode PULLUP, PULLDOWN or PULLOFF resistor (OUTPUT always PULLOFF)
         if (mode == INPUT_PULLDOWN) {
            *(gpio_map+OFFSET_PULLUPDN) = (*(gpio_map+OFFSET_PULLUPDN) & ~3) | 0x01;
         } else if (mode == INPUT_PULLUP) {
@@ -219,15 +219,15 @@ void pinMode(uint8_t pin, uint8_t mode)
         }
 
         // Save pwm pin number so at program close we put it to default state
-        // Also clear gpio pin to prevent any errro if diferent pin mode is set multiple times
+        // Also clear gpio pin to prevent any errro if different pin mode is set multiple times
         g_pwm_pin_set[pin] = HIGH;
         g_gpio_pin_set[pin] = LOW;
 
-        // Set pin to its correcponding ALT mode or (PWM MODE)
+        // Set pin to its corresponding ALT mode or (PWM MODE)
         *(gpio_map+offset) = 
             (*(gpio_map+offset) & ~(7 << shift)) | ((gpio_fsel_alt << shift) & (7 << shift));
 
-        // Set frequency to defualt Arduino frequency (490Hz) and duty cycle value to zero
+        // Set frequency to default Arduino frequency (490Hz) and duty cycle value to zero
         setPwmFrequency(pin, PWM_DEFAULT_FREQUENCY, 0);
 
         // Ser PWM range to default of 256 bits of resolution
@@ -265,7 +265,7 @@ void digitalWrite(uint8_t pin, uint8_t val)
 
     // Check if pin has been initialized 
     if (g_gpio_pin_set[pin] != HIGH) {
-        fprintf(stderr, "%s(): please initalize pin %d first "
+        fprintf(stderr, "%s(): please initialize pin %d first "
             "using pinMode() function \n",__func__, pin);
         exit(1);
     }
@@ -292,7 +292,7 @@ int digitalRead(uint8_t pin)
 
     // Check if pin has been initialized 
     if (g_gpio_pin_set[pin] != HIGH) {
-        fprintf(stderr, "%s(): please initalize pin %d first "
+        fprintf(stderr, "%s(): please initialize pin %d first "
             "using pinMode() function \n",__func__, pin);
         exit(1);
     }
@@ -316,7 +316,7 @@ void analogWrite(uint8_t pin, uint32_t value)
 
     // Check if pin has been initialized
     if (g_pwm_pin_set[pin] != HIGH) {
-        fprintf(stderr, "%s(): please initalize pin %d first "
+        fprintf(stderr, "%s(): please initialize pin %d first "
             "using pinMode() function \n",__func__, pin);
         exit(1);
     } else {
@@ -383,7 +383,7 @@ void setPwmFrequency (uint8_t pin, uint32_t frequency, uint32_t dutycycle)
     double countDuration;
 
     if (g_pwm_pin_set[pin] != HIGH) {
-        fprintf(stderr, "%s(): please initalize pin %d first "
+        fprintf(stderr, "%s(): please initialize pin %d first "
             "using pinMode() function \n",__func__, pin);
         exit(1);
     }
@@ -499,7 +499,7 @@ void tone(uint8_t pin, uint32_t frequency, unsigned long duration, uint32_t bloc
         threadArgs->pin = pin;
         threadArgs->duration = duration;
 
-        // Cancel any existant threads for the pwm pin
+        // Cancel any existent threads for the pwm pin
         if (*threadId != 0) {
             pthread_cancel(*threadId);
         }
@@ -587,7 +587,7 @@ unsigned long pulseIn(uint8_t pin, uint8_t state, unsigned long timeout)
             return 0;
     }
 
-    // return microsecond ellpsed
+    // return microsecond elapsed
     return ((end.tv_sec - start.tv_sec) * 1e6  + 
             (end.tv_nsec - start.tv_nsec) * 1e-3);
 }
@@ -597,7 +597,7 @@ unsigned long pulseIn(uint8_t pin, uint8_t state, unsigned long timeout)
 //          Time                          //
 ////////////////////////////////////////////
 
-// Returns the time in millseconds since the program started.
+// Returns the time in milliseconds since the program started.
 unsigned long millis(void) 
 {
     struct timespec timenow, start, end;
@@ -780,7 +780,7 @@ long random(long howsmall, long howbig)
 //          External Interrupts           //
 ////////////////////////////////////////////
 
-// Arguments for Externatl Interrupt threads
+// Arguments for External Interrupt threads
 struct ThreadExtArg {
     void (*func)();
     int pin;
@@ -854,7 +854,7 @@ void attachInterrupt(uint8_t pin, void (*f)(void), int mode)
     // Return if the interrupt pin number is out of range
     // NOT_AN_INTERRUPT is set when digitalPinToInterrupt(p) is used for an invalid pin
     if (pin == (uint8_t) NOT_AN_INTERRUPT) {
-        fprintf(stderr, "%s(): interrupr pin number out of range\n",__func__);
+        fprintf(stderr, "%s(): interrupt pin number out of range\n",__func__);
         return;
     }
 
@@ -899,7 +899,7 @@ void attachInterrupt(uint8_t pin, void (*f)(void), int mode)
     }
     fclose(fp);
     
-    // Cancel any existant threads for the interrupt pin
+    // Cancel any existent threads for the interrupt pin
     if (*threadId != 0) {
         pthread_cancel(*threadId);
     }
@@ -916,7 +916,7 @@ void detachInterrupt(uint8_t pin)
     // Return if the interrupt pin number is out of range
     // NOT_AN_INTERRUPT is set when digitalPinToInterrupt(p) is used for an invalid pin
     if (pin == (uint8_t) NOT_AN_INTERRUPT) {
-        fprintf(stderr, "%s(): interrupr pin number out of range\n",__func__);
+        fprintf(stderr, "%s(): interrupt pin number out of range\n",__func__);
         return;
     }
 
@@ -933,7 +933,7 @@ void detachInterrupt(uint8_t pin)
     // Unexport gpio pin
     FILE *fp = fopen("/sys/class/gpio/unexport","w");
     if (fp == NULL) {
-        fprintf(stderr, "%s(): unexrpot gpio error: %s\n",__func__, strerror (errno));
+        fprintf(stderr, "%s(): unexport gpio error: %s\n",__func__, strerror (errno));
         exit(1);
     } else {
         fprintf(fp,"%d",pin); 

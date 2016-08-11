@@ -26,7 +26,7 @@
 
 
 // General Library Version 
-#define LINUXDUINO_VERSION "1.0.0"
+#define LINUXDUINO_VERSION "1.0.1"
 
 // Total Number of GPIOs Pins in BCM283x SoC chips
 #define SOC_GPIO_PINS   54
@@ -42,7 +42,7 @@ asm(".global _printf_float");
 asm(".global _scanf_float");
 
 
-// Remove some PROGMEM space macros if posible
+// Remove some PROGMEM space macros if possible
 #define PROGMEM
 #define pgm_read_byte(addr) (*(const unsigned char *)(addr))
 #define pgm_read_word(addr) (*(const unsigned short *)(addr))
@@ -342,7 +342,7 @@ extern uint32_t PWM_DUTYCYCLE_RESOLUTION;
 extern uint32_t PWM_DEFAULT_FREQUENCY;
 
 //int analogRead (int pin); // Not implemented
-//int analogReference(int type) // Not implemened
+//int analogReference(int type) // Not implemented
 void analogWrite(uint8_t pin, uint32_t value);
 void setPwmDutyCycle (uint8_t pin, uint32_t dutycycle);
 void setPwmFPeriod (uint8_t pin, uint32_t microseconds);
@@ -386,7 +386,7 @@ void delayMicroseconds(unsigned int us);
 #define EULER 2.718281828459045235360287471352
 
 
-// min and max implemented as fucntions to prevent 
+// min and max implemented as functions to prevent 
 // std::min and std::max conflicts with <string> header
 inline int min(int a, int b) { return ((a)<(b) ? (a) : (b)); }
 inline float min(float a, float b) { return ((a)<(b) ? (a) : (b)); }
