@@ -7,9 +7,15 @@ sdate: "Aug 5, 2016"
 
 ### Reference
 
-**PiDuino Library (libpiduino)** aims to support the core official Arduino functions published in the [Arduino official website](https://www.arduino.cc/en/Reference/Libraries) as of April 2016. Note that the Arduino API has many legacy functions that although keeped no longer used, the ported libraries and functions are only the ones published on the official website.
+**PiDuino Library (libpiduino)** aims to support the core official Arduino reference published in the [Arduino official website](https://www.arduino.cc/en/Reference/Libraries) as of April 2016. Note that the Arduino API has many legacy functions that although keep no longer used, the ported libraries and functions are only the ones published on the official website.
 
-**libpiduino 1.0.0** has 101 functions implemented out of 111 functions, this means that about **90%** of the official Arduino functions are implemented. Also 10 (EXTRA) functions which give more functionality to the library were included. 
+**libpiduino 1.0.0** has 99 functions implemented out of 111 functions, this means that about **89%** of the official Arduino functions are implemented. Also 10 (EXTRA) functions which give more functionality to the library were included. 
+
+___________________________________________________
+
+> **(*)** - Functions that have changes compared the official Arduino reference.  
+> **(#)** - Functions that require sudo/root to run them.  
+> **(EXTRA)** - Extra functions not in the official Arduino reference.  
 
 ___________________________________________________
 
@@ -17,9 +23,9 @@ ___________________________________________________
 
 | Function | Implemented (YES/NO-Comment/In Progress) |
 | ------ | ----------- |
-| [pinMode(pin, mode)]({{ site.baseurl }}{% post_url 2000-02-02-pinMode %})    | YES |
-| digitalWrite(pin, value) | YES |
-| digitalRead(pin)  | YES |
+| **(*)** [pinMode(pin, mode)]({{ site.baseurl }}{% post_url 2000-02-02-pinMode %})    | YES |
+| [digitalWrite(pin, value)]({{ site.baseurl }}{% post_url 2000-02-02-digitalWrite %}) | YES |
+| [digitalRead(pin)]({{ site.baseurl }}{% post_url 2000-02-02-digitalRead %})  | YES |
 
 #### - Analog I/O (ADC and PWM)
 
@@ -27,19 +33,19 @@ ___________________________________________________
 | ------ | ----------- |
 | analogReference(type) | NO - No hardware support for RPi |
 | analogRead(pin) | NO - No hardware support for RPi |
-| analogWrite(pin, value) - PWM | YES |
-| (EXTRA) setPwmDutyCycle (pin, dutycycle)  | YES |
-| (EXTRA) setPwmFrequency (pin, frequency, dutycycle)  | YES |
-| (EXTRA) setPwmFrequency (pin, frequency)  | YES |
-| (EXTRA) setPwmPeriod (pin, microseconds)  | YES |
+| **(#)** [analogWrite(pin, value)]({{ site.baseurl }}{% post_url 2000-02-02-analogWrite %}) - PWM | YES |
+| **(EXTRA, #)** [setPwmDutyCycle(pin, dutycycle)]({{ site.baseurl }}{% post_url 2000-02-02-setPwmDutyCycle %}) | YES |
+| **(EXTRA, #)** [setPwmFrequency(pin, frequency, dutycycle)]({{ site.baseurl }}{% post_url 2000-02-02-setPwmDutyFrequency%})  | YES |
+| **(EXTRA, #)** [setPwmFrequency(pin, frequency)]({{ site.baseurl }}{% post_url 2000-02-02-setPwmFrequency%})  | YES |
+| **(EXTRA, #)** [setPwmPeriod(pin, microseconds)]({{ site.baseurl }}{% post_url 2000-02-02-setPwmPeriod%}) | YES |
  
 #### - Advanced I/O
 
 | Function | Implemented (YES/NO-Comment/In Progress) |
 | ------ | ----------- |
-| tone(pin, frequency)   | YES |
-| tone(pin, frequency, duration) | YES |
-| noTone(pin)  | YES |
+| **(#)** tone(pin, frequency)   | YES |
+| **(#)** tone(pin, frequency, duration) | YES |
+| **(#)** noTone(pin)  | YES |
 | shiftOut(dataPin, clockPin, bitOrder, value)  | YES |
 | byte incoming = shiftIn(dataPin, clockPin, bitOrder) | YES |
 | pulseIn(pin, value)  | YES |
@@ -127,8 +133,8 @@ ___________________________________________________
 
 | Function | Implemented (YES/NO-Comment/In Progress) |
 | ------ | ----------- |
-| interrupts()  | In Progress |
-| noInterrupts() | In Progress |
+| interrupts()  | NO |
+| noInterrupts() | NO |
 
 #### - Serial
 
@@ -139,8 +145,8 @@ ___________________________________________________
 | Serial.availableForWrite() | YES |
 | Serial.begin(speed) | YES |
 | Serial.begin(speed, config)| YES |
-| (EXTRA) Serial.begin(driverName, speed) | YES |
-| (EXTRA) Serial.begin(driverName, speed, config)| YES |
+| **(EXTRA)** Serial.begin(driverName, speed) | YES |
+| **(EXTRA)** Serial.begin(driverName, speed, config)| YES |
 | Serial.end() | YES |
 | Serial.find(target) | YES |
 | Serial.findUntil(target, terminal) | YES |
@@ -153,13 +159,13 @@ ___________________________________________________
 | Serial.print(val, format)| YES |
 | Serial.println(val)  | YES |
 | Serial.println(val, format) | YES |
-| (EXTRA) Serial.printf(format, ...) | YES |
+| **(EXTRA)** Serial.printf(format, ...) | YES |
 | Serial.read() | YES |
 | Serial.readBytes(buffer, length)| YES |
 | Serial.readBytesUntil(character, buffer, length) | YES |
 | Serial.readString() | YES |
 | Serial.readStringUntil(terminator) | YES |
-| (EXRTA) Serial.readStringCommand(character, buffer, length) | YES |
+| **(EXRTA)** Serial.readStringCommand(character, buffer, length) | YES |
 | Serial.setTimeout(time) | YES |
 | Serial.write(val)  | YES |
 | Serial.write(str)  | YES |
@@ -171,7 +177,7 @@ ___________________________________________________
 | Function | Implemented (YES/NO-Comment/In Progress) |
 | ------ | ----------- |
 | Wire.begin() | YES |
-| (EXTRA) Wire.begin(driverName) | YES |
+| **(EXTRA)** Wire.begin(driverName) | YES |
 | Wire.begin(address) | NO/In Progress - Linux I2C Slave driver was added recently, still verifying |
 | Wire.requestFrom(address, quantity) | YES |
 | Wire.requestFrom(address, quantity, stop) | NO - There is no way to send an I2C stop msg to the driver |
@@ -192,7 +198,7 @@ ___________________________________________________
 | ------ | ----------- |
 | SPISettings | YES |
 | SPI.begin() | YES |
-| (EXTRA) SPI.begin(driverName) | YES |
+| **(EXTRA)** SPI.begin(driverName) | YES |
 | SPI.end()| YES |
 | SPI.beginTransaction(mySettings) | YES |
 | SPI.endTransaction() | YES |

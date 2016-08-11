@@ -6,8 +6,8 @@
     <meta charset="utf-8">
     <meta name="author" content="Jorge Garza">
     <meta name="description" content="Arduino library for Raspberry Pi">
-    <title> pinMode › PiDuino Library</title>
-    <link rel="canonical" href="https://github.com/NVSL/PiDuino_Library/PiDuino_Library/function/2000/02/02/pinMode.html">
+    <title> digitalWrite › PiDuino Library</title>
+    <link rel="canonical" href="https://github.com/NVSL/PiDuino_Library/PiDuino_Library/function/2000/02/02/digitalRead.html">
     <link href="/PiDuino_Library/main.css" rel="stylesheet" type="text/css">
     <link href='//fonts.googleapis.com/css?family=Source+Sans+Pro:200,300,400,600,700,200italic,300italic,400italic,600italic,700italic' rel='stylesheet' type='text/css'>
     <link href='//fonts.googleapis.com/css?family=Gentium+Basic:400,700,400italic,700italic' rel='stylesheet' type='text/css'>
@@ -48,9 +48,9 @@
     
     
     <article>
-          <h3 id="pinmodepin-mode">pinMode(pin, mode)</h3>
+          <h3 id="digitalreadpin-value">digitalRead(pin, value)</h3>
 
-<p>Configures the specified GPIO pin number as INPUT, OUTPUT or PWM pin.</p>
+<p>Reads a GPIO pin value.</p>
 
 <p><strong>Parameters</strong></p>
 
@@ -58,19 +58,9 @@
   <p><strong>pin</strong> - The GPIO pin number.</p>
 </blockquote>
 
-<blockquote>
-  <p><strong>mode</strong> - Can be the followings:<br />
-<em>INPUT</em> : Sets pin as input without pullup resistor. <br />
-<em>INTPUT_PULLUP</em> : Sets pin as input with pullup resistor.<br />
-<em>INTPUT_PULLDOWN</em> : Sets pin as input with pulldown resistor.<br />
-<em>OUTPUT</em> : Sets pin as output.<br />
-<em>PWM_OUTPUT</em> : Sets pin as hardware PWM output. (Only for a few pins, see Notes below)<br />
-<em>SOFTPWM_OUTPUT</em> : Not available yet, still In progress.</p>
-</blockquote>
-
 <p><strong>Returns</strong></p>
 
-<p>None</p>
+<p><em>HIGH</em> (1) or <em>LOW</em> (0)</p>
 
 <hr />
 
@@ -78,95 +68,21 @@
 
 <figure class="highlight"><pre><code class="language-c" data-lang="c"><span class="cp">#include &lt;Arduino.h&gt;
 </span>
-<span class="kt">int</span> <span class="n">ledPin</span> <span class="o">=</span> <span class="mi">4</span><span class="p">;</span> <span class="c1">// GPIO4
+<span class="c1">// This program reads a pin and outputs
+// its value at the specified output pin. 
 </span>
+<span class="kt">int</span> <span class="n">inputPin</span> <span class="o">=</span> <span class="mi">17</span><span class="p">;</span> <span class="c1">// GPIO17
+</span><span class="kt">int</span> <span class="n">ledPin</span> <span class="o">=</span> <span class="mi">4</span><span class="p">;</span> <span class="c1">// GPIO4
+</span><span class="kt">int</span> <span class="n">val</span> <span class="o">=</span> <span class="mi">0</span><span class="p">;</span>
+
 <span class="kt">void</span> <span class="nf">setup</span><span class="p">()</span> <span class="p">{</span>
+	<span class="n">pinMode</span><span class="p">(</span><span class="n">inputPin</span><span class="p">,</span> <span class="n">INPUT</span><span class="p">);</span>
 	<span class="n">pinMode</span><span class="p">(</span><span class="n">ledPin</span><span class="p">,</span> <span class="n">OUTPUT</span><span class="p">);</span>
 <span class="p">}</span>
 
 <span class="kt">void</span> <span class="nf">loop</span><span class="p">()</span> <span class="p">{</span>
-	<span class="n">digitalWrite</span><span class="p">(</span><span class="n">ledPin</span><span class="p">,</span> <span class="n">HIGH</span><span class="p">);</span>
-	<span class="n">delay</span><span class="p">(</span><span class="mi">1000</span><span class="p">);</span>
-	<span class="n">digitalWrite</span><span class="p">(</span><span class="n">ledPin</span><span class="p">,</span> <span class="n">LOW</span><span class="p">);</span>
-	<span class="n">delay</span><span class="p">(</span><span class="mi">1000</span><span class="p">);</span>
-<span class="p">}</span></code></pre></figure>
-
-<hr />
-
-<p><strong>Notes</strong></p>
-
-<ul>
-  <li>These are the available pins for hardware PWM. Only a few are exposed to the RPi connector/header.</li>
-</ul>
-
-<table>
-  <thead>
-    <tr>
-      <th style="text-align: center">GPIO PIN</th>
-      <th style="text-align: center">Available in RPi (40-pins) connector</th>
-    </tr>
-  </thead>
-  <tbody>
-    <tr>
-      <td style="text-align: center">12</td>
-      <td style="text-align: center">YES</td>
-    </tr>
-    <tr>
-      <td style="text-align: center">13</td>
-      <td style="text-align: center">YES</td>
-    </tr>
-    <tr>
-      <td style="text-align: center">18</td>
-      <td style="text-align: center">YES</td>
-    </tr>
-    <tr>
-      <td style="text-align: center">19</td>
-      <td style="text-align: center">YES</td>
-    </tr>
-    <tr>
-      <td style="text-align: center">40</td>
-      <td style="text-align: center">NO</td>
-    </tr>
-    <tr>
-      <td style="text-align: center">41</td>
-      <td style="text-align: center">NO</td>
-    </tr>
-    <tr>
-      <td style="text-align: center">45</td>
-      <td style="text-align: center">NO</td>
-    </tr>
-    <tr>
-      <td style="text-align: center">52</td>
-      <td style="text-align: center">NO</td>
-    </tr>
-    <tr>
-      <td style="text-align: center">53</td>
-      <td style="text-align: center">NO</td>
-    </tr>
-  </tbody>
-</table>
-
-<ul>
-  <li><strong>pinMode</strong> function uses “/dev/gpiomem” as the default driver. If you want to change the driver to “/dev/mem”
-for example (which requires root) you can modify the <em>GPIO_DRIVER_NAME</em> constant as shown in the example.</li>
-</ul>
-
-<p><strong>Example</strong></p>
-
-<figure class="highlight"><pre><code class="language-c" data-lang="c"><span class="cp">#include &lt;Arduino.h&gt;
-</span>
-<span class="kt">int</span> <span class="n">ledPin</span> <span class="o">=</span> <span class="mi">4</span><span class="p">;</span> <span class="c1">// GPIO4
-</span>
-<span class="kt">void</span> <span class="nf">setup</span><span class="p">()</span> <span class="p">{</span>
-        <span class="n">strcpy</span><span class="p">(</span><span class="n">GPIO_DRIVER_NAME</span><span class="p">,</span> <span class="s">"/dev/mem"</span><span class="p">);</span>
-        <span class="n">pinMode</span><span class="p">(</span><span class="n">ledPin</span><span class="p">,</span> <span class="n">OUTPUT</span><span class="p">);</span>
-<span class="p">}</span>
-
-<span class="kt">void</span> <span class="nf">loop</span><span class="p">()</span> <span class="p">{</span>
-        <span class="n">digitalWrite</span><span class="p">(</span><span class="n">ledPin</span><span class="p">,</span> <span class="n">HIGH</span><span class="p">);</span>
-        <span class="n">delay</span><span class="p">(</span><span class="mi">1000</span><span class="p">);</span>
-        <span class="n">digitalWrite</span><span class="p">(</span><span class="n">ledPin</span><span class="p">,</span> <span class="n">LOW</span><span class="p">);</span>
-        <span class="n">delay</span><span class="p">(</span><span class="mi">1000</span><span class="p">);</span>
+	<span class="n">val</span> <span class="o">=</span> <span class="n">digitalRead</span><span class="p">(</span><span class="n">inputPin</span><span class="p">);</span>
+	<span class="n">digitalWrite</span><span class="p">(</span><span class="n">ledPin</span><span class="p">);</span>
 <span class="p">}</span></code></pre></figure>
 
 

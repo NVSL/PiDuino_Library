@@ -107,6 +107,14 @@ body > footer {
   max-width: 100%;
   height: auto; }
 
+.title-ul {
+  list-style-type: none;
+  margin: 0;
+  padding: 0; }
+
+.title-li {
+  float: left; }
+
 #paginate {
   padding-bottom: 1.5em; }
 

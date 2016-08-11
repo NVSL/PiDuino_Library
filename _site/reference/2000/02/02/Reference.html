@@ -19,6 +19,26 @@
   <body>
     <header>
       <h1><a href="/PiDuino_Library/">PiDuino Library</a></h1>
+      <!--
+      <ul class="title-ul">
+
+        <li class="title-li">
+        <h1><a href="/PiDuino_Library/">PiDuino Library</a></h1>
+        </li>
+
+        <li>
+          
+          <form action="https://www.paypal.com/cgi-bin/webscr" method="post" target="_top">
+          <input type="hidden" name="cmd" value="_s-xclick">
+          <input type="hidden" name="encrypted" value="-----BEGIN PKCS7-----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-----END PKCS7-----
+          ">
+          <input type="image" src="https://www.paypalobjects.com/en_US/i/btn/btn_donateCC_LG.gif" border="0" name="submit" alt="PayPal - The safer, easier way to pay online!">
+          <img alt="" border="0" src="https://www.paypalobjects.com/es_XC/i/scr/pixel.gif" width="1" height="1">
+          </form>
+        </li>
+
+      </ul>
+      -->
       <nav>
         <ul>
           <li><a href="/PiDuino_Library/">Home</a></li><li><a href="/PiDuino_Library/RPi_Pinout.html">RPi_Pinout</a></li><li><a href="/PiDuino_Library/Reference.html">Reference</a></li>
@@ -30,9 +50,17 @@
     <article>
           <h3 id="reference">Reference</h3>
 
-<p><strong>PiDuino Library (libpiduino)</strong> aims to support the core official Arduino functions published in the <a href="https://www.arduino.cc/en/Reference/Libraries">Arduino official website</a> as of April 2016. Note that the Arduino API has many legacy functions that although keeped no longer used, the ported libraries and functions are only the ones published on the official website.</p>
+<p><strong>PiDuino Library (libpiduino)</strong> aims to support the core official Arduino reference published in the <a href="https://www.arduino.cc/en/Reference/Libraries">Arduino official website</a> as of April 2016. Note that the Arduino API has many legacy functions that although keep no longer used, the ported libraries and functions are only the ones published on the official website.</p>
 
-<p><strong>libpiduino 1.0.0</strong> has 101 functions implemented out of 111 functions, this means that about <strong>90%</strong> of the official Arduino functions are implemented. Also 10 (EXTRA) functions which give more functionality to the library were included.</p>
+<p><strong>libpiduino 1.0.0</strong> has 99 functions implemented out of 111 functions, this means that about <strong>89%</strong> of the official Arduino functions are implemented. Also 10 (EXTRA) functions which give more functionality to the library were included.</p>
+
+<hr />
+
+<blockquote>
+  <p><strong>(*)</strong> - Functions that have changes compared the official Arduino reference.<br />
+<strong>(#)</strong> - Functions that require sudo/root to run them.<br />
+<strong>(EXTRA)</strong> - Extra functions not in the official Arduino reference.</p>
+</blockquote>
 
 <hr />
 
@@ -47,15 +75,15 @@
   </thead>
   <tbody>
     <tr>
-      <td><a href="/PiDuino_Library/function/2000/02/02/pinMode.html">pinMode(pin, mode)</a></td>
+      <td><strong>(*)</strong> <a href="/PiDuino_Library/function/2000/02/02/pinMode.html">pinMode(pin, mode)</a></td>
       <td>YES</td>
     </tr>
     <tr>
-      <td>digitalWrite(pin, value)</td>
+      <td><a href="/PiDuino_Library/function/2000/02/02/digitalWrite.html">digitalWrite(pin, value)</a></td>
       <td>YES</td>
     </tr>
     <tr>
-      <td>digitalRead(pin)</td>
+      <td><a href="/PiDuino_Library/function/2000/02/02/digitalRead.html">digitalRead(pin)</a></td>
       <td>YES</td>
     </tr>
   </tbody>
@@ -80,23 +108,23 @@
       <td>NO - No hardware support for RPi</td>
     </tr>
     <tr>
-      <td>analogWrite(pin, value) - PWM</td>
+      <td><strong>(#)</strong> <a href="/PiDuino_Library/function/2000/02/02/analogWrite.html">analogWrite(pin, value)</a> - PWM</td>
       <td>YES</td>
     </tr>
     <tr>
-      <td>(EXTRA) setPwmDutyCycle (pin, dutycycle)</td>
+      <td><strong>(EXTRA, #)</strong> <a href="/PiDuino_Library/function/2000/02/02/setPwmDutyCycle.html">setPwmDutyCycle(pin, dutycycle)</a></td>
       <td>YES</td>
     </tr>
     <tr>
-      <td>(EXTRA) setPwmFrequency (pin, frequency, dutycycle)</td>
+      <td><strong>(EXTRA, #)</strong> <a href="/PiDuino_Library/function/2000/02/02/setPwmDutyFrequency.html">setPwmFrequency(pin, frequency, dutycycle)</a></td>
       <td>YES</td>
     </tr>
     <tr>
-      <td>(EXTRA) setPwmFrequency (pin, frequency)</td>
+      <td><strong>(EXTRA, #)</strong> <a href="/PiDuino_Library/function/2000/02/02/setPwmFrequency.html">setPwmFrequency(pin, frequency)</a></td>
       <td>YES</td>
     </tr>
     <tr>
-      <td>(EXTRA) setPwmPeriod (pin, microseconds)</td>
+      <td><strong>(EXTRA, #)</strong> <a href="/PiDuino_Library/function/2000/02/02/setPwmPeriod.html">setPwmPeriod(pin, microseconds)</a></td>
       <td>YES</td>
     </tr>
   </tbody>
@@ -113,15 +141,15 @@
   </thead>
   <tbody>
     <tr>
-      <td>tone(pin, frequency)</td>
+      <td><strong>(#)</strong> tone(pin, frequency)</td>
       <td>YES</td>
     </tr>
     <tr>
-      <td>tone(pin, frequency, duration)</td>
+      <td><strong>(#)</strong> tone(pin, frequency, duration)</td>
       <td>YES</td>
     </tr>
     <tr>
-      <td>noTone(pin)</td>
+      <td><strong>(#)</strong> noTone(pin)</td>
       <td>YES</td>
     </tr>
     <tr>
@@ -418,11 +446,11 @@
   <tbody>
     <tr>
       <td>interrupts()</td>
-      <td>In Progress</td>
+      <td>NO</td>
     </tr>
     <tr>
       <td>noInterrupts()</td>
-      <td>In Progress</td>
+      <td>NO</td>
     </tr>
   </tbody>
 </table>
@@ -458,11 +486,11 @@
       <td>YES</td>
     </tr>
     <tr>
-      <td>(EXTRA) Serial.begin(driverName, speed)</td>
+      <td><strong>(EXTRA)</strong> Serial.begin(driverName, speed)</td>
       <td>YES</td>
     </tr>
     <tr>
-      <td>(EXTRA) Serial.begin(driverName, speed, config)</td>
+      <td><strong>(EXTRA)</strong> Serial.begin(driverName, speed, config)</td>
       <td>YES</td>
     </tr>
     <tr>
@@ -514,7 +542,7 @@
       <td>YES</td>
     </tr>
     <tr>
-      <td>(EXTRA) Serial.printf(format, …)</td>
+      <td><strong>(EXTRA)</strong> Serial.printf(format, …)</td>
       <td>YES</td>
     </tr>
     <tr>
@@ -538,7 +566,7 @@
       <td>YES</td>
     </tr>
     <tr>
-      <td>(EXRTA) Serial.readStringCommand(character, buffer, length)</td>
+      <td><strong>(EXRTA)</strong> Serial.readStringCommand(character, buffer, length)</td>
       <td>YES</td>
     </tr>
     <tr>
@@ -579,7 +607,7 @@
       <td>YES</td>
     </tr>
     <tr>
-      <td>(EXTRA) Wire.begin(driverName)</td>
+      <td><strong>(EXTRA)</strong> Wire.begin(driverName)</td>
       <td>YES</td>
     </tr>
     <tr>
@@ -656,7 +684,7 @@
       <td>YES</td>
     </tr>
     <tr>
-      <td>(EXTRA) SPI.begin(driverName)</td>
+      <td><strong>(EXTRA)</strong> SPI.begin(driverName)</td>
       <td>YES</td>
     </tr>
     <tr>

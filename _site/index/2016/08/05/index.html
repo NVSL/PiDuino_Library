@@ -19,6 +19,26 @@
   <body>
     <header>
       <h1><a href="/PiDuino_Library/">PiDuino Library</a></h1>
+      <!--
+      <ul class="title-ul">
+
+        <li class="title-li">
+        <h1><a href="/PiDuino_Library/">PiDuino Library</a></h1>
+        </li>
+
+        <li>
+          
+          <form action="https://www.paypal.com/cgi-bin/webscr" method="post" target="_top">
+          <input type="hidden" name="cmd" value="_s-xclick">
+          <input type="hidden" name="encrypted" value="-----BEGIN PKCS7-----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-----END PKCS7-----
+          ">
+          <input type="image" src="https://www.paypalobjects.com/en_US/i/btn/btn_donateCC_LG.gif" border="0" name="submit" alt="PayPal - The safer, easier way to pay online!">
+          <img alt="" border="0" src="https://www.paypalobjects.com/es_XC/i/scr/pixel.gif" width="1" height="1">
+          </form>
+        </li>
+
+      </ul>
+      -->
       <nav>
         <ul>
           <li><a href="/PiDuino_Library/">Home</a></li><li><a href="/PiDuino_Library/RPi_Pinout.html">RPi_Pinout</a></li><li><a href="/PiDuino_Library/Reference.html">Reference</a></li>
@@ -34,11 +54,11 @@
 targets the BCM283x SoC, all 54 pins, and not a specific set of pins of any Raspberry Pi (RPi) board.</p>
 
 <p>This library <strong>does not support Analog to Digital Conversion (ADC)</strong> functions as the BCM283x
-SoC does not have an integrated ADC and I don’t want to create hardware-dependant software. 
-If you need ADC is recomended to use external libraries.</p>
+SoC does not have an integrated ADC and I don’t want to create hardware-dependent software. 
+If you need ADC is recommended to use external libraries.</p>
 
-<p>Finally most of this library code was built so it can be easily ported to other plataforms like the Artik/Exynos SoCs
- or Snapdragon SoCs in the future, if you want to port this library to other plataforms send me an email.</p>
+<p>Finally most of this library code was built so it can be easily ported to another platform like the Artik/Exynos SoCs
+ or Snapdragon SoCs in the future, if you want to port this library to another platform send me an email.</p>
 
 <p><strong>Install</strong></p>
 
@@ -48,6 +68,8 @@ If you need ADC is recomended to use external libraries.</p>
 </code></pre>
 </div>
 <p style="text-align: right;">-&gt; <a href="https://github.com/NVSL/PiDuino_Library">source code</a> &lt;-</p>
+
+<p><a href="https://www.paypal.com/cgi-bin/webscr?cmd=_donations&amp;business=XV85PF2AAESFJ&amp;lc=US&amp;item_name=Piduino%20Library&amp;currency_code=USD&amp;bn=PP%2dDonationsBF%3abtn_donateCC_LG%2egif%3aNonHosted"><img src="https://www.paypalobjects.com/en_US/i/btn/btn_donateCC_LG.gif" alt="" /></a></p>
 
 <p><strong>Setup</strong></p>
 
@@ -155,13 +177,13 @@ See which pin is GPIO4 in your board in the <a href="/PiDuino_Library/RPi_Pinout
 <span class="p">}</span></code></pre></figure>
 
 <p>If you want to check that the SPI, I2C drivers are enabled use the command below.
-Note that the I2C number may be diferent depending on your RPi board version.</p>
+Note that the I2C number may be different depending on your RPi board version.</p>
 
 <div class="highlighter-rouge"><pre class="highlight"><code>ls /dev/ | grep 'i2c-\|spidev\|ttyAMA0'
 </code></pre>
 </div>
 
-<p>The outupt should be something like this:</p>
+<p>The output should be something like this:</p>
 
 <div class="highlighter-rouge"><pre class="highlight"><code>i2c-1
 spidev0.0
@@ -170,7 +192,33 @@ ttyAMA0
 </code></pre>
 </div>
 
-<p>Thank you!.</p>
+<p><strong>Donate</strong></p>
+
+<p class="center-image">Your donations will help me continue improving this library.</p>
+
+<p class="center-image"><a href="https://www.paypal.com/cgi-bin/webscr?cmd=_donations&amp;business=XV85PF2AAESFJ&amp;lc=US&amp;item_name=Piduino%20Library&amp;currency_code=USD&amp;bn=PP%2dDonationsBF%3abtn_donateCC_LG%2egif%3aNonHosted"><img src="https://www.paypalobjects.com/en_US/i/btn/btn_donateCC_LG.gif" alt="" /></a></p>
+
+<p class="center-image">░░░░░░░░░▄░░░░░░░░░░░░░░▄<br />
+░░░░░░░░▌▒█░░░░░░░░░░░▄▀▒▌<br />
+░░░░░░░░▌▒▒█░░░░░░░░▄▀▒▒▒▐<br />
+░░░░░░░▐▄▀▒▒▀▀▀▀▄▄▄▀▒▒▒▒▒▐<br />
+░░░░░▄▄▀▒░▒▒▒▒▒▒▒▒▒█▒▒▄█▒▐<br />
+░░░▄▀▒▒▒░░░▒▒▒░░░▒▒▒▀██▀▒▌<br />
+░░▐▒▒▒▄▄▒▒▒▒░░░▒▒▒▒▒▒▒▀▄▒▒▌<br />
+░░▌░░▌█▀▒▒▒▒▒▄▀█▄▒▒▒▒▒▒▒█▒▐<br />
+░▐░░░▒▒▒▒▒▒▒▒▌██▀▒▒░░░▒▒▒▀▄▌<br />
+░▌░▒▄██▄▒▒▒▒▒▒▒▒▒░░░░░░▒▒▒▒▌<br />
+▌▒▀▐▄█▄█▌▄░▀▒▒░░░░░░░░░░▒▒▒▐<br />
+▐▒▒▐▀▐▀▒░▄▄▒▄▒▒▒▒▒▒░▒░▒░▒▒▒▒▌<br />
+▐▒▒▒▀▀▄▄▒▒▒▄▒▒▒▒▒▒▒▒░▒░▒░▒▒▐<br />
+░▌▒▒▒▒▒▒▀▀▀▒▒▒▒▒▒░▒░▒░▒░▒▒▒▌<br />
+░▐▒▒▒▒▒▒▒▒▒▒▒▒▒▒░▒░▒░▒▒▄▒▒▐<br />
+░░▀▄▒▒▒▒▒▒▒▒▒▒▒░▒░▒░▒▄▒▒▒▒▌<br />
+░░░░▀▄▒▒▒▒▒▒▒▒▒▒▄▄▄▀▒▒▒▒▄▀<br />
+░░░░░░▀▄▄▄▄▄▄▀▀▀▒▒▒▒▒▄▄▀<br />
+░░░░░░░░░▒▒▒▒▒▒▒▒▒▒▀</p>
+
+<p class="center-image">Thank you!.</p>
 
 
       

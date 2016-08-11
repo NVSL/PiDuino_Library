@@ -1,14 +1,14 @@
-<?xml version="1.0" encoding="utf-8"?><?xml-stylesheet type="text/xml" href="/feed.xslt.xml"?><feed xmlns="http://www.w3.org/2005/Atom"><generator uri="http://jekyllrb.com" version="3.1.6">Jekyll</generator><link href="https://github.com/NVSL/PiDuino_Library/PiDuino_Library/feed.xml" rel="self" type="application/atom+xml" /><link href="https://github.com/NVSL/PiDuino_Library/PiDuino_Library/" rel="alternate" type="text/html" /><updated>2016-08-08T21:23:48-07:00</updated><id>https://github.com/NVSL/PiDuino_Library/PiDuino_Library/</id><title>PiDuino Library</title><subtitle>Arduino library for Raspberry Pi</subtitle><author><name>Jorge Garza</name></author><entry><title>Piduino Library (libpiduino)</title><link href="https://github.com/NVSL/PiDuino_Library/PiDuino_Library/index/2016/08/05/index.html" rel="alternate" type="text/html" title="Piduino Library (libpiduino)" /><published>2016-08-05T00:00:00-07:00</published><updated>2016-08-05T00:00:00-07:00</updated><id>https://github.com/NVSL/PiDuino_Library/PiDuino_Library/index/2016/08/05/index</id><content type="html" xml:base="https://github.com/NVSL/PiDuino_Library/PiDuino_Library/index/2016/08/05/index.html">&lt;p&gt;&lt;strong&gt;About&lt;/strong&gt;&lt;/p&gt;
+<?xml version="1.0" encoding="utf-8"?><?xml-stylesheet type="text/xml" href="/feed.xslt.xml"?><feed xmlns="http://www.w3.org/2005/Atom"><generator uri="http://jekyllrb.com" version="3.1.6">Jekyll</generator><link href="https://github.com/NVSL/PiDuino_Library/PiDuino_Library/feed.xml" rel="self" type="application/atom+xml" /><link href="https://github.com/NVSL/PiDuino_Library/PiDuino_Library/" rel="alternate" type="text/html" /><updated>2016-08-11T01:33:11-07:00</updated><id>https://github.com/NVSL/PiDuino_Library/PiDuino_Library/</id><title>PiDuino Library</title><subtitle>Arduino library for Raspberry Pi</subtitle><author><name>Jorge Garza</name></author><entry><title>Piduino Library (libpiduino)</title><link href="https://github.com/NVSL/PiDuino_Library/PiDuino_Library/index/2016/08/05/index.html" rel="alternate" type="text/html" title="Piduino Library (libpiduino)" /><published>2016-08-05T00:00:00-07:00</published><updated>2016-08-05T00:00:00-07:00</updated><id>https://github.com/NVSL/PiDuino_Library/PiDuino_Library/index/2016/08/05/index</id><content type="html" xml:base="https://github.com/NVSL/PiDuino_Library/PiDuino_Library/index/2016/08/05/index.html">&lt;p&gt;&lt;strong&gt;About&lt;/strong&gt;&lt;/p&gt;
 
 &lt;p&gt;&lt;strong&gt;Piduino Library (libpiduino)&lt;/strong&gt; is a C++ library that lets you write and compile Arduino programs in the Raspberry Pi. This library 
 targets the BCM283x SoC, all 54 pins, and not a specific set of pins of any Raspberry Pi (RPi) board.&lt;/p&gt;
 
 &lt;p&gt;This library &lt;strong&gt;does not support Analog to Digital Conversion (ADC)&lt;/strong&gt; functions as the BCM283x
-SoC does not have an integrated ADC and I don’t want to create hardware-dependant software. 
-If you need ADC is recomended to use external libraries.&lt;/p&gt;
+SoC does not have an integrated ADC and I don’t want to create hardware-dependent software. 
+If you need ADC is recommended to use external libraries.&lt;/p&gt;
 
-&lt;p&gt;Finally most of this library code was built so it can be easily ported to other plataforms like the Artik/Exynos SoCs
- or Snapdragon SoCs in the future, if you want to port this library to other plataforms send me an email.&lt;/p&gt;
+&lt;p&gt;Finally most of this library code was built so it can be easily ported to another platform like the Artik/Exynos SoCs
+ or Snapdragon SoCs in the future, if you want to port this library to another platform send me an email.&lt;/p&gt;
 
 &lt;p&gt;&lt;strong&gt;Install&lt;/strong&gt;&lt;/p&gt;
 
@@ -18,6 +18,8 @@ If you need ADC is recomended to use external libraries.&lt;/p&gt;
 &lt;/code&gt;&lt;/pre&gt;
 &lt;/div&gt;
 &lt;p style=&quot;text-align: right;&quot;&gt;-&amp;gt; &lt;a href=&quot;https://github.com/NVSL/PiDuino_Library&quot;&gt;source code&lt;/a&gt; &amp;lt;-&lt;/p&gt;
+
+&lt;p&gt;&lt;a href=&quot;https://www.paypal.com/cgi-bin/webscr?cmd=_donations&amp;amp;business=XV85PF2AAESFJ&amp;amp;lc=US&amp;amp;item_name=Piduino%20Library&amp;amp;currency_code=USD&amp;amp;bn=PP%2dDonationsBF%3abtn_donateCC_LG%2egif%3aNonHosted&quot;&gt;&lt;img src=&quot;https://www.paypalobjects.com/en_US/i/btn/btn_donateCC_LG.gif&quot; alt=&quot;&quot; /&gt;&lt;/a&gt;&lt;/p&gt;
 
 &lt;p&gt;&lt;strong&gt;Setup&lt;/strong&gt;&lt;/p&gt;
 
@@ -125,13 +127,13 @@ See which pin is GPIO4 in your board in the &lt;a href=&quot;/PiDuino_Library/RP
 &lt;span class=&quot;p&quot;&gt;}&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/figure&gt;
 
 &lt;p&gt;If you want to check that the SPI, I2C drivers are enabled use the command below.
-Note that the I2C number may be diferent depending on your RPi board version.&lt;/p&gt;
+Note that the I2C number may be different depending on your RPi board version.&lt;/p&gt;
 
 &lt;div class=&quot;highlighter-rouge&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;ls /dev/ | grep &#39;i2c-\|spidev\|ttyAMA0&#39;
 &lt;/code&gt;&lt;/pre&gt;
 &lt;/div&gt;
 
-&lt;p&gt;The outupt should be something like this:&lt;/p&gt;
+&lt;p&gt;The output should be something like this:&lt;/p&gt;
 
 &lt;div class=&quot;highlighter-rouge&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;i2c-1
 spidev0.0
@@ -140,17 +142,43 @@ ttyAMA0
 &lt;/code&gt;&lt;/pre&gt;
 &lt;/div&gt;
 
-&lt;p&gt;Thank you!.&lt;/p&gt;</content><author><name>Jorge Garza</name></author><summary>About
+&lt;p&gt;&lt;strong&gt;Donate&lt;/strong&gt;&lt;/p&gt;
+
+&lt;p class=&quot;center-image&quot;&gt;Your donations will help me continue improving this library.&lt;/p&gt;
+
+&lt;p class=&quot;center-image&quot;&gt;&lt;a href=&quot;https://www.paypal.com/cgi-bin/webscr?cmd=_donations&amp;amp;business=XV85PF2AAESFJ&amp;amp;lc=US&amp;amp;item_name=Piduino%20Library&amp;amp;currency_code=USD&amp;amp;bn=PP%2dDonationsBF%3abtn_donateCC_LG%2egif%3aNonHosted&quot;&gt;&lt;img src=&quot;https://www.paypalobjects.com/en_US/i/btn/btn_donateCC_LG.gif&quot; alt=&quot;&quot; /&gt;&lt;/a&gt;&lt;/p&gt;
+
+&lt;p class=&quot;center-image&quot;&gt;░░░░░░░░░▄░░░░░░░░░░░░░░▄&lt;br /&gt;
+░░░░░░░░▌▒█░░░░░░░░░░░▄▀▒▌&lt;br /&gt;
+░░░░░░░░▌▒▒█░░░░░░░░▄▀▒▒▒▐&lt;br /&gt;
+░░░░░░░▐▄▀▒▒▀▀▀▀▄▄▄▀▒▒▒▒▒▐&lt;br /&gt;
+░░░░░▄▄▀▒░▒▒▒▒▒▒▒▒▒█▒▒▄█▒▐&lt;br /&gt;
+░░░▄▀▒▒▒░░░▒▒▒░░░▒▒▒▀██▀▒▌&lt;br /&gt;
+░░▐▒▒▒▄▄▒▒▒▒░░░▒▒▒▒▒▒▒▀▄▒▒▌&lt;br /&gt;
+░░▌░░▌█▀▒▒▒▒▒▄▀█▄▒▒▒▒▒▒▒█▒▐&lt;br /&gt;
+░▐░░░▒▒▒▒▒▒▒▒▌██▀▒▒░░░▒▒▒▀▄▌&lt;br /&gt;
+░▌░▒▄██▄▒▒▒▒▒▒▒▒▒░░░░░░▒▒▒▒▌&lt;br /&gt;
+▌▒▀▐▄█▄█▌▄░▀▒▒░░░░░░░░░░▒▒▒▐&lt;br /&gt;
+▐▒▒▐▀▐▀▒░▄▄▒▄▒▒▒▒▒▒░▒░▒░▒▒▒▒▌&lt;br /&gt;
+▐▒▒▒▀▀▄▄▒▒▒▄▒▒▒▒▒▒▒▒░▒░▒░▒▒▐&lt;br /&gt;
+░▌▒▒▒▒▒▒▀▀▀▒▒▒▒▒▒░▒░▒░▒░▒▒▒▌&lt;br /&gt;
+░▐▒▒▒▒▒▒▒▒▒▒▒▒▒▒░▒░▒░▒▒▄▒▒▐&lt;br /&gt;
+░░▀▄▒▒▒▒▒▒▒▒▒▒▒░▒░▒░▒▄▒▒▒▒▌&lt;br /&gt;
+░░░░▀▄▒▒▒▒▒▒▒▒▒▒▄▄▄▀▒▒▒▒▄▀&lt;br /&gt;
+░░░░░░▀▄▄▄▄▄▄▀▀▀▒▒▒▒▒▄▄▀&lt;br /&gt;
+░░░░░░░░░▒▒▒▒▒▒▒▒▒▒▀&lt;/p&gt;
+
+&lt;p class=&quot;center-image&quot;&gt;Thank you!.&lt;/p&gt;</content><author><name>Jorge Garza</name></author><summary>About
 
 Piduino Library (libpiduino) is a C++ library that lets you write and compile Arduino programs in the Raspberry Pi. This library 
 targets the BCM283x SoC, all 54 pins, and not a specific set of pins of any Raspberry Pi (RPi) board.
 
 This library does not support Analog to Digital Conversion (ADC) functions as the BCM283x
-SoC does not have an integrated ADC and I don’t want to create hardware-dependant software. 
-If you need ADC is recomended to use external libraries.
+SoC does not have an integrated ADC and I don’t want to create hardware-dependent software. 
+If you need ADC is recommended to use external libraries.
 
-Finally most of this library code was built so it can be easily ported to other plataforms like the Artik/Exynos SoCs
- or Snapdragon SoCs in the future, if you want to port this library to other plataforms send me an email.
+Finally most of this library code was built so it can be easily ported to another platform like the Artik/Exynos SoCs
+ or Snapdragon SoCs in the future, if you want to port this library to another platform send me an email.
 
 Install
 
@@ -160,6 +188,8 @@ sudo apt-get install libpiduino-dev
 
 
 -&amp;gt; source code &amp;lt;-
+
+
 
 Setup
 
@@ -267,13 +297,13 @@ int main () {
 }
 
 If you want to check that the SPI, I2C drivers are enabled use the command below.
-Note that the I2C number may be diferent depending on your RPi board version.
+Note that the I2C number may be different depending on your RPi board version.
 
 ls /dev/ | grep &#39;i2c-\|spidev\|ttyAMA0&#39;
 
 
 
-The outupt should be something like this:
+The output should be something like this:
 
 i2c-1
 spidev0.0
@@ -282,7 +312,793 @@ ttyAMA0
 
 
 
-Thank you!.</summary></entry><entry><title>Reference</title><link href="https://github.com/NVSL/PiDuino_Library/PiDuino_Library/pinout/2000/02/02/pinout.html" rel="alternate" type="text/html" title="Reference" /><published>2000-02-02T00:00:00-08:00</published><updated>2000-02-02T00:00:00-08:00</updated><id>https://github.com/NVSL/PiDuino_Library/PiDuino_Library/pinout/2000/02/02/pinout</id><content type="html" xml:base="https://github.com/NVSL/PiDuino_Library/PiDuino_Library/pinout/2000/02/02/pinout.html">&lt;h3 id=&quot;pinout&quot;&gt;Pinout&lt;/h3&gt;
+Donate
+
+Your donations will help me continue improving this library.
+
+
+
+░░░░░░░░░▄░░░░░░░░░░░░░░▄
+░░░░░░░░▌▒█░░░░░░░░░░░▄▀▒▌
+░░░░░░░░▌▒▒█░░░░░░░░▄▀▒▒▒▐
+░░░░░░░▐▄▀▒▒▀▀▀▀▄▄▄▀▒▒▒▒▒▐
+░░░░░▄▄▀▒░▒▒▒▒▒▒▒▒▒█▒▒▄█▒▐
+░░░▄▀▒▒▒░░░▒▒▒░░░▒▒▒▀██▀▒▌
+░░▐▒▒▒▄▄▒▒▒▒░░░▒▒▒▒▒▒▒▀▄▒▒▌
+░░▌░░▌█▀▒▒▒▒▒▄▀█▄▒▒▒▒▒▒▒█▒▐
+░▐░░░▒▒▒▒▒▒▒▒▌██▀▒▒░░░▒▒▒▀▄▌
+░▌░▒▄██▄▒▒▒▒▒▒▒▒▒░░░░░░▒▒▒▒▌
+▌▒▀▐▄█▄█▌▄░▀▒▒░░░░░░░░░░▒▒▒▐
+▐▒▒▐▀▐▀▒░▄▄▒▄▒▒▒▒▒▒░▒░▒░▒▒▒▒▌
+▐▒▒▒▀▀▄▄▒▒▒▄▒▒▒▒▒▒▒▒░▒░▒░▒▒▐
+░▌▒▒▒▒▒▒▀▀▀▒▒▒▒▒▒░▒░▒░▒░▒▒▒▌
+░▐▒▒▒▒▒▒▒▒▒▒▒▒▒▒░▒░▒░▒▒▄▒▒▐
+░░▀▄▒▒▒▒▒▒▒▒▒▒▒░▒░▒░▒▄▒▒▒▒▌
+░░░░▀▄▒▒▒▒▒▒▒▒▒▒▄▄▄▀▒▒▒▒▄▀
+░░░░░░▀▄▄▄▄▄▄▀▀▀▒▒▒▒▒▄▄▀
+░░░░░░░░░▒▒▒▒▒▒▒▒▒▒▀
+
+Thank you!.</summary></entry><entry><title>setPwmPeriod</title><link href="https://github.com/NVSL/PiDuino_Library/PiDuino_Library/function/2000/02/02/setPwmPeriod.html" rel="alternate" type="text/html" title="setPwmPeriod" /><published>2000-02-02T00:00:00-08:00</published><updated>2000-02-02T00:00:00-08:00</updated><id>https://github.com/NVSL/PiDuino_Library/PiDuino_Library/function/2000/02/02/setPwmPeriod</id><content type="html" xml:base="https://github.com/NVSL/PiDuino_Library/PiDuino_Library/function/2000/02/02/setPwmPeriod.html">&lt;h3 id=&quot;setpwmperiodpin-microseconds&quot;&gt;setPwmPeriod(pin, microseconds)&lt;/h3&gt;
+
+&lt;p&gt;Sets the PWM (Pulse Width Modulation) wave period in microseconds (us).&lt;/p&gt;
+
+&lt;p&gt;&lt;strong&gt;Parameters&lt;/strong&gt;&lt;/p&gt;
+
+&lt;blockquote&gt;
+  &lt;p&gt;&lt;strong&gt;pin&lt;/strong&gt; - The GPIO pin number.&lt;/p&gt;
+&lt;/blockquote&gt;
+
+&lt;blockquote&gt;
+  &lt;p&gt;&lt;strong&gt;microseconds&lt;/strong&gt; - PWM frequency (in us).&lt;br /&gt;
+Available ranges are between 52631 (19 hz) and 26 (37500 hz).&lt;/p&gt;
+&lt;/blockquote&gt;
+
+&lt;p&gt;&lt;strong&gt;Returns&lt;/strong&gt;&lt;/p&gt;
+
+&lt;p&gt;None&lt;/p&gt;
+
+&lt;hr /&gt;
+
+&lt;p&gt;&lt;strong&gt;Example&lt;/strong&gt;&lt;/p&gt;
+
+&lt;figure class=&quot;highlight&quot;&gt;&lt;pre&gt;&lt;code class=&quot;language-c&quot; data-lang=&quot;c&quot;&gt;&lt;span class=&quot;cp&quot;&gt;#include &amp;lt;Arduino.h&amp;gt;
+&lt;/span&gt;
+&lt;span class=&quot;kt&quot;&gt;int&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;GPIO_PIN&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;mi&quot;&gt;12&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;;&lt;/span&gt; &lt;span class=&quot;c1&quot;&gt;// GPIO12
+&lt;/span&gt;
+&lt;span class=&quot;kt&quot;&gt;void&lt;/span&gt; &lt;span class=&quot;nf&quot;&gt;setup&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;()&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;{&lt;/span&gt;
+	&lt;span class=&quot;n&quot;&gt;pinMode&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;GPIO_PIN&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;PWM_OUTPUT&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;);&lt;/span&gt;
+&lt;span class=&quot;p&quot;&gt;}&lt;/span&gt;
+
+&lt;span class=&quot;kt&quot;&gt;void&lt;/span&gt; &lt;span class=&quot;nf&quot;&gt;loop&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;()&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;{&lt;/span&gt;
+	&lt;span class=&quot;c1&quot;&gt;// Set PWM to 10000 us (100 Hz)
+&lt;/span&gt;	&lt;span class=&quot;n&quot;&gt;setPwmDutyCycle&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;GPIO_PIN&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;mi&quot;&gt;10000&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;);&lt;/span&gt; 
+	&lt;span class=&quot;n&quot;&gt;delay&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;mi&quot;&gt;1000&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;);&lt;/span&gt;
+	&lt;span class=&quot;c1&quot;&gt;// Set PWM to 1000 us (1 KHz)
+&lt;/span&gt;	&lt;span class=&quot;n&quot;&gt;setPwmDutyCycle&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;GPIO_PIN&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;mi&quot;&gt;1000&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;);&lt;/span&gt; 
+	&lt;span class=&quot;n&quot;&gt;delay&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;mi&quot;&gt;1000&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;);&lt;/span&gt;
+	&lt;span class=&quot;c1&quot;&gt;// Set PWM to 100 us (10 kHz)
+&lt;/span&gt;	&lt;span class=&quot;n&quot;&gt;setPwmDutyCycle&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;GPIO_PIN&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;mi&quot;&gt;100&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;);&lt;/span&gt; 
+	&lt;span class=&quot;n&quot;&gt;delay&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;mi&quot;&gt;1000&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;);&lt;/span&gt;
+&lt;span class=&quot;p&quot;&gt;}&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/figure&gt;
+
+&lt;hr /&gt;
+
+&lt;p&gt;&lt;strong&gt;Notes&lt;/strong&gt;&lt;/p&gt;
+
+&lt;ul&gt;
+  &lt;li&gt;The default PWM frequency is 490 Hz&lt;/li&gt;
+  &lt;li&gt;&lt;em&gt;PWM_OUTPUT&lt;/em&gt; uses the hardware PWM of the BCM283x SoC.&lt;br /&gt;
+The available PWM pins are the followings:&lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;table&gt;
+  &lt;thead&gt;
+    &lt;tr&gt;
+      &lt;th style=&quot;text-align: center&quot;&gt;GPIO PIN&lt;/th&gt;
+      &lt;th style=&quot;text-align: center&quot;&gt;Available in RPi (40-pins) connector&lt;/th&gt;
+    &lt;/tr&gt;
+  &lt;/thead&gt;
+  &lt;tbody&gt;
+    &lt;tr&gt;
+      &lt;td style=&quot;text-align: center&quot;&gt;12&lt;/td&gt;
+      &lt;td style=&quot;text-align: center&quot;&gt;YES&lt;/td&gt;
+    &lt;/tr&gt;
+    &lt;tr&gt;
+      &lt;td style=&quot;text-align: center&quot;&gt;13&lt;/td&gt;
+      &lt;td style=&quot;text-align: center&quot;&gt;YES&lt;/td&gt;
+    &lt;/tr&gt;
+    &lt;tr&gt;
+      &lt;td style=&quot;text-align: center&quot;&gt;18&lt;/td&gt;
+      &lt;td style=&quot;text-align: center&quot;&gt;YES&lt;/td&gt;
+    &lt;/tr&gt;
+    &lt;tr&gt;
+      &lt;td style=&quot;text-align: center&quot;&gt;19&lt;/td&gt;
+      &lt;td style=&quot;text-align: center&quot;&gt;YES&lt;/td&gt;
+    &lt;/tr&gt;
+    &lt;tr&gt;
+      &lt;td style=&quot;text-align: center&quot;&gt;40&lt;/td&gt;
+      &lt;td style=&quot;text-align: center&quot;&gt;NO&lt;/td&gt;
+    &lt;/tr&gt;
+    &lt;tr&gt;
+      &lt;td style=&quot;text-align: center&quot;&gt;41&lt;/td&gt;
+      &lt;td style=&quot;text-align: center&quot;&gt;NO&lt;/td&gt;
+    &lt;/tr&gt;
+    &lt;tr&gt;
+      &lt;td style=&quot;text-align: center&quot;&gt;45&lt;/td&gt;
+      &lt;td style=&quot;text-align: center&quot;&gt;NO&lt;/td&gt;
+    &lt;/tr&gt;
+    &lt;tr&gt;
+      &lt;td style=&quot;text-align: center&quot;&gt;52&lt;/td&gt;
+      &lt;td style=&quot;text-align: center&quot;&gt;NO&lt;/td&gt;
+    &lt;/tr&gt;
+    &lt;tr&gt;
+      &lt;td style=&quot;text-align: center&quot;&gt;53&lt;/td&gt;
+      &lt;td style=&quot;text-align: center&quot;&gt;NO&lt;/td&gt;
+    &lt;/tr&gt;
+  &lt;/tbody&gt;
+&lt;/table&gt;</content><author><name>Jorge Garza</name></author><summary>setPwmPeriod(pin, microseconds)
+
+Sets the PWM (Pulse Width Modulation) wave period in microseconds (us).
+
+Parameters
+
+
+  pin - The GPIO pin number.
+
+
+
+  microseconds - PWM frequency (in us).
+Available ranges are between 52631 (19 hz) and 26 (37500 hz).
+
+
+Returns
+
+None
+
+
+
+Example
+
+#include &amp;lt;Arduino.h&amp;gt;
+
+int GPIO_PIN = 12; // GPIO12
+
+void setup() {
+	pinMode(GPIO_PIN, PWM_OUTPUT);
+}
+
+void loop() {
+	// Set PWM to 10000 us (100 Hz)
+	setPwmDutyCycle(GPIO_PIN, 10000); 
+	delay(1000);
+	// Set PWM to 1000 us (1 KHz)
+	setPwmDutyCycle(GPIO_PIN, 1000); 
+	delay(1000);
+	// Set PWM to 100 us (10 kHz)
+	setPwmDutyCycle(GPIO_PIN, 100); 
+	delay(1000);
+}
+
+
+
+Notes
+
+
+  The default PWM frequency is 490 Hz
+  PWM_OUTPUT uses the hardware PWM of the BCM283x SoC.
+The available PWM pins are the followings:
+
+
+
+  
+    
+      GPIO PIN
+      Available in RPi (40-pins) connector
+    
+  
+  
+    
+      12
+      YES
+    
+    
+      13
+      YES
+    
+    
+      18
+      YES
+    
+    
+      19
+      YES
+    
+    
+      40
+      NO
+    
+    
+      41
+      NO
+    
+    
+      45
+      NO
+    
+    
+      52
+      NO
+    
+    
+      53
+      NO</summary></entry><entry><title>setPwmFrequency</title><link href="https://github.com/NVSL/PiDuino_Library/PiDuino_Library/function/2000/02/02/setPwmFrequency.html" rel="alternate" type="text/html" title="setPwmFrequency" /><published>2000-02-02T00:00:00-08:00</published><updated>2000-02-02T00:00:00-08:00</updated><id>https://github.com/NVSL/PiDuino_Library/PiDuino_Library/function/2000/02/02/setPwmFrequency</id><content type="html" xml:base="https://github.com/NVSL/PiDuino_Library/PiDuino_Library/function/2000/02/02/setPwmFrequency.html">&lt;h3 id=&quot;setpwmfrequencypin-frequency&quot;&gt;setPwmFrequency(pin, frequency)&lt;/h3&gt;
+
+&lt;p&gt;Sets the PWM (Pulse Width Modulation) wave frequency in Hz.&lt;/p&gt;
+
+&lt;p&gt;&lt;strong&gt;Parameters&lt;/strong&gt;&lt;/p&gt;
+
+&lt;blockquote&gt;
+  &lt;p&gt;&lt;strong&gt;pin&lt;/strong&gt; - The GPIO pin number.&lt;/p&gt;
+&lt;/blockquote&gt;
+
+&lt;blockquote&gt;
+  &lt;p&gt;&lt;strong&gt;frequency&lt;/strong&gt; - PWM frequency (in Hz). Available ranges are between 19 and 37500.&lt;/p&gt;
+&lt;/blockquote&gt;
+
+&lt;p&gt;&lt;strong&gt;Returns&lt;/strong&gt;&lt;/p&gt;
+
+&lt;p&gt;None&lt;/p&gt;
+
+&lt;hr /&gt;
+
+&lt;p&gt;&lt;strong&gt;Example&lt;/strong&gt;&lt;/p&gt;
+
+&lt;figure class=&quot;highlight&quot;&gt;&lt;pre&gt;&lt;code class=&quot;language-c&quot; data-lang=&quot;c&quot;&gt;&lt;span class=&quot;cp&quot;&gt;#include &amp;lt;Arduino.h&amp;gt;
+&lt;/span&gt;
+&lt;span class=&quot;kt&quot;&gt;int&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;GPIO_PIN&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;mi&quot;&gt;12&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;;&lt;/span&gt; &lt;span class=&quot;c1&quot;&gt;// GPIO12
+&lt;/span&gt;
+&lt;span class=&quot;kt&quot;&gt;void&lt;/span&gt; &lt;span class=&quot;nf&quot;&gt;setup&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;()&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;{&lt;/span&gt;
+	&lt;span class=&quot;n&quot;&gt;pinMode&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;GPIO_PIN&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;PWM_OUTPUT&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;);&lt;/span&gt;
+&lt;span class=&quot;p&quot;&gt;}&lt;/span&gt;
+
+&lt;span class=&quot;kt&quot;&gt;void&lt;/span&gt; &lt;span class=&quot;nf&quot;&gt;loop&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;()&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;{&lt;/span&gt;
+	&lt;span class=&quot;c1&quot;&gt;// Set PWM to 100 Hz
+&lt;/span&gt;	&lt;span class=&quot;n&quot;&gt;setPwmDutyCycle&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;GPIO_PIN&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;mi&quot;&gt;100&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;);&lt;/span&gt; 
+	&lt;span class=&quot;n&quot;&gt;delay&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;mi&quot;&gt;1000&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;);&lt;/span&gt;
+	&lt;span class=&quot;c1&quot;&gt;// Set PWM to 1 Khz
+&lt;/span&gt;	&lt;span class=&quot;n&quot;&gt;setPwmDutyCycle&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;GPIO_PIN&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;mi&quot;&gt;1000&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;);&lt;/span&gt; 
+	&lt;span class=&quot;n&quot;&gt;delay&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;mi&quot;&gt;1000&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;);&lt;/span&gt;
+	&lt;span class=&quot;c1&quot;&gt;// Set PWM to 10 kHz
+&lt;/span&gt;	&lt;span class=&quot;n&quot;&gt;setPwmDutyCycle&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;GPIO_PIN&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;mi&quot;&gt;10000&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;);&lt;/span&gt; 
+	&lt;span class=&quot;n&quot;&gt;delay&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;mi&quot;&gt;1000&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;);&lt;/span&gt;
+&lt;span class=&quot;p&quot;&gt;}&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/figure&gt;
+
+&lt;hr /&gt;
+
+&lt;p&gt;&lt;strong&gt;Notes&lt;/strong&gt;&lt;/p&gt;
+
+&lt;ul&gt;
+  &lt;li&gt;The default PWM frequency is 490 Hz&lt;/li&gt;
+  &lt;li&gt;&lt;em&gt;PWM_OUTPUT&lt;/em&gt; uses the hardware PWM of the BCM283x SoC.&lt;br /&gt;
+The available PWM pins are the followings:&lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;table&gt;
+  &lt;thead&gt;
+    &lt;tr&gt;
+      &lt;th style=&quot;text-align: center&quot;&gt;GPIO PIN&lt;/th&gt;
+      &lt;th style=&quot;text-align: center&quot;&gt;Available in RPi (40-pins) connector&lt;/th&gt;
+    &lt;/tr&gt;
+  &lt;/thead&gt;
+  &lt;tbody&gt;
+    &lt;tr&gt;
+      &lt;td style=&quot;text-align: center&quot;&gt;12&lt;/td&gt;
+      &lt;td style=&quot;text-align: center&quot;&gt;YES&lt;/td&gt;
+    &lt;/tr&gt;
+    &lt;tr&gt;
+      &lt;td style=&quot;text-align: center&quot;&gt;13&lt;/td&gt;
+      &lt;td style=&quot;text-align: center&quot;&gt;YES&lt;/td&gt;
+    &lt;/tr&gt;
+    &lt;tr&gt;
+      &lt;td style=&quot;text-align: center&quot;&gt;18&lt;/td&gt;
+      &lt;td style=&quot;text-align: center&quot;&gt;YES&lt;/td&gt;
+    &lt;/tr&gt;
+    &lt;tr&gt;
+      &lt;td style=&quot;text-align: center&quot;&gt;19&lt;/td&gt;
+      &lt;td style=&quot;text-align: center&quot;&gt;YES&lt;/td&gt;
+    &lt;/tr&gt;
+    &lt;tr&gt;
+      &lt;td style=&quot;text-align: center&quot;&gt;40&lt;/td&gt;
+      &lt;td style=&quot;text-align: center&quot;&gt;NO&lt;/td&gt;
+    &lt;/tr&gt;
+    &lt;tr&gt;
+      &lt;td style=&quot;text-align: center&quot;&gt;41&lt;/td&gt;
+      &lt;td style=&quot;text-align: center&quot;&gt;NO&lt;/td&gt;
+    &lt;/tr&gt;
+    &lt;tr&gt;
+      &lt;td style=&quot;text-align: center&quot;&gt;45&lt;/td&gt;
+      &lt;td style=&quot;text-align: center&quot;&gt;NO&lt;/td&gt;
+    &lt;/tr&gt;
+    &lt;tr&gt;
+      &lt;td style=&quot;text-align: center&quot;&gt;52&lt;/td&gt;
+      &lt;td style=&quot;text-align: center&quot;&gt;NO&lt;/td&gt;
+    &lt;/tr&gt;
+    &lt;tr&gt;
+      &lt;td style=&quot;text-align: center&quot;&gt;53&lt;/td&gt;
+      &lt;td style=&quot;text-align: center&quot;&gt;NO&lt;/td&gt;
+    &lt;/tr&gt;
+  &lt;/tbody&gt;
+&lt;/table&gt;</content><author><name>Jorge Garza</name></author><summary>setPwmFrequency(pin, frequency)
+
+Sets the PWM (Pulse Width Modulation) wave frequency in Hz.
+
+Parameters
+
+
+  pin - The GPIO pin number.
+
+
+
+  frequency - PWM frequency (in Hz). Available ranges are between 19 and 37500.
+
+
+Returns
+
+None
+
+
+
+Example
+
+#include &amp;lt;Arduino.h&amp;gt;
+
+int GPIO_PIN = 12; // GPIO12
+
+void setup() {
+	pinMode(GPIO_PIN, PWM_OUTPUT);
+}
+
+void loop() {
+	// Set PWM to 100 Hz
+	setPwmDutyCycle(GPIO_PIN, 100); 
+	delay(1000);
+	// Set PWM to 1 Khz
+	setPwmDutyCycle(GPIO_PIN, 1000); 
+	delay(1000);
+	// Set PWM to 10 kHz
+	setPwmDutyCycle(GPIO_PIN, 10000); 
+	delay(1000);
+}
+
+
+
+Notes
+
+
+  The default PWM frequency is 490 Hz
+  PWM_OUTPUT uses the hardware PWM of the BCM283x SoC.
+The available PWM pins are the followings:
+
+
+
+  
+    
+      GPIO PIN
+      Available in RPi (40-pins) connector
+    
+  
+  
+    
+      12
+      YES
+    
+    
+      13
+      YES
+    
+    
+      18
+      YES
+    
+    
+      19
+      YES
+    
+    
+      40
+      NO
+    
+    
+      41
+      NO
+    
+    
+      45
+      NO
+    
+    
+      52
+      NO
+    
+    
+      53
+      NO</summary></entry><entry><title>setPwmFrequency</title><link href="https://github.com/NVSL/PiDuino_Library/PiDuino_Library/function/2000/02/02/setPwmDutyFrequency.html" rel="alternate" type="text/html" title="setPwmFrequency" /><published>2000-02-02T00:00:00-08:00</published><updated>2000-02-02T00:00:00-08:00</updated><id>https://github.com/NVSL/PiDuino_Library/PiDuino_Library/function/2000/02/02/setPwmDutyFrequency</id><content type="html" xml:base="https://github.com/NVSL/PiDuino_Library/PiDuino_Library/function/2000/02/02/setPwmDutyFrequency.html">&lt;h3 id=&quot;setpwmfrequencypin-frequency-dutycycle&quot;&gt;setPwmFrequency(pin, frequency, dutycycle)&lt;/h3&gt;
+
+&lt;p&gt;Sets the PWM (Pulse Width Modulation) wave frequency in Hz and duty cycle.&lt;/p&gt;
+
+&lt;p&gt;&lt;strong&gt;Parameters&lt;/strong&gt;&lt;/p&gt;
+
+&lt;blockquote&gt;
+  &lt;p&gt;&lt;strong&gt;pin&lt;/strong&gt; - The GPIO pin number.&lt;/p&gt;
+&lt;/blockquote&gt;
+
+&lt;blockquote&gt;
+  &lt;p&gt;&lt;strong&gt;frequency&lt;/strong&gt; - PWM frequency (in Hz). Available ranges are between 19 and 37500.&lt;/p&gt;
+&lt;/blockquote&gt;
+
+&lt;blockquote&gt;
+  &lt;p&gt;&lt;strong&gt;dutycycle&lt;/strong&gt; - PWM duty cycle. Available ranges are between 0 and 255.&lt;/p&gt;
+&lt;/blockquote&gt;
+
+&lt;p&gt;&lt;strong&gt;Returns&lt;/strong&gt;&lt;/p&gt;
+
+&lt;p&gt;None&lt;/p&gt;
+
+&lt;hr /&gt;
+
+&lt;p&gt;&lt;strong&gt;Example&lt;/strong&gt;&lt;/p&gt;
+
+&lt;figure class=&quot;highlight&quot;&gt;&lt;pre&gt;&lt;code class=&quot;language-c&quot; data-lang=&quot;c&quot;&gt;&lt;span class=&quot;cp&quot;&gt;#include &amp;lt;Arduino.h&amp;gt;
+&lt;/span&gt;
+&lt;span class=&quot;kt&quot;&gt;int&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;GPIO_PIN&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;mi&quot;&gt;12&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;;&lt;/span&gt; &lt;span class=&quot;c1&quot;&gt;// GPIO12
+&lt;/span&gt;
+&lt;span class=&quot;kt&quot;&gt;void&lt;/span&gt; &lt;span class=&quot;nf&quot;&gt;setup&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;()&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;{&lt;/span&gt;
+	&lt;span class=&quot;n&quot;&gt;pinMode&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;GPIO_PIN&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;PWM_OUTPUT&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;);&lt;/span&gt;
+&lt;span class=&quot;p&quot;&gt;}&lt;/span&gt;
+
+&lt;span class=&quot;kt&quot;&gt;void&lt;/span&gt; &lt;span class=&quot;nf&quot;&gt;loop&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;()&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;{&lt;/span&gt;
+	&lt;span class=&quot;c1&quot;&gt;// Set PWM to 100 Hz and 25% duty cycle
+&lt;/span&gt;	&lt;span class=&quot;n&quot;&gt;setPwmDutyCycle&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;GPIO_PIN&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;mi&quot;&gt;100&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;mi&quot;&gt;64&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;);&lt;/span&gt; 
+	&lt;span class=&quot;n&quot;&gt;delay&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;mi&quot;&gt;1000&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;);&lt;/span&gt;
+	&lt;span class=&quot;c1&quot;&gt;// Set PWM to 1 Khz and 50% duty cycle
+&lt;/span&gt;	&lt;span class=&quot;n&quot;&gt;setPwmDutyCycle&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;GPIO_PIN&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;mi&quot;&gt;1000&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;mi&quot;&gt;128&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;);&lt;/span&gt; 
+	&lt;span class=&quot;n&quot;&gt;delay&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;mi&quot;&gt;1000&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;);&lt;/span&gt;
+	&lt;span class=&quot;c1&quot;&gt;// Set PWM to 10 kHz and 75% duty cycle
+&lt;/span&gt;	&lt;span class=&quot;n&quot;&gt;setPwmDutyCycle&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;GPIO_PIN&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;mi&quot;&gt;10000&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;mi&quot;&gt;192&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;);&lt;/span&gt; 
+	&lt;span class=&quot;n&quot;&gt;delay&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;mi&quot;&gt;1000&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;);&lt;/span&gt;
+&lt;span class=&quot;p&quot;&gt;}&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/figure&gt;
+
+&lt;hr /&gt;
+
+&lt;p&gt;&lt;strong&gt;Notes&lt;/strong&gt;&lt;/p&gt;
+
+&lt;ul&gt;
+  &lt;li&gt;The default PWM frequency is 490 Hz&lt;/li&gt;
+  &lt;li&gt;&lt;em&gt;PWM_OUTPUT&lt;/em&gt; uses the hardware PWM of the BCM283x SoC.&lt;br /&gt;
+The available PWM pins are the followings:&lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;table&gt;
+  &lt;thead&gt;
+    &lt;tr&gt;
+      &lt;th style=&quot;text-align: center&quot;&gt;GPIO PIN&lt;/th&gt;
+      &lt;th style=&quot;text-align: center&quot;&gt;Available in RPi (40-pins) connector&lt;/th&gt;
+    &lt;/tr&gt;
+  &lt;/thead&gt;
+  &lt;tbody&gt;
+    &lt;tr&gt;
+      &lt;td style=&quot;text-align: center&quot;&gt;12&lt;/td&gt;
+      &lt;td style=&quot;text-align: center&quot;&gt;YES&lt;/td&gt;
+    &lt;/tr&gt;
+    &lt;tr&gt;
+      &lt;td style=&quot;text-align: center&quot;&gt;13&lt;/td&gt;
+      &lt;td style=&quot;text-align: center&quot;&gt;YES&lt;/td&gt;
+    &lt;/tr&gt;
+    &lt;tr&gt;
+      &lt;td style=&quot;text-align: center&quot;&gt;18&lt;/td&gt;
+      &lt;td style=&quot;text-align: center&quot;&gt;YES&lt;/td&gt;
+    &lt;/tr&gt;
+    &lt;tr&gt;
+      &lt;td style=&quot;text-align: center&quot;&gt;19&lt;/td&gt;
+      &lt;td style=&quot;text-align: center&quot;&gt;YES&lt;/td&gt;
+    &lt;/tr&gt;
+    &lt;tr&gt;
+      &lt;td style=&quot;text-align: center&quot;&gt;40&lt;/td&gt;
+      &lt;td style=&quot;text-align: center&quot;&gt;NO&lt;/td&gt;
+    &lt;/tr&gt;
+    &lt;tr&gt;
+      &lt;td style=&quot;text-align: center&quot;&gt;41&lt;/td&gt;
+      &lt;td style=&quot;text-align: center&quot;&gt;NO&lt;/td&gt;
+    &lt;/tr&gt;
+    &lt;tr&gt;
+      &lt;td style=&quot;text-align: center&quot;&gt;45&lt;/td&gt;
+      &lt;td style=&quot;text-align: center&quot;&gt;NO&lt;/td&gt;
+    &lt;/tr&gt;
+    &lt;tr&gt;
+      &lt;td style=&quot;text-align: center&quot;&gt;52&lt;/td&gt;
+      &lt;td style=&quot;text-align: center&quot;&gt;NO&lt;/td&gt;
+    &lt;/tr&gt;
+    &lt;tr&gt;
+      &lt;td style=&quot;text-align: center&quot;&gt;53&lt;/td&gt;
+      &lt;td style=&quot;text-align: center&quot;&gt;NO&lt;/td&gt;
+    &lt;/tr&gt;
+  &lt;/tbody&gt;
+&lt;/table&gt;</content><author><name>Jorge Garza</name></author><summary>setPwmFrequency(pin, frequency, dutycycle)
+
+Sets the PWM (Pulse Width Modulation) wave frequency in Hz and duty cycle.
+
+Parameters
+
+
+  pin - The GPIO pin number.
+
+
+
+  frequency - PWM frequency (in Hz). Available ranges are between 19 and 37500.
+
+
+
+  dutycycle - PWM duty cycle. Available ranges are between 0 and 255.
+
+
+Returns
+
+None
+
+
+
+Example
+
+#include &amp;lt;Arduino.h&amp;gt;
+
+int GPIO_PIN = 12; // GPIO12
+
+void setup() {
+	pinMode(GPIO_PIN, PWM_OUTPUT);
+}
+
+void loop() {
+	// Set PWM to 100 Hz and 25% duty cycle
+	setPwmDutyCycle(GPIO_PIN, 100, 64); 
+	delay(1000);
+	// Set PWM to 1 Khz and 50% duty cycle
+	setPwmDutyCycle(GPIO_PIN, 1000, 128); 
+	delay(1000);
+	// Set PWM to 10 kHz and 75% duty cycle
+	setPwmDutyCycle(GPIO_PIN, 10000, 192); 
+	delay(1000);
+}
+
+
+
+Notes
+
+
+  The default PWM frequency is 490 Hz
+  PWM_OUTPUT uses the hardware PWM of the BCM283x SoC.
+The available PWM pins are the followings:
+
+
+
+  
+    
+      GPIO PIN
+      Available in RPi (40-pins) connector
+    
+  
+  
+    
+      12
+      YES
+    
+    
+      13
+      YES
+    
+    
+      18
+      YES
+    
+    
+      19
+      YES
+    
+    
+      40
+      NO
+    
+    
+      41
+      NO
+    
+    
+      45
+      NO
+    
+    
+      52
+      NO
+    
+    
+      53
+      NO</summary></entry><entry><title>setPwmDutyCycle</title><link href="https://github.com/NVSL/PiDuino_Library/PiDuino_Library/function/2000/02/02/setPwmDutyCycle.html" rel="alternate" type="text/html" title="setPwmDutyCycle" /><published>2000-02-02T00:00:00-08:00</published><updated>2000-02-02T00:00:00-08:00</updated><id>https://github.com/NVSL/PiDuino_Library/PiDuino_Library/function/2000/02/02/setPwmDutyCycle</id><content type="html" xml:base="https://github.com/NVSL/PiDuino_Library/PiDuino_Library/function/2000/02/02/setPwmDutyCycle.html">&lt;h3 id=&quot;setpwmdutycyclepin-dutycycle&quot;&gt;setPwmDutyCycle(pin, dutycycle)&lt;/h3&gt;
+
+&lt;p&gt;Writes a PWM (Pulse Width Modulation) wave at the output of the selected pin.&lt;/p&gt;
+
+&lt;p&gt;&lt;strong&gt;Parameters&lt;/strong&gt;&lt;/p&gt;
+
+&lt;blockquote&gt;
+  &lt;p&gt;&lt;strong&gt;pin&lt;/strong&gt; - The GPIO pin number.&lt;/p&gt;
+&lt;/blockquote&gt;
+
+&lt;blockquote&gt;
+  &lt;p&gt;&lt;strong&gt;dutycycle&lt;/strong&gt; - PWM duty cycle. Available ranges between 0 and 255.&lt;/p&gt;
+&lt;/blockquote&gt;
+
+&lt;p&gt;&lt;strong&gt;Returns&lt;/strong&gt;&lt;/p&gt;
+
+&lt;p&gt;None&lt;/p&gt;
+
+&lt;hr /&gt;
+
+&lt;p&gt;&lt;strong&gt;Example&lt;/strong&gt;&lt;/p&gt;
+
+&lt;figure class=&quot;highlight&quot;&gt;&lt;pre&gt;&lt;code class=&quot;language-c&quot; data-lang=&quot;c&quot;&gt;&lt;span class=&quot;cp&quot;&gt;#include &amp;lt;Arduino.h&amp;gt;
+&lt;/span&gt;
+&lt;span class=&quot;kt&quot;&gt;int&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;GPIO_PIN&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;mi&quot;&gt;12&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;;&lt;/span&gt; &lt;span class=&quot;c1&quot;&gt;// GPIO12
+&lt;/span&gt;
+&lt;span class=&quot;kt&quot;&gt;void&lt;/span&gt; &lt;span class=&quot;nf&quot;&gt;setup&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;()&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;{&lt;/span&gt;
+	&lt;span class=&quot;n&quot;&gt;pinMode&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;GPIO_PIN&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;PWM_OUTPUT&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;);&lt;/span&gt;
+	&lt;span class=&quot;n&quot;&gt;setPwmDutyCycle&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;GPIO_PIN&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;mi&quot;&gt;128&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;);&lt;/span&gt; &lt;span class=&quot;c1&quot;&gt;// Set PWM to half duty cycle
+&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;}&lt;/span&gt;
+
+&lt;span class=&quot;kt&quot;&gt;void&lt;/span&gt; &lt;span class=&quot;nf&quot;&gt;loop&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;()&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;{&lt;/span&gt;
+	
+&lt;span class=&quot;p&quot;&gt;}&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/figure&gt;
+
+&lt;hr /&gt;
+
+&lt;p&gt;&lt;strong&gt;Notes&lt;/strong&gt;&lt;/p&gt;
+
+&lt;ul&gt;
+  &lt;li&gt;The default PWM frequency is 490 Hz&lt;/li&gt;
+  &lt;li&gt;&lt;em&gt;PWM_OUTPUT&lt;/em&gt; uses the hardware PWM of the BCM283x SoC.&lt;br /&gt;
+The available PWM pins are the followings:&lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;table&gt;
+  &lt;thead&gt;
+    &lt;tr&gt;
+      &lt;th style=&quot;text-align: center&quot;&gt;GPIO PIN&lt;/th&gt;
+      &lt;th style=&quot;text-align: center&quot;&gt;Available in RPi (40-pins) connector&lt;/th&gt;
+    &lt;/tr&gt;
+  &lt;/thead&gt;
+  &lt;tbody&gt;
+    &lt;tr&gt;
+      &lt;td style=&quot;text-align: center&quot;&gt;12&lt;/td&gt;
+      &lt;td style=&quot;text-align: center&quot;&gt;YES&lt;/td&gt;
+    &lt;/tr&gt;
+    &lt;tr&gt;
+      &lt;td style=&quot;text-align: center&quot;&gt;13&lt;/td&gt;
+      &lt;td style=&quot;text-align: center&quot;&gt;YES&lt;/td&gt;
+    &lt;/tr&gt;
+    &lt;tr&gt;
+      &lt;td style=&quot;text-align: center&quot;&gt;18&lt;/td&gt;
+      &lt;td style=&quot;text-align: center&quot;&gt;YES&lt;/td&gt;
+    &lt;/tr&gt;
+    &lt;tr&gt;
+      &lt;td style=&quot;text-align: center&quot;&gt;19&lt;/td&gt;
+      &lt;td style=&quot;text-align: center&quot;&gt;YES&lt;/td&gt;
+    &lt;/tr&gt;
+    &lt;tr&gt;
+      &lt;td style=&quot;text-align: center&quot;&gt;40&lt;/td&gt;
+      &lt;td style=&quot;text-align: center&quot;&gt;NO&lt;/td&gt;
+    &lt;/tr&gt;
+    &lt;tr&gt;
+      &lt;td style=&quot;text-align: center&quot;&gt;41&lt;/td&gt;
+      &lt;td style=&quot;text-align: center&quot;&gt;NO&lt;/td&gt;
+    &lt;/tr&gt;
+    &lt;tr&gt;
+      &lt;td style=&quot;text-align: center&quot;&gt;45&lt;/td&gt;
+      &lt;td style=&quot;text-align: center&quot;&gt;NO&lt;/td&gt;
+    &lt;/tr&gt;
+    &lt;tr&gt;
+      &lt;td style=&quot;text-align: center&quot;&gt;52&lt;/td&gt;
+      &lt;td style=&quot;text-align: center&quot;&gt;NO&lt;/td&gt;
+    &lt;/tr&gt;
+    &lt;tr&gt;
+      &lt;td style=&quot;text-align: center&quot;&gt;53&lt;/td&gt;
+      &lt;td style=&quot;text-align: center&quot;&gt;NO&lt;/td&gt;
+    &lt;/tr&gt;
+  &lt;/tbody&gt;
+&lt;/table&gt;</content><author><name>Jorge Garza</name></author><summary>setPwmDutyCycle(pin, dutycycle)
+
+Writes a PWM (Pulse Width Modulation) wave at the output of the selected pin.
+
+Parameters
+
+
+  pin - The GPIO pin number.
+
+
+
+  dutycycle - PWM duty cycle. Available ranges between 0 and 255.
+
+
+Returns
+
+None
+
+
+
+Example
+
+#include &amp;lt;Arduino.h&amp;gt;
+
+int GPIO_PIN = 12; // GPIO12
+
+void setup() {
+	pinMode(GPIO_PIN, PWM_OUTPUT);
+	setPwmDutyCycle(GPIO_PIN, 128); // Set PWM to half duty cycle
+}
+
+void loop() {
+	
+}
+
+
+
+Notes
+
+
+  The default PWM frequency is 490 Hz
+  PWM_OUTPUT uses the hardware PWM of the BCM283x SoC.
+The available PWM pins are the followings:
+
+
+
+  
+    
+      GPIO PIN
+      Available in RPi (40-pins) connector
+    
+  
+  
+    
+      12
+      YES
+    
+    
+      13
+      YES
+    
+    
+      18
+      YES
+    
+    
+      19
+      YES
+    
+    
+      40
+      NO
+    
+    
+      41
+      NO
+    
+    
+      45
+      NO
+    
+    
+      52
+      NO
+    
+    
+      53
+      NO</summary></entry><entry><title>Reference</title><link href="https://github.com/NVSL/PiDuino_Library/PiDuino_Library/pinout/2000/02/02/pinout.html" rel="alternate" type="text/html" title="Reference" /><published>2000-02-02T00:00:00-08:00</published><updated>2000-02-02T00:00:00-08:00</updated><id>https://github.com/NVSL/PiDuino_Library/PiDuino_Library/pinout/2000/02/02/pinout</id><content type="html" xml:base="https://github.com/NVSL/PiDuino_Library/PiDuino_Library/pinout/2000/02/02/pinout.html">&lt;h3 id=&quot;pinout&quot;&gt;Pinout&lt;/h3&gt;
 
 &lt;p&gt;This libarary uses &lt;strong&gt;GPIOX&lt;/strong&gt; as reference where &lt;strong&gt;X&lt;/strong&gt; is the number of the pin (e.g. &lt;a href=&quot;/PiDuino_Library/function/2000/02/02/pinMode.html&quot;&gt;pinMode(X, mode)&lt;/a&gt;). This library doesn’t use the Physical pin numbering as those numbers are a reference of the PCB and not of the Broadcom BCM283x SoC.&lt;/p&gt;
 
@@ -306,1358 +1122,435 @@ Raspberry Pi 40-pin GPIO connector
 
 Raspberry Pi 26-pin GPIO connector</summary></entry><entry><title>pinMode</title><link href="https://github.com/NVSL/PiDuino_Library/PiDuino_Library/function/2000/02/02/pinMode.html" rel="alternate" type="text/html" title="pinMode" /><published>2000-02-02T00:00:00-08:00</published><updated>2000-02-02T00:00:00-08:00</updated><id>https://github.com/NVSL/PiDuino_Library/PiDuino_Library/function/2000/02/02/pinMode</id><content type="html" xml:base="https://github.com/NVSL/PiDuino_Library/PiDuino_Library/function/2000/02/02/pinMode.html">&lt;h3 id=&quot;pinmodepin-mode&quot;&gt;pinMode(pin, mode)&lt;/h3&gt;
 
-&lt;p&gt;TODO&lt;/p&gt;</content><author><name>Jorge Garza</name></author><summary>pinMode(pin, mode)
+&lt;p&gt;Configures the specified GPIO pin number as INPUT, OUTPUT or PWM pin.&lt;/p&gt;
 
-TODO</summary></entry><entry><title>Reference</title><link href="https://github.com/NVSL/PiDuino_Library/PiDuino_Library/reference/2000/02/02/Reference.html" rel="alternate" type="text/html" title="Reference" /><published>2000-02-02T00:00:00-08:00</published><updated>2000-02-02T00:00:00-08:00</updated><id>https://github.com/NVSL/PiDuino_Library/PiDuino_Library/reference/2000/02/02/Reference</id><content type="html" xml:base="https://github.com/NVSL/PiDuino_Library/PiDuino_Library/reference/2000/02/02/Reference.html">&lt;h3 id=&quot;reference&quot;&gt;Reference&lt;/h3&gt;
+&lt;p&gt;&lt;strong&gt;Parameters&lt;/strong&gt;&lt;/p&gt;
 
-&lt;p&gt;&lt;strong&gt;PiDuino Library (libpiduino)&lt;/strong&gt; aims to support the core official Arduino functions published in the &lt;a href=&quot;https://www.arduino.cc/en/Reference/Libraries&quot;&gt;Arduino official website&lt;/a&gt; as of April 2016. Note that the Arduino API has many legacy functions that although keeped no longer used, the ported libraries and functions are only the ones published on the official website.&lt;/p&gt;
+&lt;blockquote&gt;
+  &lt;p&gt;&lt;strong&gt;pin&lt;/strong&gt; - The GPIO pin number.&lt;/p&gt;
+&lt;/blockquote&gt;
 
-&lt;p&gt;&lt;strong&gt;libpiduino 1.0.0&lt;/strong&gt; has 101 functions implemented out of 111 functions, this means that about &lt;strong&gt;90%&lt;/strong&gt; of the official Arduino functions are implemented. Also 10 (EXTRA) functions which give more functionality to the library were included.&lt;/p&gt;
+&lt;blockquote&gt;
+  &lt;p&gt;&lt;strong&gt;mode&lt;/strong&gt; - Can be the followings:&lt;br /&gt;
+&lt;em&gt;INPUT&lt;/em&gt; : Sets pin as input without pullup resistor. &lt;br /&gt;
+&lt;em&gt;INTPUT_PULLUP&lt;/em&gt; : Sets pin as input with pullup resistor.&lt;br /&gt;
+&lt;em&gt;INTPUT_PULLDOWN&lt;/em&gt; : Sets pin as input with pulldown resistor.&lt;br /&gt;
+&lt;em&gt;OUTPUT&lt;/em&gt; : Sets pin as output.&lt;br /&gt;
+&lt;em&gt;PWM_OUTPUT&lt;/em&gt; : Sets pin as hardware PWM output. (Only for a few pins, see Notes below)&lt;br /&gt;
+&lt;em&gt;SOFTPWM_OUTPUT&lt;/em&gt; : Not available yet, still In progress.&lt;/p&gt;
+&lt;/blockquote&gt;
+
+&lt;p&gt;&lt;strong&gt;Returns&lt;/strong&gt;&lt;/p&gt;
+
+&lt;p&gt;None&lt;/p&gt;
 
 &lt;hr /&gt;
 
-&lt;h4 id=&quot;digital-io&quot;&gt;- Digital I/O&lt;/h4&gt;
+&lt;p&gt;&lt;strong&gt;Example&lt;/strong&gt;&lt;/p&gt;
+
+&lt;figure class=&quot;highlight&quot;&gt;&lt;pre&gt;&lt;code class=&quot;language-c&quot; data-lang=&quot;c&quot;&gt;&lt;span class=&quot;cp&quot;&gt;#include &amp;lt;Arduino.h&amp;gt;
+&lt;/span&gt;
+&lt;span class=&quot;kt&quot;&gt;int&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;ledPin&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;mi&quot;&gt;4&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;;&lt;/span&gt; &lt;span class=&quot;c1&quot;&gt;// GPIO4
+&lt;/span&gt;
+&lt;span class=&quot;kt&quot;&gt;void&lt;/span&gt; &lt;span class=&quot;nf&quot;&gt;setup&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;()&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;{&lt;/span&gt;
+	&lt;span class=&quot;n&quot;&gt;pinMode&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;ledPin&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;OUTPUT&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;);&lt;/span&gt;
+&lt;span class=&quot;p&quot;&gt;}&lt;/span&gt;
+
+&lt;span class=&quot;kt&quot;&gt;void&lt;/span&gt; &lt;span class=&quot;nf&quot;&gt;loop&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;()&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;{&lt;/span&gt;
+	&lt;span class=&quot;n&quot;&gt;digitalWrite&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;ledPin&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;HIGH&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;);&lt;/span&gt;
+	&lt;span class=&quot;n&quot;&gt;delay&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;mi&quot;&gt;1000&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;);&lt;/span&gt;
+	&lt;span class=&quot;n&quot;&gt;digitalWrite&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;ledPin&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;LOW&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;);&lt;/span&gt;
+	&lt;span class=&quot;n&quot;&gt;delay&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;mi&quot;&gt;1000&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;);&lt;/span&gt;
+&lt;span class=&quot;p&quot;&gt;}&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/figure&gt;
+
+&lt;hr /&gt;
+
+&lt;p&gt;&lt;strong&gt;Notes&lt;/strong&gt;&lt;/p&gt;
+
+&lt;ul&gt;
+  &lt;li&gt;These are the available pins for hardware PWM. Only a few are exposed to the RPi connector/header.&lt;/li&gt;
+&lt;/ul&gt;
 
 &lt;table&gt;
   &lt;thead&gt;
     &lt;tr&gt;
-      &lt;th&gt;Function&lt;/th&gt;
-      &lt;th&gt;Implemented (YES/NO-Comment/In Progress)&lt;/th&gt;
+      &lt;th style=&quot;text-align: center&quot;&gt;GPIO PIN&lt;/th&gt;
+      &lt;th style=&quot;text-align: center&quot;&gt;Available in RPi (40-pins) connector&lt;/th&gt;
     &lt;/tr&gt;
   &lt;/thead&gt;
   &lt;tbody&gt;
     &lt;tr&gt;
-      &lt;td&gt;&lt;a href=&quot;/PiDuino_Library/function/2000/02/02/pinMode.html&quot;&gt;pinMode(pin, mode)&lt;/a&gt;&lt;/td&gt;
-      &lt;td&gt;YES&lt;/td&gt;
+      &lt;td style=&quot;text-align: center&quot;&gt;12&lt;/td&gt;
+      &lt;td style=&quot;text-align: center&quot;&gt;YES&lt;/td&gt;
     &lt;/tr&gt;
     &lt;tr&gt;
-      &lt;td&gt;digitalWrite(pin, value)&lt;/td&gt;
-      &lt;td&gt;YES&lt;/td&gt;
+      &lt;td style=&quot;text-align: center&quot;&gt;13&lt;/td&gt;
+      &lt;td style=&quot;text-align: center&quot;&gt;YES&lt;/td&gt;
     &lt;/tr&gt;
     &lt;tr&gt;
-      &lt;td&gt;digitalRead(pin)&lt;/td&gt;
-      &lt;td&gt;YES&lt;/td&gt;
+      &lt;td style=&quot;text-align: center&quot;&gt;18&lt;/td&gt;
+      &lt;td style=&quot;text-align: center&quot;&gt;YES&lt;/td&gt;
+    &lt;/tr&gt;
+    &lt;tr&gt;
+      &lt;td style=&quot;text-align: center&quot;&gt;19&lt;/td&gt;
+      &lt;td style=&quot;text-align: center&quot;&gt;YES&lt;/td&gt;
+    &lt;/tr&gt;
+    &lt;tr&gt;
+      &lt;td style=&quot;text-align: center&quot;&gt;40&lt;/td&gt;
+      &lt;td style=&quot;text-align: center&quot;&gt;NO&lt;/td&gt;
+    &lt;/tr&gt;
+    &lt;tr&gt;
+      &lt;td style=&quot;text-align: center&quot;&gt;41&lt;/td&gt;
+      &lt;td style=&quot;text-align: center&quot;&gt;NO&lt;/td&gt;
+    &lt;/tr&gt;
+    &lt;tr&gt;
+      &lt;td style=&quot;text-align: center&quot;&gt;45&lt;/td&gt;
+      &lt;td style=&quot;text-align: center&quot;&gt;NO&lt;/td&gt;
+    &lt;/tr&gt;
+    &lt;tr&gt;
+      &lt;td style=&quot;text-align: center&quot;&gt;52&lt;/td&gt;
+      &lt;td style=&quot;text-align: center&quot;&gt;NO&lt;/td&gt;
+    &lt;/tr&gt;
+    &lt;tr&gt;
+      &lt;td style=&quot;text-align: center&quot;&gt;53&lt;/td&gt;
+      &lt;td style=&quot;text-align: center&quot;&gt;NO&lt;/td&gt;
     &lt;/tr&gt;
   &lt;/tbody&gt;
 &lt;/table&gt;
 
-&lt;h4 id=&quot;analog-io-adc-and-pwm&quot;&gt;- Analog I/O (ADC and PWM)&lt;/h4&gt;
+&lt;ul&gt;
+  &lt;li&gt;&lt;strong&gt;pinMode&lt;/strong&gt; function uses “/dev/gpiomem” as the default driver. If you want to change the driver to “/dev/mem”
+for example (which requires root) you can modify the &lt;em&gt;GPIO_DRIVER_NAME&lt;/em&gt; constant as shown in the example.&lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;p&gt;&lt;strong&gt;Example&lt;/strong&gt;&lt;/p&gt;
+
+&lt;figure class=&quot;highlight&quot;&gt;&lt;pre&gt;&lt;code class=&quot;language-c&quot; data-lang=&quot;c&quot;&gt;&lt;span class=&quot;cp&quot;&gt;#include &amp;lt;Arduino.h&amp;gt;
+&lt;/span&gt;
+&lt;span class=&quot;kt&quot;&gt;int&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;ledPin&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;mi&quot;&gt;4&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;;&lt;/span&gt; &lt;span class=&quot;c1&quot;&gt;// GPIO4
+&lt;/span&gt;
+&lt;span class=&quot;kt&quot;&gt;void&lt;/span&gt; &lt;span class=&quot;nf&quot;&gt;setup&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;()&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;{&lt;/span&gt;
+        &lt;span class=&quot;n&quot;&gt;strcpy&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;GPIO_DRIVER_NAME&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;s&quot;&gt;&quot;/dev/mem&quot;&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;);&lt;/span&gt;
+        &lt;span class=&quot;n&quot;&gt;pinMode&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;ledPin&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;OUTPUT&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;);&lt;/span&gt;
+&lt;span class=&quot;p&quot;&gt;}&lt;/span&gt;
+
+&lt;span class=&quot;kt&quot;&gt;void&lt;/span&gt; &lt;span class=&quot;nf&quot;&gt;loop&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;()&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;{&lt;/span&gt;
+        &lt;span class=&quot;n&quot;&gt;digitalWrite&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;ledPin&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;HIGH&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;);&lt;/span&gt;
+        &lt;span class=&quot;n&quot;&gt;delay&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;mi&quot;&gt;1000&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;);&lt;/span&gt;
+        &lt;span class=&quot;n&quot;&gt;digitalWrite&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;ledPin&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;LOW&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;);&lt;/span&gt;
+        &lt;span class=&quot;n&quot;&gt;delay&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;mi&quot;&gt;1000&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;);&lt;/span&gt;
+&lt;span class=&quot;p&quot;&gt;}&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/figure&gt;</content><author><name>Jorge Garza</name></author><summary>pinMode(pin, mode)
+
+Configures the specified GPIO pin number as INPUT, OUTPUT or PWM pin.
+
+Parameters
+
+
+  pin - The GPIO pin number.
+
+
+
+  mode - Can be the followings:
+INPUT : Sets pin as input without pullup resistor. 
+INTPUT_PULLUP : Sets pin as input with pullup resistor.
+INTPUT_PULLDOWN : Sets pin as input with pulldown resistor.
+OUTPUT : Sets pin as output.
+PWM_OUTPUT : Sets pin as hardware PWM output. (Only for a few pins, see Notes below)
+SOFTPWM_OUTPUT : Not available yet, still In progress.</summary></entry><entry><title>digitalWrite</title><link href="https://github.com/NVSL/PiDuino_Library/PiDuino_Library/function/2000/02/02/digitalWrite.html" rel="alternate" type="text/html" title="digitalWrite" /><published>2000-02-02T00:00:00-08:00</published><updated>2000-02-02T00:00:00-08:00</updated><id>https://github.com/NVSL/PiDuino_Library/PiDuino_Library/function/2000/02/02/digitalWrite</id><content type="html" xml:base="https://github.com/NVSL/PiDuino_Library/PiDuino_Library/function/2000/02/02/digitalWrite.html">&lt;h3 id=&quot;digitalwritepin-value&quot;&gt;digitalWrite(pin, value)&lt;/h3&gt;
+
+&lt;p&gt;Writes a HIGH or LOW value at the specified GPIO pin&lt;/p&gt;
+
+&lt;p&gt;&lt;strong&gt;Parameters&lt;/strong&gt;&lt;/p&gt;
+
+&lt;blockquote&gt;
+  &lt;p&gt;&lt;strong&gt;pin&lt;/strong&gt; - The GPIO pin number.&lt;/p&gt;
+&lt;/blockquote&gt;
+
+&lt;blockquote&gt;
+  &lt;p&gt;&lt;strong&gt;value&lt;/strong&gt; - Can be the followings:&lt;br /&gt;
+&lt;em&gt;HIGH&lt;/em&gt; : Outputs (3.3V).&lt;br /&gt;
+&lt;em&gt;LOW&lt;/em&gt; : Outputs (0V).&lt;/p&gt;
+&lt;/blockquote&gt;
+
+&lt;p&gt;&lt;strong&gt;Returns&lt;/strong&gt;&lt;/p&gt;
+
+&lt;p&gt;None&lt;/p&gt;
+
+&lt;hr /&gt;
+
+&lt;p&gt;&lt;strong&gt;Example&lt;/strong&gt;&lt;/p&gt;
+
+&lt;figure class=&quot;highlight&quot;&gt;&lt;pre&gt;&lt;code class=&quot;language-c&quot; data-lang=&quot;c&quot;&gt;&lt;span class=&quot;cp&quot;&gt;#include &amp;lt;Arduino.h&amp;gt;
+&lt;/span&gt;
+&lt;span class=&quot;kt&quot;&gt;int&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;ledPin&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;mi&quot;&gt;4&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;;&lt;/span&gt; &lt;span class=&quot;c1&quot;&gt;// GPIO4
+&lt;/span&gt;
+&lt;span class=&quot;kt&quot;&gt;void&lt;/span&gt; &lt;span class=&quot;nf&quot;&gt;setup&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;()&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;{&lt;/span&gt;
+        &lt;span class=&quot;n&quot;&gt;pinMode&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;ledPin&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;OUTPUT&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;);&lt;/span&gt;
+&lt;span class=&quot;p&quot;&gt;}&lt;/span&gt;
+
+&lt;span class=&quot;kt&quot;&gt;void&lt;/span&gt; &lt;span class=&quot;nf&quot;&gt;loop&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;()&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;{&lt;/span&gt;
+        &lt;span class=&quot;n&quot;&gt;digitalWrite&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;ledPin&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;HIGH&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;);&lt;/span&gt;
+        &lt;span class=&quot;n&quot;&gt;delay&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;mi&quot;&gt;1000&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;);&lt;/span&gt;
+        &lt;span class=&quot;n&quot;&gt;digitalWrite&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;ledPin&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;LOW&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;);&lt;/span&gt;
+        &lt;span class=&quot;n&quot;&gt;delay&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;mi&quot;&gt;1000&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;);&lt;/span&gt;
+&lt;span class=&quot;p&quot;&gt;}&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/figure&gt;</content><author><name>Jorge Garza</name></author><summary>digitalWrite(pin, value)
+
+Writes a HIGH or LOW value at the specified GPIO pin
+
+Parameters
+
+
+  pin - The GPIO pin number.
+
+
+
+  value - Can be the followings:
+HIGH : Outputs (3.3V).
+LOW : Outputs (0V).</summary></entry><entry><title>digitalWrite</title><link href="https://github.com/NVSL/PiDuino_Library/PiDuino_Library/function/2000/02/02/digitalRead.html" rel="alternate" type="text/html" title="digitalWrite" /><published>2000-02-02T00:00:00-08:00</published><updated>2000-02-02T00:00:00-08:00</updated><id>https://github.com/NVSL/PiDuino_Library/PiDuino_Library/function/2000/02/02/digitalRead</id><content type="html" xml:base="https://github.com/NVSL/PiDuino_Library/PiDuino_Library/function/2000/02/02/digitalRead.html">&lt;h3 id=&quot;digitalreadpin-value&quot;&gt;digitalRead(pin, value)&lt;/h3&gt;
+
+&lt;p&gt;Reads a GPIO pin value.&lt;/p&gt;
+
+&lt;p&gt;&lt;strong&gt;Parameters&lt;/strong&gt;&lt;/p&gt;
+
+&lt;blockquote&gt;
+  &lt;p&gt;&lt;strong&gt;pin&lt;/strong&gt; - The GPIO pin number.&lt;/p&gt;
+&lt;/blockquote&gt;
+
+&lt;p&gt;&lt;strong&gt;Returns&lt;/strong&gt;&lt;/p&gt;
+
+&lt;p&gt;&lt;em&gt;HIGH&lt;/em&gt; (1) or &lt;em&gt;LOW&lt;/em&gt; (0)&lt;/p&gt;
+
+&lt;hr /&gt;
+
+&lt;p&gt;&lt;strong&gt;Example&lt;/strong&gt;&lt;/p&gt;
+
+&lt;figure class=&quot;highlight&quot;&gt;&lt;pre&gt;&lt;code class=&quot;language-c&quot; data-lang=&quot;c&quot;&gt;&lt;span class=&quot;cp&quot;&gt;#include &amp;lt;Arduino.h&amp;gt;
+&lt;/span&gt;
+&lt;span class=&quot;c1&quot;&gt;// This program reads a pin and outputs
+// its value at the specified output pin. 
+&lt;/span&gt;
+&lt;span class=&quot;kt&quot;&gt;int&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;inputPin&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;mi&quot;&gt;17&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;;&lt;/span&gt; &lt;span class=&quot;c1&quot;&gt;// GPIO17
+&lt;/span&gt;&lt;span class=&quot;kt&quot;&gt;int&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;ledPin&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;mi&quot;&gt;4&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;;&lt;/span&gt; &lt;span class=&quot;c1&quot;&gt;// GPIO4
+&lt;/span&gt;&lt;span class=&quot;kt&quot;&gt;int&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;val&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;mi&quot;&gt;0&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;;&lt;/span&gt;
+
+&lt;span class=&quot;kt&quot;&gt;void&lt;/span&gt; &lt;span class=&quot;nf&quot;&gt;setup&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;()&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;{&lt;/span&gt;
+	&lt;span class=&quot;n&quot;&gt;pinMode&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;inputPin&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;INPUT&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;);&lt;/span&gt;
+	&lt;span class=&quot;n&quot;&gt;pinMode&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;ledPin&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;OUTPUT&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;);&lt;/span&gt;
+&lt;span class=&quot;p&quot;&gt;}&lt;/span&gt;
+
+&lt;span class=&quot;kt&quot;&gt;void&lt;/span&gt; &lt;span class=&quot;nf&quot;&gt;loop&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;()&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;{&lt;/span&gt;
+	&lt;span class=&quot;n&quot;&gt;val&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;digitalRead&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;inputPin&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;);&lt;/span&gt;
+	&lt;span class=&quot;n&quot;&gt;digitalWrite&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;ledPin&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;);&lt;/span&gt;
+&lt;span class=&quot;p&quot;&gt;}&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/figure&gt;</content><author><name>Jorge Garza</name></author><summary>digitalRead(pin, value)
+
+Reads a GPIO pin value.
+
+Parameters
+
+
+  pin - The GPIO pin number.
+
+
+Returns
+
+HIGH (1) or LOW (0)
+
+
+
+Example
+
+#include &amp;lt;Arduino.h&amp;gt;
+
+// This program reads a pin and outputs
+// its value at the specified output pin. 
+
+int inputPin = 17; // GPIO17
+int ledPin = 4; // GPIO4
+int val = 0;
+
+void setup() {
+	pinMode(inputPin, INPUT);
+	pinMode(ledPin, OUTPUT);
+}
+
+void loop() {
+	val = digitalRead(inputPin);
+	digitalWrite(ledPin);
+}</summary></entry><entry><title>analogWrite</title><link href="https://github.com/NVSL/PiDuino_Library/PiDuino_Library/function/2000/02/02/analogWrite.html" rel="alternate" type="text/html" title="analogWrite" /><published>2000-02-02T00:00:00-08:00</published><updated>2000-02-02T00:00:00-08:00</updated><id>https://github.com/NVSL/PiDuino_Library/PiDuino_Library/function/2000/02/02/analogWrite</id><content type="html" xml:base="https://github.com/NVSL/PiDuino_Library/PiDuino_Library/function/2000/02/02/analogWrite.html">&lt;h3 id=&quot;analogwritepin-value&quot;&gt;analogWrite(pin, value)&lt;/h3&gt;
+
+&lt;p&gt;Writes a PWM (Pulse Width Modulation) wave at the output of the selected pin.&lt;/p&gt;
+
+&lt;p&gt;&lt;strong&gt;Parameters&lt;/strong&gt;&lt;/p&gt;
+
+&lt;blockquote&gt;
+  &lt;p&gt;&lt;strong&gt;pin&lt;/strong&gt; - The GPIO pin number.&lt;/p&gt;
+&lt;/blockquote&gt;
+
+&lt;blockquote&gt;
+  &lt;p&gt;&lt;strong&gt;value&lt;/strong&gt; - PWM duty cycle. Available ranges between 0 and 255.&lt;/p&gt;
+&lt;/blockquote&gt;
+
+&lt;p&gt;&lt;strong&gt;Returns&lt;/strong&gt;&lt;/p&gt;
+
+&lt;p&gt;None&lt;/p&gt;
+
+&lt;hr /&gt;
+
+&lt;p&gt;&lt;strong&gt;Example&lt;/strong&gt;&lt;/p&gt;
+
+&lt;figure class=&quot;highlight&quot;&gt;&lt;pre&gt;&lt;code class=&quot;language-c&quot; data-lang=&quot;c&quot;&gt;&lt;span class=&quot;cp&quot;&gt;#include &amp;lt;Arduino.h&amp;gt;
+&lt;/span&gt;
+&lt;span class=&quot;kt&quot;&gt;int&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;GPIO_PIN&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;mi&quot;&gt;12&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;;&lt;/span&gt; &lt;span class=&quot;c1&quot;&gt;// GPIO12
+&lt;/span&gt;
+&lt;span class=&quot;kt&quot;&gt;void&lt;/span&gt; &lt;span class=&quot;nf&quot;&gt;setup&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;()&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;{&lt;/span&gt;
+	&lt;span class=&quot;n&quot;&gt;pinMode&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;GPIO_PIN&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;PWM_OUTPUT&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;);&lt;/span&gt;
+	&lt;span class=&quot;n&quot;&gt;analogWrite&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;GPIO_PIN&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;mi&quot;&gt;128&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;);&lt;/span&gt; &lt;span class=&quot;c1&quot;&gt;// Set PWM to half duty cycle
+&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;}&lt;/span&gt;
+
+&lt;span class=&quot;kt&quot;&gt;void&lt;/span&gt; &lt;span class=&quot;nf&quot;&gt;loop&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;()&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;{&lt;/span&gt;
+	
+&lt;span class=&quot;p&quot;&gt;}&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/figure&gt;
+
+&lt;hr /&gt;
+
+&lt;p&gt;&lt;strong&gt;Notes&lt;/strong&gt;&lt;/p&gt;
+
+&lt;ul&gt;
+  &lt;li&gt;The default PWM frequency is 490 Hz&lt;/li&gt;
+  &lt;li&gt;&lt;em&gt;PWM_OUTPUT&lt;/em&gt; uses the hardware PWM of the BCM283x SoC.&lt;br /&gt;
+The available PWM pins are the followings:&lt;/li&gt;
+&lt;/ul&gt;
 
 &lt;table&gt;
   &lt;thead&gt;
     &lt;tr&gt;
-      &lt;th&gt;Function&lt;/th&gt;
-      &lt;th&gt;Implemented (YES/NO-Comment/In Progress)&lt;/th&gt;
+      &lt;th style=&quot;text-align: center&quot;&gt;GPIO PIN&lt;/th&gt;
+      &lt;th style=&quot;text-align: center&quot;&gt;Available in RPi (40-pins) connector&lt;/th&gt;
     &lt;/tr&gt;
   &lt;/thead&gt;
   &lt;tbody&gt;
     &lt;tr&gt;
-      &lt;td&gt;analogReference(type)&lt;/td&gt;
-      &lt;td&gt;NO - No hardware support for RPi&lt;/td&gt;
+      &lt;td style=&quot;text-align: center&quot;&gt;12&lt;/td&gt;
+      &lt;td style=&quot;text-align: center&quot;&gt;YES&lt;/td&gt;
     &lt;/tr&gt;
     &lt;tr&gt;
-      &lt;td&gt;analogRead(pin)&lt;/td&gt;
-      &lt;td&gt;NO - No hardware support for RPi&lt;/td&gt;
+      &lt;td style=&quot;text-align: center&quot;&gt;13&lt;/td&gt;
+      &lt;td style=&quot;text-align: center&quot;&gt;YES&lt;/td&gt;
     &lt;/tr&gt;
     &lt;tr&gt;
-      &lt;td&gt;analogWrite(pin, value) - PWM&lt;/td&gt;
-      &lt;td&gt;YES&lt;/td&gt;
+      &lt;td style=&quot;text-align: center&quot;&gt;18&lt;/td&gt;
+      &lt;td style=&quot;text-align: center&quot;&gt;YES&lt;/td&gt;
     &lt;/tr&gt;
     &lt;tr&gt;
-      &lt;td&gt;(EXTRA) setPwmDutyCycle (pin, dutycycle)&lt;/td&gt;
-      &lt;td&gt;YES&lt;/td&gt;
+      &lt;td style=&quot;text-align: center&quot;&gt;19&lt;/td&gt;
+      &lt;td style=&quot;text-align: center&quot;&gt;YES&lt;/td&gt;
     &lt;/tr&gt;
     &lt;tr&gt;
-      &lt;td&gt;(EXTRA) setPwmFrequency (pin, frequency, dutycycle)&lt;/td&gt;
-      &lt;td&gt;YES&lt;/td&gt;
+      &lt;td style=&quot;text-align: center&quot;&gt;40&lt;/td&gt;
+      &lt;td style=&quot;text-align: center&quot;&gt;NO&lt;/td&gt;
     &lt;/tr&gt;
     &lt;tr&gt;
-      &lt;td&gt;(EXTRA) setPwmFrequency (pin, frequency)&lt;/td&gt;
-      &lt;td&gt;YES&lt;/td&gt;
+      &lt;td style=&quot;text-align: center&quot;&gt;41&lt;/td&gt;
+      &lt;td style=&quot;text-align: center&quot;&gt;NO&lt;/td&gt;
     &lt;/tr&gt;
     &lt;tr&gt;
-      &lt;td&gt;(EXTRA) setPwmPeriod (pin, microseconds)&lt;/td&gt;
-      &lt;td&gt;YES&lt;/td&gt;
-    &lt;/tr&gt;
-  &lt;/tbody&gt;
-&lt;/table&gt;
-
-&lt;h4 id=&quot;advanced-io&quot;&gt;- Advanced I/O&lt;/h4&gt;
-
-&lt;table&gt;
-  &lt;thead&gt;
-    &lt;tr&gt;
-      &lt;th&gt;Function&lt;/th&gt;
-      &lt;th&gt;Implemented (YES/NO-Comment/In Progress)&lt;/th&gt;
-    &lt;/tr&gt;
-  &lt;/thead&gt;
-  &lt;tbody&gt;
-    &lt;tr&gt;
-      &lt;td&gt;tone(pin, frequency)&lt;/td&gt;
-      &lt;td&gt;YES&lt;/td&gt;
+      &lt;td style=&quot;text-align: center&quot;&gt;45&lt;/td&gt;
+      &lt;td style=&quot;text-align: center&quot;&gt;NO&lt;/td&gt;
     &lt;/tr&gt;
     &lt;tr&gt;
-      &lt;td&gt;tone(pin, frequency, duration)&lt;/td&gt;
-      &lt;td&gt;YES&lt;/td&gt;
+      &lt;td style=&quot;text-align: center&quot;&gt;52&lt;/td&gt;
+      &lt;td style=&quot;text-align: center&quot;&gt;NO&lt;/td&gt;
     &lt;/tr&gt;
     &lt;tr&gt;
-      &lt;td&gt;noTone(pin)&lt;/td&gt;
-      &lt;td&gt;YES&lt;/td&gt;
-    &lt;/tr&gt;
-    &lt;tr&gt;
-      &lt;td&gt;shiftOut(dataPin, clockPin, bitOrder, value)&lt;/td&gt;
-      &lt;td&gt;YES&lt;/td&gt;
-    &lt;/tr&gt;
-    &lt;tr&gt;
-      &lt;td&gt;byte incoming = shiftIn(dataPin, clockPin, bitOrder)&lt;/td&gt;
-      &lt;td&gt;YES&lt;/td&gt;
-    &lt;/tr&gt;
-    &lt;tr&gt;
-      &lt;td&gt;pulseIn(pin, value)&lt;/td&gt;
-      &lt;td&gt;YES&lt;/td&gt;
-    &lt;/tr&gt;
-    &lt;tr&gt;
-      &lt;td&gt;pulseIn(pin, value, timeout)&lt;/td&gt;
-      &lt;td&gt;YES&lt;/td&gt;
+      &lt;td style=&quot;text-align: center&quot;&gt;53&lt;/td&gt;
+      &lt;td style=&quot;text-align: center&quot;&gt;NO&lt;/td&gt;
     &lt;/tr&gt;
   &lt;/tbody&gt;
-&lt;/table&gt;
+&lt;/table&gt;</content><author><name>Jorge Garza</name></author><summary>analogWrite(pin, value)
 
-&lt;h4 id=&quot;time&quot;&gt;- Time&lt;/h4&gt;
+Writes a PWM (Pulse Width Modulation) wave at the output of the selected pin.
 
-&lt;table&gt;
-  &lt;thead&gt;
-    &lt;tr&gt;
-      &lt;th&gt;Function&lt;/th&gt;
-      &lt;th&gt;Implemented (YES/NO-Comment/In Progress)&lt;/th&gt;
-    &lt;/tr&gt;
-  &lt;/thead&gt;
-  &lt;tbody&gt;
-    &lt;tr&gt;
-      &lt;td&gt;time = millis()&lt;/td&gt;
-      &lt;td&gt;YES&lt;/td&gt;
-    &lt;/tr&gt;
-    &lt;tr&gt;
-      &lt;td&gt;time = micros()&lt;/td&gt;
-      &lt;td&gt;YES&lt;/td&gt;
-    &lt;/tr&gt;
-    &lt;tr&gt;
-      &lt;td&gt;delay(ms)&lt;/td&gt;
-      &lt;td&gt;YES&lt;/td&gt;
-    &lt;/tr&gt;
-    &lt;tr&gt;
-      &lt;td&gt;delayMicroseconds(us)&lt;/td&gt;
-      &lt;td&gt;YES&lt;/td&gt;
-    &lt;/tr&gt;
-  &lt;/tbody&gt;
-&lt;/table&gt;
+Parameters
 
-&lt;h4 id=&quot;math&quot;&gt;- Math&lt;/h4&gt;
 
-&lt;table&gt;
-  &lt;thead&gt;
-    &lt;tr&gt;
-      &lt;th&gt;Function&lt;/th&gt;
-      &lt;th&gt;Implemented (YES/NO-Comment/In Progress)&lt;/th&gt;
-    &lt;/tr&gt;
-  &lt;/thead&gt;
-  &lt;tbody&gt;
-    &lt;tr&gt;
-      &lt;td&gt;min(x, y)&lt;/td&gt;
-      &lt;td&gt;YES&lt;/td&gt;
-    &lt;/tr&gt;
-    &lt;tr&gt;
-      &lt;td&gt;max(x, y)&lt;/td&gt;
-      &lt;td&gt;YES&lt;/td&gt;
-    &lt;/tr&gt;
-    &lt;tr&gt;
-      &lt;td&gt;abs(x)&lt;/td&gt;
-      &lt;td&gt;YES&lt;/td&gt;
-    &lt;/tr&gt;
-    &lt;tr&gt;
-      &lt;td&gt;constrain(x, a, b)&lt;/td&gt;
-      &lt;td&gt;YES&lt;/td&gt;
-    &lt;/tr&gt;
-    &lt;tr&gt;
-      &lt;td&gt;map(value, fromLow, fromHigh, toLow, toHigh)&lt;/td&gt;
-      &lt;td&gt;YES&lt;/td&gt;
-    &lt;/tr&gt;
-    &lt;tr&gt;
-      &lt;td&gt;pow(base, exponent)&lt;/td&gt;
-      &lt;td&gt;YES&lt;/td&gt;
-    &lt;/tr&gt;
-    &lt;tr&gt;
-      &lt;td&gt;radians(deg)&lt;/td&gt;
-      &lt;td&gt;YES&lt;/td&gt;
-    &lt;/tr&gt;
-    &lt;tr&gt;
-      &lt;td&gt;degrees(rad)&lt;/td&gt;
-      &lt;td&gt;YES&lt;/td&gt;
-    &lt;/tr&gt;
-    &lt;tr&gt;
-      &lt;td&gt;sqrt(x)&lt;/td&gt;
-      &lt;td&gt;YES&lt;/td&gt;
-    &lt;/tr&gt;
-    &lt;tr&gt;
-      &lt;td&gt;sq(x)&lt;/td&gt;
-      &lt;td&gt;YES&lt;/td&gt;
-    &lt;/tr&gt;
-  &lt;/tbody&gt;
-&lt;/table&gt;
-
-&lt;h4 id=&quot;trigonometry&quot;&gt;- Trigonometry&lt;/h4&gt;
-
-&lt;table&gt;
-  &lt;thead&gt;
-    &lt;tr&gt;
-      &lt;th&gt;Function&lt;/th&gt;
-      &lt;th&gt;Implemented (YES/NO-Comment/In Progress)&lt;/th&gt;
-    &lt;/tr&gt;
-  &lt;/thead&gt;
-  &lt;tbody&gt;
-    &lt;tr&gt;
-      &lt;td&gt;sin(rad)&lt;/td&gt;
-      &lt;td&gt;YES&lt;/td&gt;
-    &lt;/tr&gt;
-    &lt;tr&gt;
-      &lt;td&gt;cos(rad)&lt;/td&gt;
-      &lt;td&gt;YES&lt;/td&gt;
-    &lt;/tr&gt;
-    &lt;tr&gt;
-      &lt;td&gt;tan(rad)&lt;/td&gt;
-      &lt;td&gt;YES&lt;/td&gt;
-    &lt;/tr&gt;
-  &lt;/tbody&gt;
-&lt;/table&gt;
-
-&lt;h4 id=&quot;characters&quot;&gt;- Characters&lt;/h4&gt;
-
-&lt;table&gt;
-  &lt;thead&gt;
-    &lt;tr&gt;
-      &lt;th&gt;Function&lt;/th&gt;
-      &lt;th&gt;Implemented (YES/NO-Comment/In Progress)&lt;/th&gt;
-    &lt;/tr&gt;
-  &lt;/thead&gt;
-  &lt;tbody&gt;
-    &lt;tr&gt;
-      &lt;td&gt;isAlphaNumeric(thisChar)&lt;/td&gt;
-      &lt;td&gt;YES&lt;/td&gt;
-    &lt;/tr&gt;
-    &lt;tr&gt;
-      &lt;td&gt;isAlpha(thisChar)&lt;/td&gt;
-      &lt;td&gt;YES&lt;/td&gt;
-    &lt;/tr&gt;
-    &lt;tr&gt;
-      &lt;td&gt;isAscii(thisChar)&lt;/td&gt;
-      &lt;td&gt;YES&lt;/td&gt;
-    &lt;/tr&gt;
-    &lt;tr&gt;
-      &lt;td&gt;isWhitespace(thisChar)&lt;/td&gt;
-      &lt;td&gt;YES&lt;/td&gt;
-    &lt;/tr&gt;
-    &lt;tr&gt;
-      &lt;td&gt;isControl(thisChar)&lt;/td&gt;
-      &lt;td&gt;YES&lt;/td&gt;
-    &lt;/tr&gt;
-    &lt;tr&gt;
-      &lt;td&gt;isDigit(thisChar)&lt;/td&gt;
-      &lt;td&gt;YES&lt;/td&gt;
-    &lt;/tr&gt;
-    &lt;tr&gt;
-      &lt;td&gt;isGraph(thisChar)&lt;/td&gt;
-      &lt;td&gt;YES&lt;/td&gt;
-    &lt;/tr&gt;
-    &lt;tr&gt;
-      &lt;td&gt;isLowerCase(thisChar)&lt;/td&gt;
-      &lt;td&gt;YES&lt;/td&gt;
-    &lt;/tr&gt;
-    &lt;tr&gt;
-      &lt;td&gt;isPrintable(thisChar)&lt;/td&gt;
-      &lt;td&gt;YES&lt;/td&gt;
-    &lt;/tr&gt;
-    &lt;tr&gt;
-      &lt;td&gt;isPunct(thisChar)&lt;/td&gt;
-      &lt;td&gt;YES&lt;/td&gt;
-    &lt;/tr&gt;
-    &lt;tr&gt;
-      &lt;td&gt;isSpace(thisChar)&lt;/td&gt;
-      &lt;td&gt;YES&lt;/td&gt;
-    &lt;/tr&gt;
-    &lt;tr&gt;
-      &lt;td&gt;isUpperCase(thisChar)&lt;/td&gt;
-      &lt;td&gt;YES&lt;/td&gt;
-    &lt;/tr&gt;
-    &lt;tr&gt;
-      &lt;td&gt;isHexadecimalDigit(thisChar)&lt;/td&gt;
-      &lt;td&gt;YES&lt;/td&gt;
-    &lt;/tr&gt;
-  &lt;/tbody&gt;
-&lt;/table&gt;
-
-&lt;h4 id=&quot;random-numbers&quot;&gt;- Random Numbers&lt;/h4&gt;
-
-&lt;table&gt;
-  &lt;thead&gt;
-    &lt;tr&gt;
-      &lt;th&gt;Function&lt;/th&gt;
-      &lt;th&gt;Implemented (YES/NO-Comment/In Progress)&lt;/th&gt;
-    &lt;/tr&gt;
-  &lt;/thead&gt;
-  &lt;tbody&gt;
-    &lt;tr&gt;
-      &lt;td&gt;randomSeed(seed)&lt;/td&gt;
-      &lt;td&gt;YES&lt;/td&gt;
-    &lt;/tr&gt;
-    &lt;tr&gt;
-      &lt;td&gt;random(max)&lt;/td&gt;
-      &lt;td&gt;YES&lt;/td&gt;
-    &lt;/tr&gt;
-    &lt;tr&gt;
-      &lt;td&gt;random(min, max)&lt;/td&gt;
-      &lt;td&gt;YES&lt;/td&gt;
-    &lt;/tr&gt;
-  &lt;/tbody&gt;
-&lt;/table&gt;
-
-&lt;h4 id=&quot;bits-and-bytes&quot;&gt;- Bits and Bytes&lt;/h4&gt;
-
-&lt;table&gt;
-  &lt;thead&gt;
-    &lt;tr&gt;
-      &lt;th&gt;Function&lt;/th&gt;
-      &lt;th&gt;Implemented (YES/NO-Comment/In Progress)&lt;/th&gt;
-    &lt;/tr&gt;
-  &lt;/thead&gt;
-  &lt;tbody&gt;
-    &lt;tr&gt;
-      &lt;td&gt;lowByte(x)&lt;/td&gt;
-      &lt;td&gt;YES&lt;/td&gt;
-    &lt;/tr&gt;
-    &lt;tr&gt;
-      &lt;td&gt;highByte(x)&lt;/td&gt;
-      &lt;td&gt;YES&lt;/td&gt;
-    &lt;/tr&gt;
-    &lt;tr&gt;
-      &lt;td&gt;bitRead(x, n)&lt;/td&gt;
-      &lt;td&gt;YES&lt;/td&gt;
-    &lt;/tr&gt;
-    &lt;tr&gt;
-      &lt;td&gt;bitWrite(x, n, b)&lt;/td&gt;
-      &lt;td&gt;YES&lt;/td&gt;
-    &lt;/tr&gt;
-    &lt;tr&gt;
-      &lt;td&gt;bitSet(x, n)&lt;/td&gt;
-      &lt;td&gt;YES&lt;/td&gt;
-    &lt;/tr&gt;
-    &lt;tr&gt;
-      &lt;td&gt;bitClear(x, n)&lt;/td&gt;
-      &lt;td&gt;YES&lt;/td&gt;
-    &lt;/tr&gt;
-    &lt;tr&gt;
-      &lt;td&gt;bit(n)&lt;/td&gt;
-      &lt;td&gt;YES&lt;/td&gt;
-    &lt;/tr&gt;
-  &lt;/tbody&gt;
-&lt;/table&gt;
-
-&lt;h4 id=&quot;external-interrupts&quot;&gt;- External Interrupts&lt;/h4&gt;
-
-&lt;table&gt;
-  &lt;thead&gt;
-    &lt;tr&gt;
-      &lt;th&gt;Function&lt;/th&gt;
-      &lt;th&gt;Implemented (YES/NO-Comment/In Progress)&lt;/th&gt;
-    &lt;/tr&gt;
-  &lt;/thead&gt;
-  &lt;tbody&gt;
-    &lt;tr&gt;
-      &lt;td&gt;attachInterrupt(digitalPinToInterrupt(pin), ISR, mode)&lt;/td&gt;
-      &lt;td&gt;YES&lt;/td&gt;
-    &lt;/tr&gt;
-    &lt;tr&gt;
-      &lt;td&gt;detachInterrupt(interrupt)&lt;/td&gt;
-      &lt;td&gt;YES&lt;/td&gt;
-    &lt;/tr&gt;
-    &lt;tr&gt;
-      &lt;td&gt;detachInterrupt(digitalPinToInterrupt(pin))&lt;/td&gt;
-      &lt;td&gt;YES&lt;/td&gt;
-    &lt;/tr&gt;
-  &lt;/tbody&gt;
-&lt;/table&gt;
-
-&lt;h4 id=&quot;interrupts&quot;&gt;- Interrupts&lt;/h4&gt;
-
-&lt;table&gt;
-  &lt;thead&gt;
-    &lt;tr&gt;
-      &lt;th&gt;Function&lt;/th&gt;
-      &lt;th&gt;Implemented (YES/NO-Comment/In Progress)&lt;/th&gt;
-    &lt;/tr&gt;
-  &lt;/thead&gt;
-  &lt;tbody&gt;
-    &lt;tr&gt;
-      &lt;td&gt;interrupts()&lt;/td&gt;
-      &lt;td&gt;In Progress&lt;/td&gt;
-    &lt;/tr&gt;
-    &lt;tr&gt;
-      &lt;td&gt;noInterrupts()&lt;/td&gt;
-      &lt;td&gt;In Progress&lt;/td&gt;
-    &lt;/tr&gt;
-  &lt;/tbody&gt;
-&lt;/table&gt;
-
-&lt;h4 id=&quot;serial&quot;&gt;- Serial&lt;/h4&gt;
-
-&lt;table&gt;
-  &lt;thead&gt;
-    &lt;tr&gt;
-      &lt;th&gt;Function&lt;/th&gt;
-      &lt;th&gt;Implemented (YES/NO-Comment/In Progress)&lt;/th&gt;
-    &lt;/tr&gt;
-  &lt;/thead&gt;
-  &lt;tbody&gt;
-    &lt;tr&gt;
-      &lt;td&gt;if (Serial)&lt;/td&gt;
-      &lt;td&gt;YES&lt;/td&gt;
-    &lt;/tr&gt;
-    &lt;tr&gt;
-      &lt;td&gt;Serial.available()&lt;/td&gt;
-      &lt;td&gt;YES&lt;/td&gt;
-    &lt;/tr&gt;
-    &lt;tr&gt;
-      &lt;td&gt;Serial.availableForWrite()&lt;/td&gt;
-      &lt;td&gt;YES&lt;/td&gt;
-    &lt;/tr&gt;
-    &lt;tr&gt;
-      &lt;td&gt;Serial.begin(speed)&lt;/td&gt;
-      &lt;td&gt;YES&lt;/td&gt;
-    &lt;/tr&gt;
-    &lt;tr&gt;
-      &lt;td&gt;Serial.begin(speed, config)&lt;/td&gt;
-      &lt;td&gt;YES&lt;/td&gt;
-    &lt;/tr&gt;
-    &lt;tr&gt;
-      &lt;td&gt;(EXTRA) Serial.begin(driverName, speed)&lt;/td&gt;
-      &lt;td&gt;YES&lt;/td&gt;
-    &lt;/tr&gt;
-    &lt;tr&gt;
-      &lt;td&gt;(EXTRA) Serial.begin(driverName, speed, config)&lt;/td&gt;
-      &lt;td&gt;YES&lt;/td&gt;
-    &lt;/tr&gt;
-    &lt;tr&gt;
-      &lt;td&gt;Serial.end()&lt;/td&gt;
-      &lt;td&gt;YES&lt;/td&gt;
-    &lt;/tr&gt;
-    &lt;tr&gt;
-      &lt;td&gt;Serial.find(target)&lt;/td&gt;
-      &lt;td&gt;YES&lt;/td&gt;
-    &lt;/tr&gt;
-    &lt;tr&gt;
-      &lt;td&gt;Serial.findUntil(target, terminal)&lt;/td&gt;
-      &lt;td&gt;YES&lt;/td&gt;
-    &lt;/tr&gt;
-    &lt;tr&gt;
-      &lt;td&gt;Serial.flush()&lt;/td&gt;
-      &lt;td&gt;YES&lt;/td&gt;
-    &lt;/tr&gt;
-    &lt;tr&gt;
-      &lt;td&gt;Serial.parseFloat()&lt;/td&gt;
-      &lt;td&gt;YES&lt;/td&gt;
-    &lt;/tr&gt;
-    &lt;tr&gt;
-      &lt;td&gt;Serial.parseInt()&lt;/td&gt;
-      &lt;td&gt;YES&lt;/td&gt;
-    &lt;/tr&gt;
-    &lt;tr&gt;
-      &lt;td&gt;Serial.parseInt(char skipChar)&lt;/td&gt;
-      &lt;td&gt;YES&lt;/td&gt;
-    &lt;/tr&gt;
-    &lt;tr&gt;
-      &lt;td&gt;Serial.peek()&lt;/td&gt;
-      &lt;td&gt;YES&lt;/td&gt;
-    &lt;/tr&gt;
-    &lt;tr&gt;
-      &lt;td&gt;Serial.print(val)&lt;/td&gt;
-      &lt;td&gt;YES&lt;/td&gt;
-    &lt;/tr&gt;
-    &lt;tr&gt;
-      &lt;td&gt;Serial.print(val, format)&lt;/td&gt;
-      &lt;td&gt;YES&lt;/td&gt;
-    &lt;/tr&gt;
-    &lt;tr&gt;
-      &lt;td&gt;Serial.println(val)&lt;/td&gt;
-      &lt;td&gt;YES&lt;/td&gt;
-    &lt;/tr&gt;
-    &lt;tr&gt;
-      &lt;td&gt;Serial.println(val, format)&lt;/td&gt;
-      &lt;td&gt;YES&lt;/td&gt;
-    &lt;/tr&gt;
-    &lt;tr&gt;
-      &lt;td&gt;(EXTRA) Serial.printf(format, …)&lt;/td&gt;
-      &lt;td&gt;YES&lt;/td&gt;
-    &lt;/tr&gt;
-    &lt;tr&gt;
-      &lt;td&gt;Serial.read()&lt;/td&gt;
-      &lt;td&gt;YES&lt;/td&gt;
-    &lt;/tr&gt;
-    &lt;tr&gt;
-      &lt;td&gt;Serial.readBytes(buffer, length)&lt;/td&gt;
-      &lt;td&gt;YES&lt;/td&gt;
-    &lt;/tr&gt;
-    &lt;tr&gt;
-      &lt;td&gt;Serial.readBytesUntil(character, buffer, length)&lt;/td&gt;
-      &lt;td&gt;YES&lt;/td&gt;
-    &lt;/tr&gt;
-    &lt;tr&gt;
-      &lt;td&gt;Serial.readString()&lt;/td&gt;
-      &lt;td&gt;YES&lt;/td&gt;
-    &lt;/tr&gt;
-    &lt;tr&gt;
-      &lt;td&gt;Serial.readStringUntil(terminator)&lt;/td&gt;
-      &lt;td&gt;YES&lt;/td&gt;
-    &lt;/tr&gt;
-    &lt;tr&gt;
-      &lt;td&gt;(EXRTA) Serial.readStringCommand(character, buffer, length)&lt;/td&gt;
-      &lt;td&gt;YES&lt;/td&gt;
-    &lt;/tr&gt;
-    &lt;tr&gt;
-      &lt;td&gt;Serial.setTimeout(time)&lt;/td&gt;
-      &lt;td&gt;YES&lt;/td&gt;
-    &lt;/tr&gt;
-    &lt;tr&gt;
-      &lt;td&gt;Serial.write(val)&lt;/td&gt;
-      &lt;td&gt;YES&lt;/td&gt;
-    &lt;/tr&gt;
-    &lt;tr&gt;
-      &lt;td&gt;Serial.write(str)&lt;/td&gt;
-      &lt;td&gt;YES&lt;/td&gt;
-    &lt;/tr&gt;
-    &lt;tr&gt;
-      &lt;td&gt;Serial.write(buf, len)&lt;/td&gt;
-      &lt;td&gt;YES&lt;/td&gt;
-    &lt;/tr&gt;
-    &lt;tr&gt;
-      &lt;td&gt;serialEvent()&lt;/td&gt;
-      &lt;td&gt;In Progress&lt;/td&gt;
-    &lt;/tr&gt;
-  &lt;/tbody&gt;
-&lt;/table&gt;
-
-&lt;h4 id=&quot;wire-i2c&quot;&gt;- Wire (I2C)&lt;/h4&gt;
-
-&lt;table&gt;
-  &lt;thead&gt;
-    &lt;tr&gt;
-      &lt;th&gt;Function&lt;/th&gt;
-      &lt;th&gt;Implemented (YES/NO-Comment/In Progress)&lt;/th&gt;
-    &lt;/tr&gt;
-  &lt;/thead&gt;
-  &lt;tbody&gt;
-    &lt;tr&gt;
-      &lt;td&gt;Wire.begin()&lt;/td&gt;
-      &lt;td&gt;YES&lt;/td&gt;
-    &lt;/tr&gt;
-    &lt;tr&gt;
-      &lt;td&gt;(EXTRA) Wire.begin(driverName)&lt;/td&gt;
-      &lt;td&gt;YES&lt;/td&gt;
-    &lt;/tr&gt;
-    &lt;tr&gt;
-      &lt;td&gt;Wire.begin(address)&lt;/td&gt;
-      &lt;td&gt;NO/In Progress - Linux I2C Slave driver was added recently, still verifying&lt;/td&gt;
-    &lt;/tr&gt;
-    &lt;tr&gt;
-      &lt;td&gt;Wire.requestFrom(address, quantity)&lt;/td&gt;
-      &lt;td&gt;YES&lt;/td&gt;
-    &lt;/tr&gt;
-    &lt;tr&gt;
-      &lt;td&gt;Wire.requestFrom(address, quantity, stop)&lt;/td&gt;
-      &lt;td&gt;NO - There is no way to send an I2C stop msg to the driver&lt;/td&gt;
-    &lt;/tr&gt;
-    &lt;tr&gt;
-      &lt;td&gt;Wire.beginTransmission(address)&lt;/td&gt;
-      &lt;td&gt;YES&lt;/td&gt;
-    &lt;/tr&gt;
-    &lt;tr&gt;
-      &lt;td&gt;Wire.endTransmission()&lt;/td&gt;
-      &lt;td&gt;YES&lt;/td&gt;
-    &lt;/tr&gt;
-    &lt;tr&gt;
-      &lt;td&gt;Wire.endTransmission(stop)&lt;/td&gt;
-      &lt;td&gt;NO - There is no way to send an I2C stop msg to the driver&lt;/td&gt;
-    &lt;/tr&gt;
-    &lt;tr&gt;
-      &lt;td&gt;Wire.write(value)&lt;/td&gt;
-      &lt;td&gt;YES&lt;/td&gt;
-    &lt;/tr&gt;
-    &lt;tr&gt;
-      &lt;td&gt;Wire.write(string)&lt;/td&gt;
-      &lt;td&gt;YES&lt;/td&gt;
-    &lt;/tr&gt;
-    &lt;tr&gt;
-      &lt;td&gt;Wire.write(data, length)&lt;/td&gt;
-      &lt;td&gt;YES&lt;/td&gt;
-    &lt;/tr&gt;
-    &lt;tr&gt;
-      &lt;td&gt;Wire.available()&lt;/td&gt;
-      &lt;td&gt;YES&lt;/td&gt;
-    &lt;/tr&gt;
-    &lt;tr&gt;
-      &lt;td&gt;Wire.read()&lt;/td&gt;
-      &lt;td&gt;YES&lt;/td&gt;
-    &lt;/tr&gt;
-    &lt;tr&gt;
-      &lt;td&gt;Wire.onReceive(handler)&lt;/td&gt;
-      &lt;td&gt;NO/In Progress - Linux I2C Slave driver was added recently, still verifying&lt;/td&gt;
-    &lt;/tr&gt;
-    &lt;tr&gt;
-      &lt;td&gt;Wire.onRequest(handler)&lt;/td&gt;
-      &lt;td&gt;NO/In Progress - Linux I2C Slave driver was added recently, still verifying&lt;/td&gt;
-    &lt;/tr&gt;
-  &lt;/tbody&gt;
-&lt;/table&gt;
-
-&lt;h4 id=&quot;spi&quot;&gt;- SPI&lt;/h4&gt;
-
-&lt;table&gt;
-  &lt;thead&gt;
-    &lt;tr&gt;
-      &lt;th&gt;Function&lt;/th&gt;
-      &lt;th&gt;Implemented (YES/NO-Comment/In Progress)&lt;/th&gt;
-    &lt;/tr&gt;
-  &lt;/thead&gt;
-  &lt;tbody&gt;
-    &lt;tr&gt;
-      &lt;td&gt;SPISettings&lt;/td&gt;
-      &lt;td&gt;YES&lt;/td&gt;
-    &lt;/tr&gt;
-    &lt;tr&gt;
-      &lt;td&gt;SPI.begin()&lt;/td&gt;
-      &lt;td&gt;YES&lt;/td&gt;
-    &lt;/tr&gt;
-    &lt;tr&gt;
-      &lt;td&gt;(EXTRA) SPI.begin(driverName)&lt;/td&gt;
-      &lt;td&gt;YES&lt;/td&gt;
-    &lt;/tr&gt;
-    &lt;tr&gt;
-      &lt;td&gt;SPI.end()&lt;/td&gt;
-      &lt;td&gt;YES&lt;/td&gt;
-    &lt;/tr&gt;
-    &lt;tr&gt;
-      &lt;td&gt;SPI.beginTransaction(mySettings)&lt;/td&gt;
-      &lt;td&gt;YES&lt;/td&gt;
-    &lt;/tr&gt;
-    &lt;tr&gt;
-      &lt;td&gt;SPI.endTransaction()&lt;/td&gt;
-      &lt;td&gt;YES&lt;/td&gt;
-    &lt;/tr&gt;
-    &lt;tr&gt;
-      &lt;td&gt;SPI.setBitOrder(order)&lt;/td&gt;
-      &lt;td&gt;YES&lt;/td&gt;
-    &lt;/tr&gt;
-    &lt;tr&gt;
-      &lt;td&gt;SPI.setClockDivider(divider)&lt;/td&gt;
-      &lt;td&gt;YES - Sets clock or if you use dividers (e.g SPI_CLOCK_DIV4) then sets clock at the divider speed for a 16Mhz Arduino microcontroller&lt;/td&gt;
-    &lt;/tr&gt;
-    &lt;tr&gt;
-      &lt;td&gt;SPI.setDataMode(mode)&lt;/td&gt;
-      &lt;td&gt;YES&lt;/td&gt;
-    &lt;/tr&gt;
-    &lt;tr&gt;
-      &lt;td&gt;receivedVal = SPI.transfer(val)&lt;/td&gt;
-      &lt;td&gt;YES&lt;/td&gt;
-    &lt;/tr&gt;
-    &lt;tr&gt;
-      &lt;td&gt;receivedVal16 = SPI.transfer16(val16)&lt;/td&gt;
-      &lt;td&gt;NO - Is almost depreceated and could be fixed better adding a bitsPerWord in settings that includes 16 bits and 32 bits&lt;/td&gt;
-    &lt;/tr&gt;
-    &lt;tr&gt;
-      &lt;td&gt;SPI.transfer(buffer, size)&lt;/td&gt;
-      &lt;td&gt;YES&lt;/td&gt;
-    &lt;/tr&gt;
-    &lt;tr&gt;
-      &lt;td&gt;SPI.usingInterrupt(interruptNumber)&lt;/td&gt;
-      &lt;td&gt;In Progress&lt;/td&gt;
-    &lt;/tr&gt;
-  &lt;/tbody&gt;
-&lt;/table&gt;
-
-&lt;p&gt;&lt;strong&gt;Notes:&lt;/strong&gt;&lt;/p&gt;
-
-&lt;p&gt;&lt;strong&gt;B&lt;/strong&gt; binary representation (e.g  &lt;strong&gt;B1000000&lt;/strong&gt;[7 bits] and  &lt;strong&gt;B110&lt;/strong&gt;[3 bits]) conflicts with some termios.h definitions so only 8 bit binary representations are supported (e.g &lt;strong&gt;B01000000&lt;/strong&gt;[8 bits], &lt;strong&gt;B00010001&lt;/strong&gt;[8 bits], etc). To represent a binary with less or more than 8 bits please use &lt;strong&gt;0b&lt;/strong&gt; instead.&lt;/p&gt;</content><author><name>Jorge Garza</name></author><summary>Reference
-
-PiDuino Library (libpiduino) aims to support the core official Arduino functions published in the Arduino official website as of April 2016. Note that the Arduino API has many legacy functions that although keeped no longer used, the ported libraries and functions are only the ones published on the official website.
-
-libpiduino 1.0.0 has 101 functions implemented out of 111 functions, this means that about 90% of the official Arduino functions are implemented. Also 10 (EXTRA) functions which give more functionality to the library were included.
+  pin - The GPIO pin number.
 
 
 
-- Digital I/O
+  value - PWM duty cycle. Available ranges between 0 and 255.
+
+
+Returns
+
+None
+
+
+
+Example
+
+#include &amp;lt;Arduino.h&amp;gt;
+
+int GPIO_PIN = 12; // GPIO12
+
+void setup() {
+	pinMode(GPIO_PIN, PWM_OUTPUT);
+	analogWrite(GPIO_PIN, 128); // Set PWM to half duty cycle
+}
+
+void loop() {
+	
+}
+
+
+
+Notes
+
+
+  The default PWM frequency is 490 Hz
+  PWM_OUTPUT uses the hardware PWM of the BCM283x SoC.
+The available PWM pins are the followings:
+
 
 
   
     
-      Function
-      Implemented (YES/NO-Comment/In Progress)
+      GPIO PIN
+      Available in RPi (40-pins) connector
     
   
   
     
-      pinMode(pin, mode)
+      12
       YES
     
     
-      digitalWrite(pin, value)
+      13
       YES
     
     
-      digitalRead(pin)
+      18
       YES
     
-  
-
-
-- Analog I/O (ADC and PWM)
-
-
-  
     
-      Function
-      Implemented (YES/NO-Comment/In Progress)
-    
-  
-  
-    
-      analogReference(type)
-      NO - No hardware support for RPi
-    
-    
-      analogRead(pin)
-      NO - No hardware support for RPi
-    
-    
-      analogWrite(pin, value) - PWM
-      YES
-    
-    
-      (EXTRA) setPwmDutyCycle (pin, dutycycle)
-      YES
-    
-    
-      (EXTRA) setPwmFrequency (pin, frequency, dutycycle)
-      YES
-    
-    
-      (EXTRA) setPwmFrequency (pin, frequency)
-      YES
-    
-    
-      (EXTRA) setPwmPeriod (pin, microseconds)
-      YES
-    
-  
-
-
-- Advanced I/O
-
-
-  
-    
-      Function
-      Implemented (YES/NO-Comment/In Progress)
-    
-  
-  
-    
-      tone(pin, frequency)
-      YES
-    
-    
-      tone(pin, frequency, duration)
-      YES
-    
-    
-      noTone(pin)
-      YES
-    
-    
-      shiftOut(dataPin, clockPin, bitOrder, value)
-      YES
-    
-    
-      byte incoming = shiftIn(dataPin, clockPin, bitOrder)
-      YES
-    
-    
-      pulseIn(pin, value)
-      YES
-    
-    
-      pulseIn(pin, value, timeout)
-      YES
-    
-  
-
-
-- Time
-
-
-  
-    
-      Function
-      Implemented (YES/NO-Comment/In Progress)
-    
-  
-  
-    
-      time = millis()
-      YES
-    
-    
-      time = micros()
-      YES
-    
-    
-      delay(ms)
-      YES
-    
-    
-      delayMicroseconds(us)
-      YES
-    
-  
-
-
-- Math
-
-
-  
-    
-      Function
-      Implemented (YES/NO-Comment/In Progress)
-    
-  
-  
-    
-      min(x, y)
-      YES
-    
-    
-      max(x, y)
-      YES
-    
-    
-      abs(x)
-      YES
-    
-    
-      constrain(x, a, b)
-      YES
-    
-    
-      map(value, fromLow, fromHigh, toLow, toHigh)
-      YES
-    
-    
-      pow(base, exponent)
-      YES
-    
-    
-      radians(deg)
-      YES
-    
-    
-      degrees(rad)
-      YES
-    
-    
-      sqrt(x)
-      YES
-    
-    
-      sq(x)
-      YES
-    
-  
-
-
-- Trigonometry
-
-
-  
-    
-      Function
-      Implemented (YES/NO-Comment/In Progress)
-    
-  
-  
-    
-      sin(rad)
-      YES
-    
-    
-      cos(rad)
-      YES
-    
-    
-      tan(rad)
-      YES
-    
-  
-
-
-- Characters
-
-
-  
-    
-      Function
-      Implemented (YES/NO-Comment/In Progress)
-    
-  
-  
-    
-      isAlphaNumeric(thisChar)
-      YES
-    
-    
-      isAlpha(thisChar)
-      YES
-    
-    
-      isAscii(thisChar)
-      YES
-    
-    
-      isWhitespace(thisChar)
-      YES
-    
-    
-      isControl(thisChar)
-      YES
-    
-    
-      isDigit(thisChar)
-      YES
-    
-    
-      isGraph(thisChar)
-      YES
-    
-    
-      isLowerCase(thisChar)
-      YES
-    
-    
-      isPrintable(thisChar)
-      YES
-    
-    
-      isPunct(thisChar)
-      YES
-    
-    
-      isSpace(thisChar)
-      YES
-    
-    
-      isUpperCase(thisChar)
-      YES
-    
-    
-      isHexadecimalDigit(thisChar)
-      YES
-    
-  
-
-
-- Random Numbers
-
-
-  
-    
-      Function
-      Implemented (YES/NO-Comment/In Progress)
-    
-  
-  
-    
-      randomSeed(seed)
-      YES
-    
-    
-      random(max)
-      YES
-    
-    
-      random(min, max)
-      YES
-    
-  
-
-
-- Bits and Bytes
-
-
-  
-    
-      Function
-      Implemented (YES/NO-Comment/In Progress)
-    
-  
-  
-    
-      lowByte(x)
-      YES
-    
-    
-      highByte(x)
-      YES
-    
-    
-      bitRead(x, n)
-      YES
-    
-    
-      bitWrite(x, n, b)
-      YES
-    
-    
-      bitSet(x, n)
-      YES
-    
-    
-      bitClear(x, n)
-      YES
-    
-    
-      bit(n)
-      YES
-    
-  
-
-
-- External Interrupts
-
-
-  
-    
-      Function
-      Implemented (YES/NO-Comment/In Progress)
-    
-  
-  
-    
-      attachInterrupt(digitalPinToInterrupt(pin), ISR, mode)
-      YES
-    
-    
-      detachInterrupt(interrupt)
-      YES
-    
-    
-      detachInterrupt(digitalPinToInterrupt(pin))
-      YES
-    
-  
-
-
-- Interrupts
-
-
-  
-    
-      Function
-      Implemented (YES/NO-Comment/In Progress)
-    
-  
-  
-    
-      interrupts()
-      In Progress
-    
-    
-      noInterrupts()
-      In Progress
-    
-  
-
-
-- Serial
-
-
-  
-    
-      Function
-      Implemented (YES/NO-Comment/In Progress)
-    
-  
-  
-    
-      if (Serial)
-      YES
-    
-    
-      Serial.available()
-      YES
-    
-    
-      Serial.availableForWrite()
-      YES
-    
-    
-      Serial.begin(speed)
-      YES
-    
-    
-      Serial.begin(speed, config)
-      YES
-    
-    
-      (EXTRA) Serial.begin(driverName, speed)
-      YES
-    
-    
-      (EXTRA) Serial.begin(driverName, speed, config)
-      YES
-    
-    
-      Serial.end()
-      YES
-    
-    
-      Serial.find(target)
-      YES
-    
-    
-      Serial.findUntil(target, terminal)
-      YES
-    
-    
-      Serial.flush()
-      YES
-    
-    
-      Serial.parseFloat()
-      YES
-    
-    
-      Serial.parseInt()
-      YES
-    
-    
-      Serial.parseInt(char skipChar)
-      YES
-    
-    
-      Serial.peek()
-      YES
-    
-    
-      Serial.print(val)
-      YES
-    
-    
-      Serial.print(val, format)
-      YES
-    
-    
-      Serial.println(val)
-      YES
-    
-    
-      Serial.println(val, format)
-      YES
-    
-    
-      (EXTRA) Serial.printf(format, …)
-      YES
-    
-    
-      Serial.read()
-      YES
-    
-    
-      Serial.readBytes(buffer, length)
-      YES
-    
-    
-      Serial.readBytesUntil(character, buffer, length)
-      YES
-    
-    
-      Serial.readString()
-      YES
-    
-    
-      Serial.readStringUntil(terminator)
-      YES
-    
-    
-      (EXRTA) Serial.readStringCommand(character, buffer, length)
-      YES
-    
-    
-      Serial.setTimeout(time)
-      YES
-    
-    
-      Serial.write(val)
-      YES
-    
-    
-      Serial.write(str)
-      YES
-    
-    
-      Serial.write(buf, len)
-      YES
-    
-    
-      serialEvent()
-      In Progress
-    
-  
-
-
-- Wire (I2C)
-
-
-  
-    
-      Function
-      Implemented (YES/NO-Comment/In Progress)
-    
-  
-  
-    
-      Wire.begin()
-      YES
-    
-    
-      (EXTRA) Wire.begin(driverName)
-      YES
-    
-    
-      Wire.begin(address)
-      NO/In Progress - Linux I2C Slave driver was added recently, still verifying
-    
-    
-      Wire.requestFrom(address, quantity)
-      YES
-    
-    
-      Wire.requestFrom(address, quantity, stop)
-      NO - There is no way to send an I2C stop msg to the driver
-    
-    
-      Wire.beginTransmission(address)
-      YES
-    
-    
-      Wire.endTransmission()
-      YES
-    
-    
-      Wire.endTransmission(stop)
-      NO - There is no way to send an I2C stop msg to the driver
-    
-    
-      Wire.write(value)
+      19
       YES
     
     
-      Wire.write(string)
-      YES
-    
-    
-      Wire.write(data, length)
-      YES
-    
-    
-      Wire.available()
-      YES
-    
-    
-      Wire.read()
-      YES
-    
-    
-      Wire.onReceive(handler)
-      NO/In Progress - Linux I2C Slave driver was added recently, still verifying
-    
-    
-      Wire.onRequest(handler)
-      NO/In Progress - Linux I2C Slave driver was added recently, still verifying
-    
-  
-
-
-- SPI
-
-
-  
-    
-      Function
-      Implemented (YES/NO-Comment/In Progress)
-    
-  
-  
-    
-      SPISettings
-      YES
-    
-    
-      SPI.begin()
-      YES
+      40
+      NO
     
     
-      (EXTRA) SPI.begin(driverName)
-      YES
-    
-    
-      SPI.end()
-      YES
-    
-    
-      SPI.beginTransaction(mySettings)
-      YES
-    
-    
-      SPI.endTransaction()
-      YES
-    
+      41
+      NO
     
-      SPI.setBitOrder(order)
-      YES
-    
-    
-      SPI.setClockDivider(divider)
-      YES - Sets clock or if you use dividers (e.g SPI_CLOCK_DIV4) then sets clock at the divider speed for a 16Mhz Arduino microcontroller
-    
-    
-      SPI.setDataMode(mode)
-      YES
     
+      45
+      NO
     
-      receivedVal = SPI.transfer(val)
-      YES
-    
-    
-      receivedVal16 = SPI.transfer16(val16)
-      NO - Is almost depreceated and could be fixed better adding a bitsPerWord in settings that includes 16 bits and 32 bits
-    
-    
-      SPI.transfer(buffer, size)
-      YES
     
+      52
+      NO
     
-      SPI.usingInterrupt(interruptNumber)
-      In Progress
     
-  
-
-
-Notes:
-
-B binary representation (e.g  B1000000[7 bits] and  B110[3 bits]) conflicts with some termios.h definitions so only 8 bit binary representations are supported (e.g B01000000[8 bits], B00010001[8 bits], etc). To represent a binary with less or more than 8 bits please use 0b instead.</summary></entry></feed>
+      53
+      NO</summary></entry></feed>

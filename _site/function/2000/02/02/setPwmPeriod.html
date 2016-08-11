@@ -6,8 +6,8 @@
     <meta charset="utf-8">
     <meta name="author" content="Jorge Garza">
     <meta name="description" content="Arduino library for Raspberry Pi">
-    <title> pinMode › PiDuino Library</title>
-    <link rel="canonical" href="https://github.com/NVSL/PiDuino_Library/PiDuino_Library/function/2000/02/02/pinMode.html">
+    <title> setPwmPeriod › PiDuino Library</title>
+    <link rel="canonical" href="https://github.com/NVSL/PiDuino_Library/PiDuino_Library/function/2000/02/02/setPwmPeriod.html">
     <link href="/PiDuino_Library/main.css" rel="stylesheet" type="text/css">
     <link href='//fonts.googleapis.com/css?family=Source+Sans+Pro:200,300,400,600,700,200italic,300italic,400italic,600italic,700italic' rel='stylesheet' type='text/css'>
     <link href='//fonts.googleapis.com/css?family=Gentium+Basic:400,700,400italic,700italic' rel='stylesheet' type='text/css'>
@@ -48,9 +48,9 @@
     
     
     <article>
-          <h3 id="pinmodepin-mode">pinMode(pin, mode)</h3>
+          <h3 id="setpwmperiodpin-microseconds">setPwmPeriod(pin, microseconds)</h3>
 
-<p>Configures the specified GPIO pin number as INPUT, OUTPUT or PWM pin.</p>
+<p>Sets the PWM (Pulse Width Modulation) wave period in microseconds (us).</p>
 
 <p><strong>Parameters</strong></p>
 
@@ -59,13 +59,8 @@
 </blockquote>
 
 <blockquote>
-  <p><strong>mode</strong> - Can be the followings:<br />
-<em>INPUT</em> : Sets pin as input without pullup resistor. <br />
-<em>INTPUT_PULLUP</em> : Sets pin as input with pullup resistor.<br />
-<em>INTPUT_PULLDOWN</em> : Sets pin as input with pulldown resistor.<br />
-<em>OUTPUT</em> : Sets pin as output.<br />
-<em>PWM_OUTPUT</em> : Sets pin as hardware PWM output. (Only for a few pins, see Notes below)<br />
-<em>SOFTPWM_OUTPUT</em> : Not available yet, still In progress.</p>
+  <p><strong>microseconds</strong> - PWM frequency (in us).<br />
+Available ranges are between 52631 (19 hz) and 26 (37500 hz).</p>
 </blockquote>
 
 <p><strong>Returns</strong></p>
@@ -78,16 +73,21 @@
 
 <figure class="highlight"><pre><code class="language-c" data-lang="c"><span class="cp">#include &lt;Arduino.h&gt;
 </span>
-<span class="kt">int</span> <span class="n">ledPin</span> <span class="o">=</span> <span class="mi">4</span><span class="p">;</span> <span class="c1">// GPIO4
+<span class="kt">int</span> <span class="n">GPIO_PIN</span> <span class="o">=</span> <span class="mi">12</span><span class="p">;</span> <span class="c1">// GPIO12
 </span>
 <span class="kt">void</span> <span class="nf">setup</span><span class="p">()</span> <span class="p">{</span>
-	<span class="n">pinMode</span><span class="p">(</span><span class="n">ledPin</span><span class="p">,</span> <span class="n">OUTPUT</span><span class="p">);</span>
+	<span class="n">pinMode</span><span class="p">(</span><span class="n">GPIO_PIN</span><span class="p">,</span> <span class="n">PWM_OUTPUT</span><span class="p">);</span>
 <span class="p">}</span>
 
 <span class="kt">void</span> <span class="nf">loop</span><span class="p">()</span> <span class="p">{</span>
-	<span class="n">digitalWrite</span><span class="p">(</span><span class="n">ledPin</span><span class="p">,</span> <span class="n">HIGH</span><span class="p">);</span>
+	<span class="c1">// Set PWM to 10000 us (100 Hz)
+</span>	<span class="n">setPwmDutyCycle</span><span class="p">(</span><span class="n">GPIO_PIN</span><span class="p">,</span> <span class="mi">10000</span><span class="p">);</span> 
 	<span class="n">delay</span><span class="p">(</span><span class="mi">1000</span><span class="p">);</span>
-	<span class="n">digitalWrite</span><span class="p">(</span><span class="n">ledPin</span><span class="p">,</span> <span class="n">LOW</span><span class="p">);</span>
+	<span class="c1">// Set PWM to 1000 us (1 KHz)
+</span>	<span class="n">setPwmDutyCycle</span><span class="p">(</span><span class="n">GPIO_PIN</span><span class="p">,</span> <span class="mi">1000</span><span class="p">);</span> 
+	<span class="n">delay</span><span class="p">(</span><span class="mi">1000</span><span class="p">);</span>
+	<span class="c1">// Set PWM to 100 us (10 kHz)
+</span>	<span class="n">setPwmDutyCycle</span><span class="p">(</span><span class="n">GPIO_PIN</span><span class="p">,</span> <span class="mi">100</span><span class="p">);</span> 
 	<span class="n">delay</span><span class="p">(</span><span class="mi">1000</span><span class="p">);</span>
 <span class="p">}</span></code></pre></figure>
 
@@ -96,7 +96,9 @@
 <p><strong>Notes</strong></p>
 
 <ul>
-  <li>These are the available pins for hardware PWM. Only a few are exposed to the RPi connector/header.</li>
+  <li>The default PWM frequency is 490 Hz</li>
+  <li><em>PWM_OUTPUT</em> uses the hardware PWM of the BCM283x SoC.<br />
+The available PWM pins are the followings:</li>
 </ul>
 
 <table>
@@ -145,29 +147,6 @@
     </tr>
   </tbody>
 </table>
-
-<ul>
-  <li><strong>pinMode</strong> function uses “/dev/gpiomem” as the default driver. If you want to change the driver to “/dev/mem”
-for example (which requires root) you can modify the <em>GPIO_DRIVER_NAME</em> constant as shown in the example.</li>
-</ul>
-
-<p><strong>Example</strong></p>
-
-<figure class="highlight"><pre><code class="language-c" data-lang="c"><span class="cp">#include &lt;Arduino.h&gt;
-</span>
-<span class="kt">int</span> <span class="n">ledPin</span> <span class="o">=</span> <span class="mi">4</span><span class="p">;</span> <span class="c1">// GPIO4
-</span>
-<span class="kt">void</span> <span class="nf">setup</span><span class="p">()</span> <span class="p">{</span>
-        <span class="n">strcpy</span><span class="p">(</span><span class="n">GPIO_DRIVER_NAME</span><span class="p">,</span> <span class="s">"/dev/mem"</span><span class="p">);</span>
-        <span class="n">pinMode</span><span class="p">(</span><span class="n">ledPin</span><span class="p">,</span> <span class="n">OUTPUT</span><span class="p">);</span>
-<span class="p">}</span>
-
-<span class="kt">void</span> <span class="nf">loop</span><span class="p">()</span> <span class="p">{</span>
-        <span class="n">digitalWrite</span><span class="p">(</span><span class="n">ledPin</span><span class="p">,</span> <span class="n">HIGH</span><span class="p">);</span>
-        <span class="n">delay</span><span class="p">(</span><span class="mi">1000</span><span class="p">);</span>
-        <span class="n">digitalWrite</span><span class="p">(</span><span class="n">ledPin</span><span class="p">,</span> <span class="n">LOW</span><span class="p">);</span>
-        <span class="n">delay</span><span class="p">(</span><span class="mi">1000</span><span class="p">);</span>
-<span class="p">}</span></code></pre></figure>
 
 
       
