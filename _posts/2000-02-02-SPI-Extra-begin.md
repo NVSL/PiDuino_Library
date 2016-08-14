@@ -23,6 +23,7 @@ ____________________
 
 {% highlight c %}
 #include <Arduino.h>
+#include <SPI.h>
 
 // Sends "Hello World!" byte by byte through SPI
 
@@ -53,6 +54,7 @@ void loop() {
 
 {% highlight c %}
 #include <Arduino.h>
+#include <SPI.h>
 
 // Sends "Hello World!" byte by byte through SPI
 
@@ -116,6 +118,7 @@ ____________________
 
 {% highlight c %}
 #include <Arduino.h>
+#include <SPI.h>
 
 void setup() {
         strcpy(SPI_DRIVER_NAME, "/dev/spidev1.0");

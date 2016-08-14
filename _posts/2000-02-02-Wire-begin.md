@@ -23,6 +23,7 @@ ____________________
 
 {% highlight c %}
 #include <Arduino.h>
+#include <Wire.h>
 
 void setup() {
 	Wire.begin();
@@ -57,6 +58,7 @@ ____________________
 
 {% highlight c %}
 #include <Arduino.h>
+#include <Wire.h>
 
 void setup() {
         strcpy(I2C_DRIVER_NAME, "/dev/i2c-4");

@@ -65,6 +65,7 @@
 <p><strong>Example</strong></p>
 
 <figure class="highlight"><pre><code class="language-c" data-lang="c"><span class="cp">#include &lt;Arduino.h&gt;
+#include &lt;SPI.h&gt;
 </span>
 <span class="c1">// Sends "Hello World!" byte by byte through SPI
 </span>
@@ -92,6 +93,7 @@
 <p><strong>Example 2</strong></p>
 
 <figure class="highlight"><pre><code class="language-c" data-lang="c"><span class="cp">#include &lt;Arduino.h&gt;
+#include &lt;SPI.h&gt;
 </span>
 <span class="c1">// Sends "Hello World!" byte by byte through SPI
 </span>
@@ -214,6 +216,7 @@ You can put directly the clock speed or use the constants below which are the cl
 </ul>
 
 <figure class="highlight"><pre><code class="language-c" data-lang="c"><span class="cp">#include &lt;Arduino.h&gt;
+#include &lt;SPI.h&gt;
 </span>
 <span class="kt">void</span> <span class="nf">setup</span><span class="p">()</span> <span class="p">{</span>
         <span class="n">strcpy</span><span class="p">(</span><span class="n">SPI_DRIVER_NAME</span><span class="p">,</span> <span class="s">"/dev/spidev1.0"</span><span class="p">);</span>

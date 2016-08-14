@@ -67,6 +67,7 @@
 <p><strong>Example</strong></p>
 
 <figure class="highlight"><pre><code class="language-c" data-lang="c"><span class="cp">#include &lt;Arduino.h&gt;
+#include &lt;Wire.h&gt;
 </span>
 <span class="kt">void</span> <span class="nf">setup</span><span class="p">()</span> <span class="p">{</span>
 	<span class="n">Wire</span><span class="p">.</span><span class="n">begin</span><span class="p">(</span><span class="s">"/dev/i2c-0"</span><span class="p">);</span>
@@ -99,6 +100,7 @@
 </ul>
 
 <figure class="highlight"><pre><code class="language-c" data-lang="c"><span class="cp">#include &lt;Arduino.h&gt;
+#include &lt;Wire.h&gt;
 </span>
 <span class="kt">void</span> <span class="nf">setup</span><span class="p">()</span> <span class="p">{</span>
         <span class="n">strcpy</span><span class="p">(</span><span class="n">I2C_DRIVER_NAME</span><span class="p">,</span> <span class="s">"/dev/i2c-4"</span><span class="p">);</span>
