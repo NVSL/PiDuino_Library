@@ -50,15 +50,15 @@
     <article>
           <h3 id="reference">Reference</h3>
 
-<p><strong>PiDuino Library (libpiduino)</strong> aims to support the core official Arduino reference published in the <a href="https://www.arduino.cc/en/Reference/Libraries">Arduino official website</a> as of April 2016. Note that the Arduino API has many legacy functions that although keep no longer used, the ported libraries and functions are only the ones published on the official website.</p>
+<p><strong>PiDuino Library (libpiduino)</strong> aims to support the <strong>core</strong> official Arduino reference published in the <a href="https://www.arduino.cc/en/Reference/Libraries">Arduino official website</a> as of April 2016 plus the Wire and SPI libraries. Note that the Arduino API has many legacy functions that although keep no longer used, the ported functions and libraries are only the ones published on the official website.</p>
 
-<p><strong>libpiduino 1.0.0</strong> has 99 functions implemented out of 111 functions, this means that about <strong>89%</strong> of the official Arduino functions are implemented. Also 10 (EXTRA) functions which give more functionality to the library were included.</p>
+<p><strong>libpiduino 1.0.0</strong> has 99 functions implemented out of 111 functions, this means that about <strong>89%</strong> of the core official Arduino functions plus the I2C and SPI libraries were implemented. Also 11 (EXTRA) functions which give more functionality to the library were included. Note that only hardware PWM is included in this release and software PWM will be included in the next one.</p>
 
 <hr />
 
 <blockquote>
   <p><strong>(*)</strong> - Functions that have changes compared the official Arduino reference.<br />
-<strong>(#)</strong> - Functions that require sudo/root to run them.<br />
+<strong>(#)</strong> - Functions that require sudo to run them.<br />
 <strong>(EXTRA)</strong> - Extra functions not in the official Arduino reference.</p>
 </blockquote>
 
@@ -70,7 +70,7 @@
   <thead>
     <tr>
       <th>Function</th>
-      <th>Implemented (YES/NO-Comment/In Progress)</th>
+      <th>Implemented <br /> (YES/NO-Comment/In Progress)</th>
     </tr>
   </thead>
   <tbody>
@@ -95,7 +95,7 @@
   <thead>
     <tr>
       <th>Function</th>
-      <th>Implemented (YES/NO-Comment/In Progress)</th>
+      <th>Implemented <br /> (YES/NO-Comment/In Progress)</th>
     </tr>
   </thead>
   <tbody>
@@ -136,20 +136,24 @@
   <thead>
     <tr>
       <th>Function</th>
-      <th>Implemented (YES/NO-Comment/In Progress)</th>
+      <th>Implemented <br /> (YES/NO-Comment/In Progress)</th>
     </tr>
   </thead>
   <tbody>
     <tr>
-      <td><strong>(#)</strong> tone(pin, frequency)</td>
+      <td><strong>(#)</strong> <a href="/PiDuino_Library/function/2000/02/02/tone.html">tone(pin, frequency)</a></td>
       <td>YES</td>
     </tr>
     <tr>
-      <td><strong>(#)</strong> tone(pin, frequency, duration)</td>
+      <td><strong>(#)</strong> <a href="/PiDuino_Library/function/2000/02/02/tone-duration.html">tone(pin, frequency, duration)</a></td>
       <td>YES</td>
     </tr>
     <tr>
-      <td><strong>(#)</strong> noTone(pin)</td>
+      <td><strong>(EXTRA, #)</strong> <a href="/PiDuino_Library/function/2000/02/02/tone-duration-block.html">tone(pin, frequency, duration, block)</a></td>
+      <td>YES</td>
+    </tr>
+    <tr>
+      <td><strong>(#)</strong> <a href="/PiDuino_Library/function/2000/02/02/noTone.html">noTone(pin) </a></td>
       <td>YES</td>
     </tr>
     <tr>
@@ -157,15 +161,15 @@
       <td>YES</td>
     </tr>
     <tr>
-      <td>byte incoming = shiftIn(dataPin, clockPin, bitOrder)</td>
+      <td>shiftIn(dataPin, clockPin, bitOrder)</td>
       <td>YES</td>
     </tr>
     <tr>
-      <td>pulseIn(pin, value)</td>
+      <td><a href="/PiDuino_Library/function/2000/02/02/pulseIn.html">pulseIn(pin, value)</a></td>
       <td>YES</td>
     </tr>
     <tr>
-      <td>pulseIn(pin, value, timeout)</td>
+      <td><a href="/PiDuino_Library/function/2000/02/02/pulseIn-duration.html">pulseIn(pin, value, timeout)</a></td>
       <td>YES</td>
     </tr>
   </tbody>
@@ -177,25 +181,325 @@
   <thead>
     <tr>
       <th>Function</th>
-      <th>Implemented (YES/NO-Comment/In Progress)</th>
+      <th>Implemented <br /> (YES/NO-Comment/In Progress)</th>
     </tr>
   </thead>
   <tbody>
     <tr>
-      <td>time = millis()</td>
+      <td>time = <a href="/PiDuino_Library/function/2000/02/02/millis.html">millis()</a></td>
       <td>YES</td>
     </tr>
     <tr>
-      <td>time = micros()</td>
+      <td>time = <a href="/PiDuino_Library/function/2000/02/02/micros.html">micros()</a></td>
       <td>YES</td>
     </tr>
     <tr>
-      <td>delay(ms)</td>
+      <td><a href="/PiDuino_Library/function/2000/02/02/delay.html">delay(ms)</a></td>
       <td>YES</td>
     </tr>
     <tr>
-      <td>delayMicroseconds(us)</td>
+      <td><a href="/PiDuino_Library/function/2000/02/02/delayMicroseconds.html">delayMicroseconds(us)</a></td>
       <td>YES</td>
+    </tr>
+  </tbody>
+</table>
+
+<h4 id="external-interrupts">- External Interrupts</h4>
+
+<table>
+  <thead>
+    <tr>
+      <th>Function</th>
+      <th>Implemented <br /> (YES/NO-Comment/In Progress)</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td>attachInterrupt(digitalPinToInterrupt(pin), ISR, mode)</td>
+      <td>YES</td>
+    </tr>
+    <tr>
+      <td>detachInterrupt(interrupt)</td>
+      <td>YES</td>
+    </tr>
+    <tr>
+      <td>detachInterrupt(digitalPinToInterrupt(pin))</td>
+      <td>YES</td>
+    </tr>
+  </tbody>
+</table>
+
+<h4 id="serial">- Serial</h4>
+
+<table>
+  <thead>
+    <tr>
+      <th>Function</th>
+      <th>Implemented <br /> (YES/NO-Comment/In Progress)</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td>if (Serial)</td>
+      <td>YES</td>
+    </tr>
+    <tr>
+      <td>Serial.available()</td>
+      <td>YES</td>
+    </tr>
+    <tr>
+      <td>Serial.availableForWrite()</td>
+      <td>YES</td>
+    </tr>
+    <tr>
+      <td><a href="/PiDuino_Library/function/2000/02/02/Serial-begin.html">Serial.begin(speed) </a></td>
+      <td>YES</td>
+    </tr>
+    <tr>
+      <td><a href="/PiDuino_Library/function/2000/02/02/Serial-begin-config.html">Serial.begin(speed, config) </a></td>
+      <td>YES</td>
+    </tr>
+    <tr>
+      <td><strong>(EXTRA)</strong> <a href="/PiDuino_Library/function/2000/02/02/Serial-Extra-begin.html">Serial.begin(driverName, speed)</a></td>
+      <td>YES</td>
+    </tr>
+    <tr>
+      <td><strong>(EXTRA)</strong> <a href="/PiDuino_Library/function/2000/02/02/Serial-Extra-begin-config.html">Serial.begin(driverName, speed, config)</a></td>
+      <td>YES</td>
+    </tr>
+    <tr>
+      <td>Serial.end()</td>
+      <td>YES</td>
+    </tr>
+    <tr>
+      <td>Serial.find(target)</td>
+      <td>YES</td>
+    </tr>
+    <tr>
+      <td>Serial.findUntil(target, terminal)</td>
+      <td>YES</td>
+    </tr>
+    <tr>
+      <td>Serial.flush()</td>
+      <td>YES</td>
+    </tr>
+    <tr>
+      <td>Serial.parseFloat()</td>
+      <td>YES</td>
+    </tr>
+    <tr>
+      <td>Serial.parseInt()</td>
+      <td>YES</td>
+    </tr>
+    <tr>
+      <td>Serial.parseInt(char skipChar)</td>
+      <td>YES</td>
+    </tr>
+    <tr>
+      <td>Serial.peek()</td>
+      <td>YES</td>
+    </tr>
+    <tr>
+      <td>Serial.print(val)</td>
+      <td>YES</td>
+    </tr>
+    <tr>
+      <td>Serial.print(val, format)</td>
+      <td>YES</td>
+    </tr>
+    <tr>
+      <td>Serial.println(val)</td>
+      <td>YES</td>
+    </tr>
+    <tr>
+      <td>Serial.println(val, format)</td>
+      <td>YES</td>
+    </tr>
+    <tr>
+      <td><strong>(EXTRA)</strong> <a href="/PiDuino_Library/function/2000/02/02/Serial-Extra-printf.html">Serial.printf(format, …) </a></td>
+      <td>YES</td>
+    </tr>
+    <tr>
+      <td>Serial.read()</td>
+      <td>YES</td>
+    </tr>
+    <tr>
+      <td>Serial.readBytes(buffer, length)</td>
+      <td>YES</td>
+    </tr>
+    <tr>
+      <td>Serial.readBytesUntil(character, buffer, length)</td>
+      <td>YES</td>
+    </tr>
+    <tr>
+      <td>Serial.readString()</td>
+      <td>YES</td>
+    </tr>
+    <tr>
+      <td>Serial.readStringUntil(terminator)</td>
+      <td>YES</td>
+    </tr>
+    <tr>
+      <td><strong>(EXRTA)</strong> <a href="/PiDuino_Library/function/2000/02/02/Serial-Extra-readStringCommand.html">Serial.readStringCommand(character, buffer, length)</a></td>
+      <td>YES</td>
+    </tr>
+    <tr>
+      <td>Serial.setTimeout(time)</td>
+      <td>YES</td>
+    </tr>
+    <tr>
+      <td>Serial.write(val)</td>
+      <td>YES</td>
+    </tr>
+    <tr>
+      <td>Serial.write(str)</td>
+      <td>YES</td>
+    </tr>
+    <tr>
+      <td>Serial.write(buf, len)</td>
+      <td>YES</td>
+    </tr>
+    <tr>
+      <td>serialEvent()</td>
+      <td>In Progress</td>
+    </tr>
+  </tbody>
+</table>
+
+<h4 id="wire-i2c">- Wire (I2C)</h4>
+
+<table>
+  <thead>
+    <tr>
+      <th>Function</th>
+      <th>Implemented <br /> (YES/NO-Comment/In Progress)</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td><a href="/PiDuino_Library/function/2000/02/02/Wire-begin.html">Wire.begin()</a> - I2C Master</td>
+      <td>YES</td>
+    </tr>
+    <tr>
+      <td><strong>(EXTRA)</strong> <a href="/PiDuino_Library/function/2000/02/02/Wire-Extra-begin.html">Wire.begin(driverName)</a> - I2C Master</td>
+      <td>YES</td>
+    </tr>
+    <tr>
+      <td>Wire.begin(address) - I2C Slave</td>
+      <td>NO/In Progress - Linux I2C Slave driver <br /> was added recently, still verifying</td>
+    </tr>
+    <tr>
+      <td>Wire.requestFrom(address, quantity)</td>
+      <td>YES</td>
+    </tr>
+    <tr>
+      <td>Wire.requestFrom(address, quantity, stop)</td>
+      <td>NO - There is no way to send <br /> an I2C stop msg to the driver</td>
+    </tr>
+    <tr>
+      <td>Wire.beginTransmission(address)</td>
+      <td>YES</td>
+    </tr>
+    <tr>
+      <td>Wire.endTransmission()</td>
+      <td>YES</td>
+    </tr>
+    <tr>
+      <td>Wire.endTransmission(stop)</td>
+      <td>NO - There is no way to send <br /> an I2C stop msg to the driver</td>
+    </tr>
+    <tr>
+      <td>Wire.write(value)</td>
+      <td>YES</td>
+    </tr>
+    <tr>
+      <td>Wire.write(string)</td>
+      <td>YES</td>
+    </tr>
+    <tr>
+      <td>Wire.write(data, length)</td>
+      <td>YES</td>
+    </tr>
+    <tr>
+      <td>Wire.available()</td>
+      <td>YES</td>
+    </tr>
+    <tr>
+      <td>Wire.read()</td>
+      <td>YES</td>
+    </tr>
+    <tr>
+      <td>Wire.onReceive(handler)</td>
+      <td>NO/In Progress - Linux I2C Slave driver <br /> was added recently, still verifying</td>
+    </tr>
+    <tr>
+      <td>Wire.onRequest(handler)</td>
+      <td>NO/In Progress - Linux I2C Slave driver <br /> was added recently, still verifying</td>
+    </tr>
+  </tbody>
+</table>
+
+<h4 id="spi">- SPI</h4>
+
+<table>
+  <thead>
+    <tr>
+      <th>Function</th>
+      <th>Implemented <br /> (YES/NO-Comment/In Progress)</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td>SPISettings</td>
+      <td>YES</td>
+    </tr>
+    <tr>
+      <td><a href="/PiDuino_Library/function/2000/02/02/SPI-begin.html">SPI.begin()</a> - SPI Master</td>
+      <td>YES</td>
+    </tr>
+    <tr>
+      <td><strong>(EXTRA)</strong> <a href="/PiDuino_Library/function/2000/02/02/SPI-Extra-begin.html">SPI.begin(driverName)</a> - SPI Master</td>
+      <td>YES</td>
+    </tr>
+    <tr>
+      <td>SPI.end()</td>
+      <td>YES</td>
+    </tr>
+    <tr>
+      <td>SPI.beginTransaction(mySettings)</td>
+      <td>YES</td>
+    </tr>
+    <tr>
+      <td>SPI.endTransaction()</td>
+      <td>YES</td>
+    </tr>
+    <tr>
+      <td>SPI.setBitOrder(order)</td>
+      <td>YES</td>
+    </tr>
+    <tr>
+      <td>SPI.setClockDivider(divider)</td>
+      <td>YES</td>
+    </tr>
+    <tr>
+      <td>SPI.setDataMode(mode)</td>
+      <td>YES</td>
+    </tr>
+    <tr>
+      <td>receivedVal = SPI.transfer(val)</td>
+      <td>YES</td>
+    </tr>
+    <tr>
+      <td>receivedVal16 = SPI.transfer16(val16)</td>
+      <td>NO - Is almost depreciated and could <br /> be fixed better adding a bitsPerWord in <br /> settings that includes 16 bits and 32 bits</td>
+    </tr>
+    <tr>
+      <td>SPI.transfer(buffer, size)</td>
+      <td>YES</td>
+    </tr>
+    <tr>
+      <td>SPI.usingInterrupt(interruptNumber)</td>
+      <td>In Progress</td>
     </tr>
   </tbody>
 </table>
@@ -206,7 +510,7 @@
   <thead>
     <tr>
       <th>Function</th>
-      <th>Implemented (YES/NO-Comment/In Progress)</th>
+      <th>Implemented <br /> (YES/NO-Comment/In Progress)</th>
     </tr>
   </thead>
   <tbody>
@@ -259,7 +563,7 @@
   <thead>
     <tr>
       <th>Function</th>
-      <th>Implemented (YES/NO-Comment/In Progress)</th>
+      <th>Implemented <br /> (YES/NO-Comment/In Progress)</th>
     </tr>
   </thead>
   <tbody>
@@ -284,7 +588,7 @@
   <thead>
     <tr>
       <th>Function</th>
-      <th>Implemented (YES/NO-Comment/In Progress)</th>
+      <th>Implemented <br /> (YES/NO-Comment/In Progress)</th>
     </tr>
   </thead>
   <tbody>
@@ -349,7 +653,7 @@
   <thead>
     <tr>
       <th>Function</th>
-      <th>Implemented (YES/NO-Comment/In Progress)</th>
+      <th>Implemented <br /> (YES/NO-Comment/In Progress)</th>
     </tr>
   </thead>
   <tbody>
@@ -374,7 +678,7 @@
   <thead>
     <tr>
       <th>Function</th>
-      <th>Implemented (YES/NO-Comment/In Progress)</th>
+      <th>Implemented <br /> (YES/NO-Comment/In Progress)</th>
     </tr>
   </thead>
   <tbody>
@@ -409,38 +713,13 @@
   </tbody>
 </table>
 
-<h4 id="external-interrupts">- External Interrupts</h4>
-
-<table>
-  <thead>
-    <tr>
-      <th>Function</th>
-      <th>Implemented (YES/NO-Comment/In Progress)</th>
-    </tr>
-  </thead>
-  <tbody>
-    <tr>
-      <td>attachInterrupt(digitalPinToInterrupt(pin), ISR, mode)</td>
-      <td>YES</td>
-    </tr>
-    <tr>
-      <td>detachInterrupt(interrupt)</td>
-      <td>YES</td>
-    </tr>
-    <tr>
-      <td>detachInterrupt(digitalPinToInterrupt(pin))</td>
-      <td>YES</td>
-    </tr>
-  </tbody>
-</table>
-
 <h4 id="interrupts">- Interrupts</h4>
 
 <table>
   <thead>
     <tr>
       <th>Function</th>
-      <th>Implemented (YES/NO-Comment/In Progress)</th>
+      <th>Implemented <br /> (YES/NO-Comment/In Progress)</th>
     </tr>
   </thead>
   <tbody>
@@ -451,281 +730,6 @@
     <tr>
       <td>noInterrupts()</td>
       <td>NO</td>
-    </tr>
-  </tbody>
-</table>
-
-<h4 id="serial">- Serial</h4>
-
-<table>
-  <thead>
-    <tr>
-      <th>Function</th>
-      <th>Implemented (YES/NO-Comment/In Progress)</th>
-    </tr>
-  </thead>
-  <tbody>
-    <tr>
-      <td>if (Serial)</td>
-      <td>YES</td>
-    </tr>
-    <tr>
-      <td>Serial.available()</td>
-      <td>YES</td>
-    </tr>
-    <tr>
-      <td>Serial.availableForWrite()</td>
-      <td>YES</td>
-    </tr>
-    <tr>
-      <td>Serial.begin(speed)</td>
-      <td>YES</td>
-    </tr>
-    <tr>
-      <td>Serial.begin(speed, config)</td>
-      <td>YES</td>
-    </tr>
-    <tr>
-      <td><strong>(EXTRA)</strong> Serial.begin(driverName, speed)</td>
-      <td>YES</td>
-    </tr>
-    <tr>
-      <td><strong>(EXTRA)</strong> Serial.begin(driverName, speed, config)</td>
-      <td>YES</td>
-    </tr>
-    <tr>
-      <td>Serial.end()</td>
-      <td>YES</td>
-    </tr>
-    <tr>
-      <td>Serial.find(target)</td>
-      <td>YES</td>
-    </tr>
-    <tr>
-      <td>Serial.findUntil(target, terminal)</td>
-      <td>YES</td>
-    </tr>
-    <tr>
-      <td>Serial.flush()</td>
-      <td>YES</td>
-    </tr>
-    <tr>
-      <td>Serial.parseFloat()</td>
-      <td>YES</td>
-    </tr>
-    <tr>
-      <td>Serial.parseInt()</td>
-      <td>YES</td>
-    </tr>
-    <tr>
-      <td>Serial.parseInt(char skipChar)</td>
-      <td>YES</td>
-    </tr>
-    <tr>
-      <td>Serial.peek()</td>
-      <td>YES</td>
-    </tr>
-    <tr>
-      <td>Serial.print(val)</td>
-      <td>YES</td>
-    </tr>
-    <tr>
-      <td>Serial.print(val, format)</td>
-      <td>YES</td>
-    </tr>
-    <tr>
-      <td>Serial.println(val)</td>
-      <td>YES</td>
-    </tr>
-    <tr>
-      <td>Serial.println(val, format)</td>
-      <td>YES</td>
-    </tr>
-    <tr>
-      <td><strong>(EXTRA)</strong> Serial.printf(format, …)</td>
-      <td>YES</td>
-    </tr>
-    <tr>
-      <td>Serial.read()</td>
-      <td>YES</td>
-    </tr>
-    <tr>
-      <td>Serial.readBytes(buffer, length)</td>
-      <td>YES</td>
-    </tr>
-    <tr>
-      <td>Serial.readBytesUntil(character, buffer, length)</td>
-      <td>YES</td>
-    </tr>
-    <tr>
-      <td>Serial.readString()</td>
-      <td>YES</td>
-    </tr>
-    <tr>
-      <td>Serial.readStringUntil(terminator)</td>
-      <td>YES</td>
-    </tr>
-    <tr>
-      <td><strong>(EXRTA)</strong> Serial.readStringCommand(character, buffer, length)</td>
-      <td>YES</td>
-    </tr>
-    <tr>
-      <td>Serial.setTimeout(time)</td>
-      <td>YES</td>
-    </tr>
-    <tr>
-      <td>Serial.write(val)</td>
-      <td>YES</td>
-    </tr>
-    <tr>
-      <td>Serial.write(str)</td>
-      <td>YES</td>
-    </tr>
-    <tr>
-      <td>Serial.write(buf, len)</td>
-      <td>YES</td>
-    </tr>
-    <tr>
-      <td>serialEvent()</td>
-      <td>In Progress</td>
-    </tr>
-  </tbody>
-</table>
-
-<h4 id="wire-i2c">- Wire (I2C)</h4>
-
-<table>
-  <thead>
-    <tr>
-      <th>Function</th>
-      <th>Implemented (YES/NO-Comment/In Progress)</th>
-    </tr>
-  </thead>
-  <tbody>
-    <tr>
-      <td>Wire.begin()</td>
-      <td>YES</td>
-    </tr>
-    <tr>
-      <td><strong>(EXTRA)</strong> Wire.begin(driverName)</td>
-      <td>YES</td>
-    </tr>
-    <tr>
-      <td>Wire.begin(address)</td>
-      <td>NO/In Progress - Linux I2C Slave driver was added recently, still verifying</td>
-    </tr>
-    <tr>
-      <td>Wire.requestFrom(address, quantity)</td>
-      <td>YES</td>
-    </tr>
-    <tr>
-      <td>Wire.requestFrom(address, quantity, stop)</td>
-      <td>NO - There is no way to send an I2C stop msg to the driver</td>
-    </tr>
-    <tr>
-      <td>Wire.beginTransmission(address)</td>
-      <td>YES</td>
-    </tr>
-    <tr>
-      <td>Wire.endTransmission()</td>
-      <td>YES</td>
-    </tr>
-    <tr>
-      <td>Wire.endTransmission(stop)</td>
-      <td>NO - There is no way to send an I2C stop msg to the driver</td>
-    </tr>
-    <tr>
-      <td>Wire.write(value)</td>
-      <td>YES</td>
-    </tr>
-    <tr>
-      <td>Wire.write(string)</td>
-      <td>YES</td>
-    </tr>
-    <tr>
-      <td>Wire.write(data, length)</td>
-      <td>YES</td>
-    </tr>
-    <tr>
-      <td>Wire.available()</td>
-      <td>YES</td>
-    </tr>
-    <tr>
-      <td>Wire.read()</td>
-      <td>YES</td>
-    </tr>
-    <tr>
-      <td>Wire.onReceive(handler)</td>
-      <td>NO/In Progress - Linux I2C Slave driver was added recently, still verifying</td>
-    </tr>
-    <tr>
-      <td>Wire.onRequest(handler)</td>
-      <td>NO/In Progress - Linux I2C Slave driver was added recently, still verifying</td>
-    </tr>
-  </tbody>
-</table>
-
-<h4 id="spi">- SPI</h4>
-
-<table>
-  <thead>
-    <tr>
-      <th>Function</th>
-      <th>Implemented (YES/NO-Comment/In Progress)</th>
-    </tr>
-  </thead>
-  <tbody>
-    <tr>
-      <td>SPISettings</td>
-      <td>YES</td>
-    </tr>
-    <tr>
-      <td>SPI.begin()</td>
-      <td>YES</td>
-    </tr>
-    <tr>
-      <td><strong>(EXTRA)</strong> SPI.begin(driverName)</td>
-      <td>YES</td>
-    </tr>
-    <tr>
-      <td>SPI.end()</td>
-      <td>YES</td>
-    </tr>
-    <tr>
-      <td>SPI.beginTransaction(mySettings)</td>
-      <td>YES</td>
-    </tr>
-    <tr>
-      <td>SPI.endTransaction()</td>
-      <td>YES</td>
-    </tr>
-    <tr>
-      <td>SPI.setBitOrder(order)</td>
-      <td>YES</td>
-    </tr>
-    <tr>
-      <td>SPI.setClockDivider(divider)</td>
-      <td>YES - Sets clock or if you use dividers (e.g SPI_CLOCK_DIV4) then sets clock at the divider speed for a 16Mhz Arduino microcontroller</td>
-    </tr>
-    <tr>
-      <td>SPI.setDataMode(mode)</td>
-      <td>YES</td>
-    </tr>
-    <tr>
-      <td>receivedVal = SPI.transfer(val)</td>
-      <td>YES</td>
-    </tr>
-    <tr>
-      <td>receivedVal16 = SPI.transfer16(val16)</td>
-      <td>NO - Is almost depreceated and could be fixed better adding a bitsPerWord in settings that includes 16 bits and 32 bits</td>
-    </tr>
-    <tr>
-      <td>SPI.transfer(buffer, size)</td>
-      <td>YES</td>
-    </tr>
-    <tr>
-      <td>SPI.usingInterrupt(interruptNumber)</td>
-      <td>In Progress</td>
     </tr>
   </tbody>
 </table>

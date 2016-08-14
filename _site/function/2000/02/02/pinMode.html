@@ -64,8 +64,8 @@
 <em>INTPUT_PULLUP</em> : Sets pin as input with pullup resistor.<br />
 <em>INTPUT_PULLDOWN</em> : Sets pin as input with pulldown resistor.<br />
 <em>OUTPUT</em> : Sets pin as output.<br />
-<em>PWM_OUTPUT</em> : Sets pin as hardware PWM output. (Only for a few pins, see Notes below)<br />
-<em>SOFTPWM_OUTPUT</em> : Not available yet, still In progress.</p>
+<em>SOFTPWM_OUTPUT</em> : Same effect as <em>OUTPUT</em>. (Not available yet, still In progress).<br />
+<em>PWM_OUTPUT</em> : Sets pin as hardware PWM output. (Only for a few pins and requires sudo, see Notes below)</p>
 </blockquote>
 
 <p><strong>Returns</strong></p>
@@ -96,59 +96,8 @@
 <p><strong>Notes</strong></p>
 
 <ul>
-  <li>These are the available pins for hardware PWM. Only a few are exposed to the RPi connector/header.</li>
-</ul>
-
-<table>
-  <thead>
-    <tr>
-      <th style="text-align: center">GPIO PIN</th>
-      <th style="text-align: center">Available in RPi (40-pins) connector</th>
-    </tr>
-  </thead>
-  <tbody>
-    <tr>
-      <td style="text-align: center">12</td>
-      <td style="text-align: center">YES</td>
-    </tr>
-    <tr>
-      <td style="text-align: center">13</td>
-      <td style="text-align: center">YES</td>
-    </tr>
-    <tr>
-      <td style="text-align: center">18</td>
-      <td style="text-align: center">YES</td>
-    </tr>
-    <tr>
-      <td style="text-align: center">19</td>
-      <td style="text-align: center">YES</td>
-    </tr>
-    <tr>
-      <td style="text-align: center">40</td>
-      <td style="text-align: center">NO</td>
-    </tr>
-    <tr>
-      <td style="text-align: center">41</td>
-      <td style="text-align: center">NO</td>
-    </tr>
-    <tr>
-      <td style="text-align: center">45</td>
-      <td style="text-align: center">NO</td>
-    </tr>
-    <tr>
-      <td style="text-align: center">52</td>
-      <td style="text-align: center">NO</td>
-    </tr>
-    <tr>
-      <td style="text-align: center">53</td>
-      <td style="text-align: center">NO</td>
-    </tr>
-  </tbody>
-</table>
-
-<ul>
-  <li><strong>pinMode</strong> function uses “/dev/gpiomem” as the default driver. If you want to change the driver to “/dev/mem”
-for example (which requires root) you can modify the <em>GPIO_DRIVER_NAME</em> constant as shown in the example.</li>
+  <li><strong>pinMode</strong> function uses “/dev/gpiomem” as the default driver for GPIO and “/dev/mem” as the default driver for hardware PWM. If you want to change the GPIO driver to “/dev/mem”,
+for example, (which requires sudo) you can modify the <em>GPIO_DRIVER_NAME</em> constant as shown in the example. You can also change the default hardware PWM driver constant <em>PWM_DRIVER_NAME</em> the same way.</li>
 </ul>
 
 <p><strong>Example</strong></p>
@@ -168,6 +117,72 @@ for example (which requires root) you can modify the <em>GPIO_DRIVER_NAME</em> c
         <span class="n">digitalWrite</span><span class="p">(</span><span class="n">ledPin</span><span class="p">,</span> <span class="n">LOW</span><span class="p">);</span>
         <span class="n">delay</span><span class="p">(</span><span class="mi">1000</span><span class="p">);</span>
 <span class="p">}</span></code></pre></figure>
+
+<ul>
+  <li>
+    <p><em>PWM_OUTPUT</em> mode sets the pins as hardware PWM pins which uses the driver “/dev/mem” and which require root privilege (sudo).</p>
+  </li>
+  <li>
+    <p>These are the available pins for hardware PWM that is set when the mode <em>PWM_OUTPUT</em> is set. Only a few hardware PWM pins are exposed to the RPi connector/header and you can only use two PWM channels or pins maximum.</p>
+  </li>
+</ul>
+
+<table>
+  <thead>
+    <tr>
+      <th style="text-align: center">GPIO PIN</th>
+      <th style="text-align: center">Available in RPi (40-pins) connector</th>
+      <th style="text-align: center">PWM channel</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td style="text-align: center">12</td>
+      <td style="text-align: center">YES</td>
+      <td style="text-align: center">0</td>
+    </tr>
+    <tr>
+      <td style="text-align: center">13</td>
+      <td style="text-align: center">YES</td>
+      <td style="text-align: center">1</td>
+    </tr>
+    <tr>
+      <td style="text-align: center">18</td>
+      <td style="text-align: center">YES</td>
+      <td style="text-align: center">0</td>
+    </tr>
+    <tr>
+      <td style="text-align: center">19</td>
+      <td style="text-align: center">YES</td>
+      <td style="text-align: center">1</td>
+    </tr>
+    <tr>
+      <td style="text-align: center">40</td>
+      <td style="text-align: center">NO</td>
+      <td style="text-align: center">0</td>
+    </tr>
+    <tr>
+      <td style="text-align: center">41</td>
+      <td style="text-align: center">NO</td>
+      <td style="text-align: center">1</td>
+    </tr>
+    <tr>
+      <td style="text-align: center">45</td>
+      <td style="text-align: center">NO</td>
+      <td style="text-align: center">1</td>
+    </tr>
+    <tr>
+      <td style="text-align: center">52</td>
+      <td style="text-align: center">NO</td>
+      <td style="text-align: center">0</td>
+    </tr>
+    <tr>
+      <td style="text-align: center">53</td>
+      <td style="text-align: center">NO</td>
+      <td style="text-align: center">1</td>
+    </tr>
+  </tbody>
+</table>
 
 
       

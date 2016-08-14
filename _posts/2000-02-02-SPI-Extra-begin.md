@@ -1,0 +1,132 @@
+---
+title:  "SPI.begin"
+author: "Jorge Garza"
+categories: function
+sdate: "Aug 5, 2016"
+---
+
+### SPI.begin(driverName)
+
+Initialize SPI as Master and opens the specified device driver name port.
+
+**Parameters**
+
+> **driverName** - SPI device driver name port. (e.g. "/dev/spidev0.0")
+
+**Returns**
+
+None
+
+____________________
+
+**Example**
+
+{% highlight c %}
+#include <Arduino.h>
+
+// Sends "Hello World!" byte by byte through SPI
+
+SPISettings settingsA(2000000, MSBFIRST, SPI_MODE1); 
+
+void setup() {
+	SPI.begin("/dev/spidev0.0");
+}
+
+void loop() {
+	char c;
+	char ret;
+
+	SPI.beginTransaction(settingsA);
+	for (const char * p = "Hello World!\n" ; c = *p; p++) {
+		ret = SPI.transfer(c);
+		printf("%c", ret);
+	}
+	printf("\n");
+	SPI.endTransaction();
+
+	delay(1000);
+}
+{% endhighlight %}
+
+
+**Example 2**
+
+{% highlight c %}
+#include <Arduino.h>
+
+// Sends "Hello World!" byte by byte through SPI
+
+void setup() {
+	SPI.begin("/dev/spidev0.0");
+	SPI.setClockDivider(2000000);
+	SPI.setBitOrder(MSBFIRST);
+	SPI.setDataMode(SPI_MODE1);
+}
+
+void loop() {
+	char c;
+	char ret;
+
+	SPI.beginTransaction(settingsA);
+	for (const char * p = "Hello World!\n" ; c = *p; p++) {
+		ret = SPI.transfer(c);
+		printf("%c", ret);
+	}
+	printf("\n");
+	SPI.endTransaction();
+
+	delay(1000);
+}
+{% endhighlight %}
+
+
+____________________
+
+**Notes**
+
+- You can use the separate functions (SPI.setClockDivider(), SPI.setBitOrder(),  SPI.setDataMode()) to configure the SPI or use *SPISettings* which is the same. 
+
+- Available clock speeds.  
+  You can put directly the clock speed or use the constants below which are the clock speeds for a 16 MHz Arduino microcontroller. Default is *SPI_CLOCK_DIV4* or 4000000 (4 MHz). 
+  
+| SPI clock constant | Clock speed in Hz |
+|:------:|:-----------:|
+|   SPI_CLOCK_DIV2   |     8000000 |
+|   SPI_CLOCK_DIV4   |     4000000 |
+|   SPI_CLOCK_DIV8   |     2000000 |
+|   SPI_CLOCK_DIV16  |     1000000 |
+|   SPI_CLOCK_DIV32  |     500000  |
+|   SPI_CLOCK_DIV64  |     250000  |
+|   SPI_CLOCK_DIV128 |     125000  |
+
+- Available bit Orders *LSBFIRST* (Least Significant Bite First) and *MSBFIRST* (Most Significant Bite First). Default is *MSBFIRST*.
+
+- Available SPI modes below. Default is *SPI_MODE0*.
+
+| SPI modes |
+|:------:|
+|   SPI_MODE0   |
+|   SPI_MODE1   |
+|   SPI_MODE2   |
+|   SPI_MODE3   |
+
+- The Chip Select (CS) Pin is enabled by default as Active_Low but in the next library release it will be disabled and EXTRA functions will be added to enable or configure it. 
+
+- SPI default device driver is "" (empty) meaning that it will search for any existent SPI device driver. if you want to change the default device driver change the *SPI_DRIVER_NAME* constant as the example below. 
+
+{% highlight c %}
+#include <Arduino.h>
+
+void setup() {
+        strcpy(SPI_DRIVER_NAME, "/dev/spidev1.0");
+        SPI.begin(); // Will try open device driver "/dev/spidev1.0"
+}
+
+void loop() {
+        ...
+}
+{% endhighlight %}
+
+
+
+

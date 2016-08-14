@@ -1,0 +1,238 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <!-- Niklas Buschmann 2015 MIT <http://github.com/niklasbuschmann> -->
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta charset="utf-8">
+    <meta name="author" content="Jorge Garza">
+    <meta name="description" content="Arduino library for Raspberry Pi">
+    <title> SPI.begin › PiDuino Library</title>
+    <link rel="canonical" href="https://github.com/NVSL/PiDuino_Library/PiDuino_Library/function/2000/02/02/SPI-begin.html">
+    <link href="/PiDuino_Library/main.css" rel="stylesheet" type="text/css">
+    <link href='//fonts.googleapis.com/css?family=Source+Sans+Pro:200,300,400,600,700,200italic,300italic,400italic,600italic,700italic' rel='stylesheet' type='text/css'>
+    <link href='//fonts.googleapis.com/css?family=Gentium+Basic:400,700,400italic,700italic' rel='stylesheet' type='text/css'>
+    <link href='//maxcdn.bootstrapcdn.com/font-awesome/4.2.0/css/font-awesome.min.css' rel='stylesheet' type='text/css'>
+    <link type="application/atom+xml" rel="alternate" href="https://github.com/PiDuino_Library/feed.xml" title="PiDuino Library" />
+    
+    
+  </head>
+  <body>
+    <header>
+      <h1><a href="/PiDuino_Library/">PiDuino Library</a></h1>
+      <!--
+      <ul class="title-ul">
+
+        <li class="title-li">
+        <h1><a href="/PiDuino_Library/">PiDuino Library</a></h1>
+        </li>
+
+        <li>
+          
+          <form action="https://www.paypal.com/cgi-bin/webscr" method="post" target="_top">
+          <input type="hidden" name="cmd" value="_s-xclick">
+          <input type="hidden" name="encrypted" value="-----BEGIN PKCS7-----MIIHNwYJKoZIhvcNAQcEoIIHKDCCByQCAQExggEwMIIBLAIBADCBlDCBjjELMAkGA1UEBhMCVVMxCzAJBgNVBAgTAkNBMRYwFAYDVQQHEw1Nb3VudGFpbiBWaWV3MRQwEgYDVQQKEwtQYXlQYWwgSW5jLjETMBEGA1UECxQKbGl2ZV9jZXJ0czERMA8GA1UEAxQIbGl2ZV9hcGkxHDAaBgkqhkiG9w0BCQEWDXJlQHBheXBhbC5jb20CAQAwDQYJKoZIhvcNAQEBBQAEgYB2j9zv08o2I0y2VOK6KbxfEois6D16/YYDfFlUrDcEKOM+0AZjvSXhLGCKgpCK7TOSLdrI3FRCRbIkEyqWUF7B9XjnFMxQY6/Yq5PQghCuBkmT7bEkiryXA6Y+EnNJrRCsi9CXVf/ikFkKGr3TKhicPybQT1g4LJr6QRpJX5dxqzELMAkGBSsOAwIaBQAwgbQGCSqGSIb3DQEHATAUBggqhkiG9w0DBwQIneCFQVg2zFCAgZApg23q2CD6VJBR8UuK3cIvMGJSYM02WsvsURNEaR/jEBuMo24Fh/n2SkIrPt4U3z/TrqR2tGWgfSIBHTcqpj/IEKuhhy6958LtEWBNpO2s9QBH1BX46/NhxYyQrgLz9mNbOUuDamzuTqXuS2VNb8P3dqa/nEnbKs2I8WGlkpZJg5RAX9wmP+CsjnTvWuzbRQ6gggOHMIIDgzCCAuygAwIBAgIBADANBgkqhkiG9w0BAQUFADCBjjELMAkGA1UEBhMCVVMxCzAJBgNVBAgTAkNBMRYwFAYDVQQHEw1Nb3VudGFpbiBWaWV3MRQwEgYDVQQKEwtQYXlQYWwgSW5jLjETMBEGA1UECxQKbGl2ZV9jZXJ0czERMA8GA1UEAxQIbGl2ZV9hcGkxHDAaBgkqhkiG9w0BCQEWDXJlQHBheXBhbC5jb20wHhcNMDQwMjEzMTAxMzE1WhcNMzUwMjEzMTAxMzE1WjCBjjELMAkGA1UEBhMCVVMxCzAJBgNVBAgTAkNBMRYwFAYDVQQHEw1Nb3VudGFpbiBWaWV3MRQwEgYDVQQKEwtQYXlQYWwgSW5jLjETMBEGA1UECxQKbGl2ZV9jZXJ0czERMA8GA1UEAxQIbGl2ZV9hcGkxHDAaBgkqhkiG9w0BCQEWDXJlQHBheXBhbC5jb20wgZ8wDQYJKoZIhvcNAQEBBQADgY0AMIGJAoGBAMFHTt38RMxLXJyO2SmS+Ndl72T7oKJ4u4uw+6awntALWh03PewmIJuzbALScsTS4sZoS1fKciBGoh11gIfHzylvkdNe/hJl66/RGqrj5rFb08sAABNTzDTiqqNpJeBsYs/c2aiGozptX2RlnBktH+SUNpAajW724Nv2Wvhif6sFAgMBAAGjge4wgeswHQYDVR0OBBYEFJaffLvGbxe9WT9S1wob7BDWZJRrMIG7BgNVHSMEgbMwgbCAFJaffLvGbxe9WT9S1wob7BDWZJRroYGUpIGRMIGOMQswCQYDVQQGEwJVUzELMAkGA1UECBMCQ0ExFjAUBgNVBAcTDU1vdW50YWluIFZpZXcxFDASBgNVBAoTC1BheVBhbCBJbmMuMRMwEQYDVQQLFApsaXZlX2NlcnRzMREwDwYDVQQDFAhsaXZlX2FwaTEcMBoGCSqGSIb3DQEJARYNcmVAcGF5cGFsLmNvbYIBADAMBgNVHRMEBTADAQH/MA0GCSqGSIb3DQEBBQUAA4GBAIFfOlaagFrl71+jq6OKidbWFSE+Q4FqROvdgIONth+8kSK//Y/4ihuE4Ymvzn5ceE3S/iBSQQMjyvb+s2TWbQYDwcp129OPIbD9epdr4tJOUNiSojw7BHwYRiPh58S1xGlFgHFXwrEBb3dgNbMUa+u4qectsMAXpVHnD9wIyfmHMYIBmjCCAZYCAQEwgZQwgY4xCzAJBgNVBAYTAlVTMQswCQYDVQQIEwJDQTEWMBQGA1UEBxMNTW91bnRhaW4gVmlldzEUMBIGA1UEChMLUGF5UGFsIEluYy4xEzARBgNVBAsUCmxpdmVfY2VydHMxETAPBgNVBAMUCGxpdmVfYXBpMRwwGgYJKoZIhvcNAQkBFg1yZUBwYXlwYWwuY29tAgEAMAkGBSsOAwIaBQCgXTAYBgkqhkiG9w0BCQMxCwYJKoZIhvcNAQcBMBwGCSqGSIb3DQEJBTEPFw0xNjA4MTEwNzU2MjBaMCMGCSqGSIb3DQEJBDEWBBQAVNAf9PM4rtVNxTc03KmC5S318zANBgkqhkiG9w0BAQEFAASBgIr24khCQvAz/4Rj8Lb0UyDtzAFHv3YcEC5x8Rk/cCNcLzgi3VV9RtjWYIRmje/ZfVTZAmgw0Dryu9cVKkCkKrd1o/Zb0T1vXkdIenUaH0KUX13S5CRD341gEfFZY6mpDyNuo00FaFEtVkFIpLcuH1kic//ywfon7pbGvUs7u/wj-----END PKCS7-----
+          ">
+          <input type="image" src="https://www.paypalobjects.com/en_US/i/btn/btn_donateCC_LG.gif" border="0" name="submit" alt="PayPal - The safer, easier way to pay online!">
+          <img alt="" border="0" src="https://www.paypalobjects.com/es_XC/i/scr/pixel.gif" width="1" height="1">
+          </form>
+        </li>
+
+      </ul>
+      -->
+      <nav>
+        <ul>
+          <li><a href="/PiDuino_Library/">Home</a></li><li><a href="/PiDuino_Library/RPi_Pinout.html">RPi_Pinout</a></li><li><a href="/PiDuino_Library/Reference.html">Reference</a></li>
+        </ul>
+      </nav>
+    </header>
+    
+    
+    <article>
+          <h3 id="spibegin">SPI.begin()</h3>
+
+<p>Initialize SPI as Master.</p>
+
+<p><strong>Parameters</strong></p>
+
+<p>None</p>
+
+<p><strong>Returns</strong></p>
+
+<p>None</p>
+
+<hr />
+
+<p><strong>Example</strong></p>
+
+<figure class="highlight"><pre><code class="language-c" data-lang="c"><span class="cp">#include &lt;Arduino.h&gt;
+</span>
+<span class="c1">// Sends "Hello World!" byte by byte through SPI
+</span>
+<span class="n">SPISettings</span> <span class="n">settingsA</span><span class="p">(</span><span class="mi">2000000</span><span class="p">,</span> <span class="n">MSBFIRST</span><span class="p">,</span> <span class="n">SPI_MODE1</span><span class="p">);</span> 
+
+<span class="kt">void</span> <span class="nf">setup</span><span class="p">()</span> <span class="p">{</span>
+	<span class="n">SPI</span><span class="p">.</span><span class="n">begin</span><span class="p">();</span>
+<span class="p">}</span>
+
+<span class="kt">void</span> <span class="nf">loop</span><span class="p">()</span> <span class="p">{</span>
+	<span class="kt">char</span> <span class="n">c</span><span class="p">;</span>
+	<span class="kt">char</span> <span class="n">ret</span><span class="p">;</span>
+
+	<span class="n">SPI</span><span class="p">.</span><span class="n">beginTransaction</span><span class="p">(</span><span class="n">settingsA</span><span class="p">);</span>
+	<span class="k">for</span> <span class="p">(</span><span class="k">const</span> <span class="kt">char</span> <span class="o">*</span> <span class="n">p</span> <span class="o">=</span> <span class="s">"Hello World!</span><span class="se">\n</span><span class="s">"</span> <span class="p">;</span> <span class="n">c</span> <span class="o">=</span> <span class="o">*</span><span class="n">p</span><span class="p">;</span> <span class="n">p</span><span class="o">++</span><span class="p">)</span> <span class="p">{</span>
+		<span class="n">ret</span> <span class="o">=</span> <span class="n">SPI</span><span class="p">.</span><span class="n">transfer</span><span class="p">(</span><span class="n">c</span><span class="p">);</span>
+		<span class="n">printf</span><span class="p">(</span><span class="s">"%c"</span><span class="p">,</span> <span class="n">ret</span><span class="p">);</span>
+	<span class="p">}</span>
+	<span class="n">printf</span><span class="p">(</span><span class="s">"</span><span class="se">\n</span><span class="s">"</span><span class="p">);</span>
+	<span class="n">SPI</span><span class="p">.</span><span class="n">endTransaction</span><span class="p">();</span>
+
+	<span class="n">delay</span><span class="p">(</span><span class="mi">1000</span><span class="p">);</span>
+<span class="p">}</span></code></pre></figure>
+
+<p><strong>Example 2</strong></p>
+
+<figure class="highlight"><pre><code class="language-c" data-lang="c"><span class="cp">#include &lt;Arduino.h&gt;
+</span>
+<span class="c1">// Sends "Hello World!" byte by byte through SPI
+</span>
+<span class="kt">void</span> <span class="nf">setup</span><span class="p">()</span> <span class="p">{</span>
+	<span class="n">SPI</span><span class="p">.</span><span class="n">begin</span><span class="p">();</span>
+	<span class="n">SPI</span><span class="p">.</span><span class="n">setClockDivider</span><span class="p">(</span><span class="mi">2000000</span><span class="p">);</span>
+	<span class="n">SPI</span><span class="p">.</span><span class="n">setBitOrder</span><span class="p">(</span><span class="n">MSBFIRST</span><span class="p">);</span>
+	<span class="n">SPI</span><span class="p">.</span><span class="n">setDataMode</span><span class="p">(</span><span class="n">SPI_MODE1</span><span class="p">);</span>
+<span class="p">}</span>
+
+<span class="kt">void</span> <span class="nf">loop</span><span class="p">()</span> <span class="p">{</span>
+	<span class="kt">char</span> <span class="n">c</span><span class="p">;</span>
+	<span class="kt">char</span> <span class="n">ret</span><span class="p">;</span>
+
+	<span class="n">SPI</span><span class="p">.</span><span class="n">beginTransaction</span><span class="p">(</span><span class="n">settingsA</span><span class="p">);</span>
+	<span class="k">for</span> <span class="p">(</span><span class="k">const</span> <span class="kt">char</span> <span class="o">*</span> <span class="n">p</span> <span class="o">=</span> <span class="s">"Hello World!</span><span class="se">\n</span><span class="s">"</span> <span class="p">;</span> <span class="n">c</span> <span class="o">=</span> <span class="o">*</span><span class="n">p</span><span class="p">;</span> <span class="n">p</span><span class="o">++</span><span class="p">)</span> <span class="p">{</span>
+		<span class="n">ret</span> <span class="o">=</span> <span class="n">SPI</span><span class="p">.</span><span class="n">transfer</span><span class="p">(</span><span class="n">c</span><span class="p">);</span>
+		<span class="n">printf</span><span class="p">(</span><span class="s">"%c"</span><span class="p">,</span> <span class="n">ret</span><span class="p">);</span>
+	<span class="p">}</span>
+	<span class="n">printf</span><span class="p">(</span><span class="s">"</span><span class="se">\n</span><span class="s">"</span><span class="p">);</span>
+	<span class="n">SPI</span><span class="p">.</span><span class="n">endTransaction</span><span class="p">();</span>
+
+	<span class="n">delay</span><span class="p">(</span><span class="mi">1000</span><span class="p">);</span>
+<span class="p">}</span></code></pre></figure>
+
+<hr />
+
+<p><strong>Notes</strong></p>
+
+<ul>
+  <li>
+    <p>You can use the separate functions (SPI.setClockDivider(), SPI.setBitOrder(),  SPI.setDataMode()) to configure the SPI or use <em>SPISettings</em> which is the same.</p>
+  </li>
+  <li>
+    <p>Available clock speeds.<br />
+You can put directly the clock speed or use the constants below which are the clock speeds for a 16 MHz Arduino microcontroller. Default is <em>SPI_CLOCK_DIV4</em> or 4000000 (4 MHz).</p>
+  </li>
+</ul>
+
+<table>
+  <thead>
+    <tr>
+      <th style="text-align: center">SPI clock constant</th>
+      <th style="text-align: center">Clock speed in Hz</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td style="text-align: center">SPI_CLOCK_DIV2</td>
+      <td style="text-align: center">8000000</td>
+    </tr>
+    <tr>
+      <td style="text-align: center">SPI_CLOCK_DIV4</td>
+      <td style="text-align: center">4000000</td>
+    </tr>
+    <tr>
+      <td style="text-align: center">SPI_CLOCK_DIV8</td>
+      <td style="text-align: center">2000000</td>
+    </tr>
+    <tr>
+      <td style="text-align: center">SPI_CLOCK_DIV16</td>
+      <td style="text-align: center">1000000</td>
+    </tr>
+    <tr>
+      <td style="text-align: center">SPI_CLOCK_DIV32</td>
+      <td style="text-align: center">500000</td>
+    </tr>
+    <tr>
+      <td style="text-align: center">SPI_CLOCK_DIV64</td>
+      <td style="text-align: center">250000</td>
+    </tr>
+    <tr>
+      <td style="text-align: center">SPI_CLOCK_DIV128</td>
+      <td style="text-align: center">125000</td>
+    </tr>
+  </tbody>
+</table>
+
+<ul>
+  <li>
+    <p>Available bit Orders <em>LSBFIRST</em> (Least Significant Bite First) and <em>MSBFIRST</em> (Most Significant Bite First). Default is <em>MSBFIRST</em>.</p>
+  </li>
+  <li>
+    <p>Available SPI modes below. Default is <em>SPI_MODE0</em>.</p>
+  </li>
+</ul>
+
+<table>
+  <thead>
+    <tr>
+      <th style="text-align: center">SPI modes</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td style="text-align: center">SPI_MODE0</td>
+    </tr>
+    <tr>
+      <td style="text-align: center">SPI_MODE1</td>
+    </tr>
+    <tr>
+      <td style="text-align: center">SPI_MODE2</td>
+    </tr>
+    <tr>
+      <td style="text-align: center">SPI_MODE3</td>
+    </tr>
+  </tbody>
+</table>
+
+<ul>
+  <li>
+    <p>The Chip Select (CS) Pin is enabled by default as Active_Low but in the next library release it will be disabled and EXTRA functions will be added to enable or configure it.</p>
+  </li>
+  <li>
+    <p>If you want to open a different SPI device driver port see the (EXTRA) function <a href="/PiDuino_Library/function/2000/02/02/SPI-Extra-begin.html">SPI.begin(driverName)</a>.</p>
+  </li>
+  <li>
+    <p>SPI default device driver is “” (empty) meaning that it will search for any existent SPI device driver. if you want to change the default device driver change the <em>SPI_DRIVER_NAME</em> constant as the example below.</p>
+  </li>
+</ul>
+
+<figure class="highlight"><pre><code class="language-c" data-lang="c"><span class="cp">#include &lt;Arduino.h&gt;
+</span>
+<span class="kt">void</span> <span class="nf">setup</span><span class="p">()</span> <span class="p">{</span>
+        <span class="n">strcpy</span><span class="p">(</span><span class="n">SPI_DRIVER_NAME</span><span class="p">,</span> <span class="s">"/dev/spidev1.0"</span><span class="p">);</span>
+        <span class="n">SPI</span><span class="p">.</span><span class="n">begin</span><span class="p">();</span> <span class="c1">// Will try open device driver "/dev/spidev1.0"
+</span><span class="p">}</span>
+
+<span class="kt">void</span> <span class="nf">loop</span><span class="p">()</span> <span class="p">{</span>
+        <span class="p">...</span>
+<span class="p">}</span></code></pre></figure>
+
+
+      
+      
+
+    </article>
+    <footer>
+      <span><a href="https://github.com/NVSL/PiDuino_Library">Github</a></span>
+      <span><a href="https://github.com/NVSL/PiDuino_Library"><i class="fa fa-github-square"></i></a></span>
+      <span>&copy; 2016</span>
+    </footer>
+  </body>
+</html>

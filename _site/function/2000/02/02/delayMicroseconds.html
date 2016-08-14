@@ -1,0 +1,92 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <!-- Niklas Buschmann 2015 MIT <http://github.com/niklasbuschmann> -->
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta charset="utf-8">
+    <meta name="author" content="Jorge Garza">
+    <meta name="description" content="Arduino library for Raspberry Pi">
+    <title> delayMicroseconds › PiDuino Library</title>
+    <link rel="canonical" href="https://github.com/NVSL/PiDuino_Library/PiDuino_Library/function/2000/02/02/delayMicroseconds.html">
+    <link href="/PiDuino_Library/main.css" rel="stylesheet" type="text/css">
+    <link href='//fonts.googleapis.com/css?family=Source+Sans+Pro:200,300,400,600,700,200italic,300italic,400italic,600italic,700italic' rel='stylesheet' type='text/css'>
+    <link href='//fonts.googleapis.com/css?family=Gentium+Basic:400,700,400italic,700italic' rel='stylesheet' type='text/css'>
+    <link href='//maxcdn.bootstrapcdn.com/font-awesome/4.2.0/css/font-awesome.min.css' rel='stylesheet' type='text/css'>
+    <link type="application/atom+xml" rel="alternate" href="https://github.com/PiDuino_Library/feed.xml" title="PiDuino Library" />
+    
+    
+  </head>
+  <body>
+    <header>
+      <h1><a href="/PiDuino_Library/">PiDuino Library</a></h1>
+      <!--
+      <ul class="title-ul">
+
+        <li class="title-li">
+        <h1><a href="/PiDuino_Library/">PiDuino Library</a></h1>
+        </li>
+
+        <li>
+          
+          <form action="https://www.paypal.com/cgi-bin/webscr" method="post" target="_top">
+          <input type="hidden" name="cmd" value="_s-xclick">
+          <input type="hidden" name="encrypted" value="-----BEGIN PKCS7-----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-----END PKCS7-----
+          ">
+          <input type="image" src="https://www.paypalobjects.com/en_US/i/btn/btn_donateCC_LG.gif" border="0" name="submit" alt="PayPal - The safer, easier way to pay online!">
+          <img alt="" border="0" src="https://www.paypalobjects.com/es_XC/i/scr/pixel.gif" width="1" height="1">
+          </form>
+        </li>
+
+      </ul>
+      -->
+      <nav>
+        <ul>
+          <li><a href="/PiDuino_Library/">Home</a></li><li><a href="/PiDuino_Library/RPi_Pinout.html">RPi_Pinout</a></li><li><a href="/PiDuino_Library/Reference.html">Reference</a></li>
+        </ul>
+      </nav>
+    </header>
+    
+    
+    <article>
+          <h3 id="delaymicrosecondsus">delayMicroseconds(us)</h3>
+
+<p>Pauses the program for the specified amount of time in microseconds.</p>
+
+<p><strong>Parameters</strong></p>
+
+<blockquote>
+  <p><strong>us</strong> - Delay in microseconds.</p>
+</blockquote>
+
+<p><strong>Returns</strong></p>
+
+<p>None</p>
+
+<hr />
+
+<p><strong>Example</strong></p>
+
+<figure class="highlight"><pre><code class="language-c" data-lang="c"><span class="cp">#include "Arduino.h"
+</span>
+<span class="kt">void</span> <span class="nf">setup</span><span class="p">()</span> <span class="p">{</span>
+<span class="p">}</span>
+
+<span class="kt">void</span> <span class="nf">loop</span><span class="p">()</span> <span class="p">{</span>
+	<span class="n">printf</span><span class="p">(</span><span class="s">"Delay since start in millis %lu </span><span class="se">\n</span><span class="s">"</span><span class="p">,</span> <span class="n">millis</span><span class="p">());</span>
+	<span class="n">printf</span><span class="p">(</span><span class="s">"Delay since start in micros %lu </span><span class="se">\n</span><span class="s">"</span><span class="p">,</span> <span class="n">micros</span><span class="p">());</span>
+	<span class="n">delayMicroseconds</span><span class="p">(</span><span class="mi">1000000</span><span class="p">);</span>	<span class="c1">// Delay 1 second
+</span>	<span class="n">delay</span><span class="p">(</span><span class="mi">1000</span><span class="p">);</span>               	<span class="c1">// Delay 1 second
+</span><span class="p">}</span></code></pre></figure>
+
+
+      
+      
+
+    </article>
+    <footer>
+      <span><a href="https://github.com/NVSL/PiDuino_Library">Github</a></span>
+      <span><a href="https://github.com/NVSL/PiDuino_Library"><i class="fa fa-github-square"></i></a></span>
+      <span>&copy; 2016</span>
+    </footer>
+  </body>
+</html>

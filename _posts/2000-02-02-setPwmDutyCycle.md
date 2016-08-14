@@ -43,20 +43,20 @@ ____________________
 **Notes**
 
 - The default PWM frequency is 490 Hz
-- *PWM_OUTPUT* uses the hardware PWM of the BCM283x SoC.  
+- *PWM_OUTPUT* mode uses the internal PWM hardware of the BCM283x SoC.  
 The available PWM pins are the followings:
 
-| GPIO PIN | Available in RPi (40-pins) connector |
-|:------:|:-----------:|
-|   12   |		YES |
-|   13   |		YES |
-|   18   | 		YES |
-|   19	 |		YES |
-|   40	 |		NO  |
-|   41	 |		NO  |
-|   45   | 		NO  |
-|   52   | 		NO  |
-|   53   | 		NO  |
+| GPIO PIN | Available in RPi (40-pins) connector | PWM channel |
+|:------:|:-----------:|:-----------:|
+|   12   |      YES |   0 |
+|   13   |      YES |   1 |
+|   18   |      YES |   0 |
+|   19   |      YES |   1 |
+|   40   |      NO  |   0 |
+|   41   |      NO  |   1 |
+|   45   |      NO  |   1 |
+|   52   |      NO  |   0 |
+|   53   |      NO  |   1 |
 
 
 
