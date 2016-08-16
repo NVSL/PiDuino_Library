@@ -2,6 +2,7 @@
 layout: blank
 ---
       {{ content }}
+
       {% if site.comments.isso and page.comments %}
       <div id="isso-thread"></div>
       {% endif %}
@@ -9,3 +10,8 @@ layout: blank
       <div id="disqus_thread"></div>
       <a href="http://disqus.com" class="dsq-brlink">comments powered by <span class="logo-disqus">Disqus</span></a>
       {% endif %}
+
+      <!-- TODO put this in a jekyll type --> 
+      <hr>
+      <div class="fb-comments" data-href="http://nvsl.github.io/PiDuino_Library/" data-numposts="5"></div>
+

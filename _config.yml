@@ -6,8 +6,8 @@ description: "Arduino library for Raspberry Pi"
 baseurl: "/PiDuino_Library" # comment out if in root directory
 
 comments:
-#    disqus: "niklasbuschmann"
-#    isso: "comments.mysite.org"
+   # disqus: "niklasbuschmann"
+   # isso: "comments.mysite.org"
 
 style:
 #    body: "whitesmoke"

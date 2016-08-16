@@ -1,4 +1,4 @@
-<?xml version="1.0" encoding="utf-8"?><?xml-stylesheet type="text/xml" href="/feed.xslt.xml"?><feed xmlns="http://www.w3.org/2005/Atom"><generator uri="http://jekyllrb.com" version="3.1.6">Jekyll</generator><link href="https://github.com/NVSL/PiDuino_Library/PiDuino_Library/feed.xml" rel="self" type="application/atom+xml" /><link href="https://github.com/NVSL/PiDuino_Library/PiDuino_Library/" rel="alternate" type="text/html" /><updated>2016-08-14T05:12:45-07:00</updated><id>https://github.com/NVSL/PiDuino_Library/PiDuino_Library/</id><title>PiDuino Library</title><subtitle>Arduino library for Raspberry Pi</subtitle><author><name>Jorge Garza</name></author><entry><title>Piduino Library (libpiduino)</title><link href="https://github.com/NVSL/PiDuino_Library/PiDuino_Library/index/2016/08/05/index.html" rel="alternate" type="text/html" title="Piduino Library (libpiduino)" /><published>2016-08-05T00:00:00-07:00</published><updated>2016-08-05T00:00:00-07:00</updated><id>https://github.com/NVSL/PiDuino_Library/PiDuino_Library/index/2016/08/05/index</id><content type="html" xml:base="https://github.com/NVSL/PiDuino_Library/PiDuino_Library/index/2016/08/05/index.html">&lt;p&gt;&lt;strong&gt;About&lt;/strong&gt;&lt;/p&gt;
+<?xml version="1.0" encoding="utf-8"?><?xml-stylesheet type="text/xml" href="/feed.xslt.xml"?><feed xmlns="http://www.w3.org/2005/Atom"><generator uri="http://jekyllrb.com" version="3.1.6">Jekyll</generator><link href="https://github.com/NVSL/PiDuino_Library/PiDuino_Library/feed.xml" rel="self" type="application/atom+xml" /><link href="https://github.com/NVSL/PiDuino_Library/PiDuino_Library/" rel="alternate" type="text/html" /><updated>2016-08-16T01:52:07-07:00</updated><id>https://github.com/NVSL/PiDuino_Library/PiDuino_Library/</id><title>PiDuino Library</title><subtitle>Arduino library for Raspberry Pi</subtitle><author><name>Jorge Garza</name></author><entry><title>Piduino Library (libpiduino)</title><link href="https://github.com/NVSL/PiDuino_Library/PiDuino_Library/index/2016/08/05/index.html" rel="alternate" type="text/html" title="Piduino Library (libpiduino)" /><published>2016-08-05T00:00:00-07:00</published><updated>2016-08-05T00:00:00-07:00</updated><id>https://github.com/NVSL/PiDuino_Library/PiDuino_Library/index/2016/08/05/index</id><content type="html" xml:base="https://github.com/NVSL/PiDuino_Library/PiDuino_Library/index/2016/08/05/index.html">&lt;p&gt;&lt;strong&gt;About&lt;/strong&gt;&lt;/p&gt;
 
 &lt;p&gt;&lt;strong&gt;Piduino Library (libpiduino)&lt;/strong&gt; is a C++ library that lets you write and compile Arduino programs in the Raspberry Pi. This library 
 targets the BCM283x SoC (System on a Chip), all 54 pins, and not a specific set of pins of any Raspberry Pi (RPi) board.&lt;/p&gt;
@@ -18,8 +18,6 @@ If you need ADC is recommended to use external libraries.&lt;/p&gt;
 &lt;/code&gt;&lt;/pre&gt;
 &lt;/div&gt;
 &lt;p style=&quot;text-align: right;&quot;&gt;-&amp;gt; &lt;a href=&quot;https://github.com/NVSL/PiDuino_Library&quot;&gt;source code&lt;/a&gt; &amp;lt;-&lt;/p&gt;
-
-&lt;p&gt;&lt;a href=&quot;https://www.paypal.com/cgi-bin/webscr?cmd=_donations&amp;amp;business=XV85PF2AAESFJ&amp;amp;lc=US&amp;amp;item_name=Piduino%20Library&amp;amp;currency_code=USD&amp;amp;bn=PP%2dDonationsBF%3abtn_donateCC_LG%2egif%3aNonHosted&quot;&gt;&lt;img src=&quot;https://www.paypalobjects.com/en_US/i/btn/btn_donateCC_LG.gif&quot; alt=&quot;&quot; /&gt;&lt;/a&gt;&lt;/p&gt;
 
 &lt;p&gt;&lt;strong&gt;Setup&lt;/strong&gt;&lt;/p&gt;
 
@@ -93,13 +91,17 @@ See which pin is GPIO4 in your board in the &lt;a href=&quot;/PiDuino_Library/RP
 
 &lt;p&gt;&lt;strong&gt;Optional&lt;/strong&gt;&lt;/p&gt;
 
-&lt;p&gt;If you want to compile an .ino file you can do it like below and use either g++ or gcc.&lt;/p&gt;
+&lt;ul&gt;
+  &lt;li&gt;If you want to compile an .ino file you can do it like below and use either g++ or gcc.&lt;/li&gt;
+&lt;/ul&gt;
 
 &lt;div class=&quot;highlighter-rouge&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;g++ -lpiduino -x c++ test.ino -o test 
 &lt;/code&gt;&lt;/pre&gt;
 &lt;/div&gt;
 
-&lt;p&gt;If you want to include main() in your code you can call “piDuino.h”. piDuino.h has already all the headers of the Piduino library included so you don’t need to type Wire.h or SPI.h like as if you use Arduino.h.&lt;/p&gt;
+&lt;ul&gt;
+  &lt;li&gt;If you want to include main() in your code you can call “piDuino.h”. piDuino.h has already all the headers of the Piduino library included so you don’t need to type Wire.h or SPI.h like as if you use Arduino.h.&lt;/li&gt;
+&lt;/ul&gt;
 
 &lt;figure class=&quot;highlight&quot;&gt;&lt;pre&gt;&lt;code class=&quot;language-c&quot; data-lang=&quot;c&quot;&gt;&lt;span class=&quot;cp&quot;&gt;#include &quot;piDuino.h&quot;
 &lt;/span&gt;
@@ -126,8 +128,36 @@ See which pin is GPIO4 in your board in the &lt;a href=&quot;/PiDuino_Library/RP
 	&lt;span class=&quot;k&quot;&gt;return&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;mi&quot;&gt;0&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;);&lt;/span&gt;
 &lt;span class=&quot;p&quot;&gt;}&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/figure&gt;
 
-&lt;p&gt;If you want to check that the SPI, I2C drivers are enabled use the command below.
-Note that the I2C number may be different depending on your RPi board version.&lt;/p&gt;
+&lt;ul&gt;
+  &lt;li&gt;This library will turn off and set as INPUT all pins that are configured using &lt;a href=&quot;/PiDuino_Library/function/2000/02/02/pinMode.html&quot;&gt;pinMode(pin, mode)&lt;/a&gt; when the program closes. This to prevent leaving LEDs or Motors running if a program crashes or not behaves well. If you want to do something at exit or prevent pins to be turned off then you can assign an exit function to the variable &lt;em&gt;ARDUINO_EXIT_FUNC&lt;/em&gt;. By adding &lt;strong&gt;exit(1)&lt;/strong&gt; in your exit function the configured pins will not be turned off.&lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;figure class=&quot;highlight&quot;&gt;&lt;pre&gt;&lt;code class=&quot;language-c&quot; data-lang=&quot;c&quot;&gt;&lt;span class=&quot;cp&quot;&gt;#include &quot;Arduino.h&quot;
+&lt;/span&gt;
+&lt;span class=&quot;c1&quot;&gt;// Add an LED to the output pin then run this program
+// and enter Ctr-C to see how the LED turns off auto-magically
+&lt;/span&gt;
+&lt;span class=&quot;kt&quot;&gt;int&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;GPIO_OUTPUT&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;mi&quot;&gt;14&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;;&lt;/span&gt;
+
+&lt;span class=&quot;kt&quot;&gt;void&lt;/span&gt; &lt;span class=&quot;nf&quot;&gt;myExit&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;kt&quot;&gt;void&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;{&lt;/span&gt;
+   &lt;span class=&quot;c1&quot;&gt;// Commands to be executed when the program exits. 
+&lt;/span&gt;   &lt;span class=&quot;n&quot;&gt;printf&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;s&quot;&gt;&quot;My exit commands&lt;/span&gt;&lt;span class=&quot;se&quot;&gt;\n&lt;/span&gt;&lt;span class=&quot;s&quot;&gt;&quot;&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;);&lt;/span&gt;
+   &lt;span class=&quot;c1&quot;&gt;// Uncommenting exit(1) will prevent pins to be turned off at exit. 
+&lt;/span&gt;   &lt;span class=&quot;c1&quot;&gt;// exit(1);
+&lt;/span&gt;
+&lt;span class=&quot;kt&quot;&gt;void&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;setup&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;()&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;{&lt;/span&gt;
+   &lt;span class=&quot;n&quot;&gt;ARDUINO_EXIT_FUNC&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;&amp;amp;&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;myExit&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;;&lt;/span&gt;
+   &lt;span class=&quot;n&quot;&gt;pinMode&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;GPIO_OUTPUT&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;OUTPUT&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;);&lt;/span&gt;
+   &lt;span class=&quot;n&quot;&gt;digitalWrite&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;GPIO_OUTPUT&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;HIGH&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;);&lt;/span&gt;
+&lt;span class=&quot;p&quot;&gt;}&lt;/span&gt;
+
+&lt;span class=&quot;kt&quot;&gt;void&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;loop&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;()&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;{&lt;/span&gt;
+&lt;span class=&quot;p&quot;&gt;}&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/figure&gt;
+
+&lt;ul&gt;
+  &lt;li&gt;If you want to check that the SPI, I2C drivers are enabled use the command below.
+Note that the I2C number may be different depending on your RPi board version.&lt;/li&gt;
+&lt;/ul&gt;
 
 &lt;div class=&quot;highlighter-rouge&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;ls /dev/ | grep &#39;i2c-\|spidev\|ttyAMA0&#39;
 &lt;/code&gt;&lt;/pre&gt;
@@ -188,8 +218,6 @@ sudo apt-get install libpiduino-dev
 
 
 -&amp;gt; source code &amp;lt;-
-
-
 
 Setup
 
@@ -263,13 +291,17 @@ See the Reference tab to see all the functions ported.
 
 Optional
 
-If you want to compile an .ino file you can do it like below and use either g++ or gcc.
+
+  If you want to compile an .ino file you can do it like below and use either g++ or gcc.
+
 
 g++ -lpiduino -x c++ test.ino -o test 
 
 
 
-If you want to include main() in your code you can call “piDuino.h”. piDuino.h has already all the headers of the Piduino library included so you don’t need to type Wire.h or SPI.h like as if you use Arduino.h.
+
+  If you want to include main() in your code you can call “piDuino.h”. piDuino.h has already all the headers of the Piduino library included so you don’t need to type Wire.h or SPI.h like as if you use Arduino.h.
+
 
 #include &quot;piDuino.h&quot;
 
@@ -296,8 +328,36 @@ int main () {
 	return (0);
 }
 
-If you want to check that the SPI, I2C drivers are enabled use the command below.
+
+  This library will turn off and set as INPUT all pins that are configured using pinMode(pin, mode) when the program closes. This to prevent leaving LEDs or Motors running if a program crashes or not behaves well. If you want to do something at exit or prevent pins to be turned off then you can assign an exit function to the variable ARDUINO_EXIT_FUNC. By adding exit(1) in your exit function the configured pins will not be turned off.
+
+
+#include &quot;Arduino.h&quot;
+
+// Add an LED to the output pin then run this program
+// and enter Ctr-C to see how the LED turns off auto-magically
+
+int GPIO_OUTPUT = 14;
+
+void myExit (void) {
+   // Commands to be executed when the program exits. 
+   printf(&quot;My exit commands &quot;);
+   // Uncommenting exit(1) will prevent pins to be turned off at exit. 
+   // exit(1);
+
+void setup() {
+   ARDUINO_EXIT_FUNC = &amp;amp;myExit;
+   pinMode(GPIO_OUTPUT, OUTPUT);
+   digitalWrite(GPIO_OUTPUT, HIGH);
+}
+
+void loop() {
+}
+
+
+  If you want to check that the SPI, I2C drivers are enabled use the command below.
 Note that the I2C number may be different depending on your RPi board version.
+
 
 ls /dev/ | grep &#39;i2c-\|spidev\|ttyAMA0&#39;
 

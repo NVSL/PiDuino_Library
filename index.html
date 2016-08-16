@@ -3,6 +3,15 @@ layout: blank
 ---
     {% for page in site.categories.index %}
       <article>
+        <!-- <div class="fb-like" data-share="true" data-width="450" data-height="0" data-show-faces="false" data-colorscheme="dark"></div> -->
+        <div align="right">
+          <!--
+          <div  class="fb-like"  data-href="http://nvsl.github.io/PiDuino_Library/" data-layout="button_count" 
+          data-action="like" data-size="large" data-show-faces="true" data-share="true"></div>
+          -->
+          <div class="fb-like" data-href="http://nvsl.github.io/PiDuino_Library/" data-layout="standard" 
+          data-action="like" data-size="large" data-show-faces="true" data-share="true"></div>
+        </div>
         <header>
           <!-- <h2>{{ page.title }}</h2> -->
         </header>
@@ -13,5 +22,7 @@ layout: blank
         <time datetime="{{ page.date | date_to_xmlschema }}">{{ page.date | date: "%b %-d, %Y" }}</time>{% endif %}
         </p>
       </article>
+      <hr>
+      <div class="fb-comments" data-href="http://nvsl.github.io/PiDuino_Library/" data-numposts="5"></div>
     {% endfor %}
 
