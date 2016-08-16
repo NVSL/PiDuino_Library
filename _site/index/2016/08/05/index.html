@@ -137,7 +137,7 @@ If you need ADC is recommended to use external libraries.</p>
 </div>
 
 <p>Now connect an LED with its proper resistor (e.g. 220 ohms) to RPi GPIO4.
-See which pin is GPIO4 in your board in the <a href="/PiDuino_Library/RPi_Pinout.html">RPi Pinout</a> tab.</p>
+You can check which pin is GPIO4 in your board in the <a href="/PiDuino_Library/RPi_Pinout.html">RPi Pinout</a> tab.</p>
 
 <p><img src="images/LED_Example.png" alt="LED-Example" class="center-image" /></p>
 
@@ -164,7 +164,7 @@ See which pin is GPIO4 in your board in the <a href="/PiDuino_Library/RPi_Pinout
 </div>
 
 <ul>
-  <li>If you want to include main() in your code you can call “piDuino.h”. piDuino.h has already all the headers of the Piduino library included so you don’t need to type Wire.h or SPI.h like as if you use Arduino.h.</li>
+  <li>If you want to include main() in your code you can call “piDuino.h”. piDuino.h has already all the headers of the Piduino library included so you don’t need to include Wire.h or SPI.h like as if you use Arduino.h.</li>
 </ul>
 
 <figure class="highlight"><pre><code class="language-c" data-lang="c"><span class="cp">#include "piDuino.h"
@@ -193,7 +193,7 @@ See which pin is GPIO4 in your board in the <a href="/PiDuino_Library/RPi_Pinout
 <span class="p">}</span></code></pre></figure>
 
 <ul>
-  <li>This library will turn off and set as INPUT all pins that are configured using <a href="/PiDuino_Library/function/2000/02/02/pinMode.html">pinMode(pin, mode)</a> when the program closes. This to prevent leaving LEDs or Motors running if a program crashes or not behaves well. If you want to do something at exit or prevent pins to be turned off then you can assign an exit function to the variable <em>ARDUINO_EXIT_FUNC</em>. By adding <strong>exit(1)</strong> in your exit function the configured pins will not be turned off.</li>
+  <li>When the program exits this library will turn off and set as INPUT all pins that were configured using <a href="/PiDuino_Library/function/2000/02/02/pinMode.html">pinMode(pin, mode)</a>. This to prevent leaving LEDs or Motors running if a program crashes or not behaves well. If you want to do something at exit or prevent pins to be turned off then you can assign an exit function to the variable <em>ARDUINO_EXIT_FUNC</em>. By adding <strong>exit(1)</strong> in your exit function the configured pins will not be turned off.</li>
 </ul>
 
 <figure class="highlight"><pre><code class="language-c" data-lang="c"><span class="cp">#include "Arduino.h"

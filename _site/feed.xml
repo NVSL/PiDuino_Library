@@ -1,4 +1,4 @@
-<?xml version="1.0" encoding="utf-8"?><?xml-stylesheet type="text/xml" href="/feed.xslt.xml"?><feed xmlns="http://www.w3.org/2005/Atom"><generator uri="http://jekyllrb.com" version="3.1.6">Jekyll</generator><link href="https://github.com/NVSL/PiDuino_Library/PiDuino_Library/feed.xml" rel="self" type="application/atom+xml" /><link href="https://github.com/NVSL/PiDuino_Library/PiDuino_Library/" rel="alternate" type="text/html" /><updated>2016-08-16T01:52:07-07:00</updated><id>https://github.com/NVSL/PiDuino_Library/PiDuino_Library/</id><title>PiDuino Library</title><subtitle>Arduino library for Raspberry Pi</subtitle><author><name>Jorge Garza</name></author><entry><title>Piduino Library (libpiduino)</title><link href="https://github.com/NVSL/PiDuino_Library/PiDuino_Library/index/2016/08/05/index.html" rel="alternate" type="text/html" title="Piduino Library (libpiduino)" /><published>2016-08-05T00:00:00-07:00</published><updated>2016-08-05T00:00:00-07:00</updated><id>https://github.com/NVSL/PiDuino_Library/PiDuino_Library/index/2016/08/05/index</id><content type="html" xml:base="https://github.com/NVSL/PiDuino_Library/PiDuino_Library/index/2016/08/05/index.html">&lt;p&gt;&lt;strong&gt;About&lt;/strong&gt;&lt;/p&gt;
+<?xml version="1.0" encoding="utf-8"?><?xml-stylesheet type="text/xml" href="/feed.xslt.xml"?><feed xmlns="http://www.w3.org/2005/Atom"><generator uri="http://jekyllrb.com" version="3.1.6">Jekyll</generator><link href="https://github.com/NVSL/PiDuino_Library/PiDuino_Library/feed.xml" rel="self" type="application/atom+xml" /><link href="https://github.com/NVSL/PiDuino_Library/PiDuino_Library/" rel="alternate" type="text/html" /><updated>2016-08-16T02:35:35-07:00</updated><id>https://github.com/NVSL/PiDuino_Library/PiDuino_Library/</id><title>PiDuino Library</title><subtitle>Arduino library for Raspberry Pi</subtitle><author><name>Jorge Garza</name></author><entry><title>Piduino Library (libpiduino)</title><link href="https://github.com/NVSL/PiDuino_Library/PiDuino_Library/index/2016/08/05/index.html" rel="alternate" type="text/html" title="Piduino Library (libpiduino)" /><published>2016-08-05T00:00:00-07:00</published><updated>2016-08-05T00:00:00-07:00</updated><id>https://github.com/NVSL/PiDuino_Library/PiDuino_Library/index/2016/08/05/index</id><content type="html" xml:base="https://github.com/NVSL/PiDuino_Library/PiDuino_Library/index/2016/08/05/index.html">&lt;p&gt;&lt;strong&gt;About&lt;/strong&gt;&lt;/p&gt;
 
 &lt;p&gt;&lt;strong&gt;Piduino Library (libpiduino)&lt;/strong&gt; is a C++ library that lets you write and compile Arduino programs in the Raspberry Pi. This library 
 targets the BCM283x SoC (System on a Chip), all 54 pins, and not a specific set of pins of any Raspberry Pi (RPi) board.&lt;/p&gt;
@@ -73,7 +73,7 @@ If you need ADC is recommended to use external libraries.&lt;/p&gt;
 &lt;/div&gt;
 
 &lt;p&gt;Now connect an LED with its proper resistor (e.g. 220 ohms) to RPi GPIO4.
-See which pin is GPIO4 in your board in the &lt;a href=&quot;/PiDuino_Library/RPi_Pinout.html&quot;&gt;RPi Pinout&lt;/a&gt; tab.&lt;/p&gt;
+You can check which pin is GPIO4 in your board in the &lt;a href=&quot;/PiDuino_Library/RPi_Pinout.html&quot;&gt;RPi Pinout&lt;/a&gt; tab.&lt;/p&gt;
 
 &lt;p&gt;&lt;img src=&quot;images/LED_Example.png&quot; alt=&quot;LED-Example&quot; class=&quot;center-image&quot; /&gt;&lt;/p&gt;
 
@@ -100,7 +100,7 @@ See which pin is GPIO4 in your board in the &lt;a href=&quot;/PiDuino_Library/RP
 &lt;/div&gt;
 
 &lt;ul&gt;
-  &lt;li&gt;If you want to include main() in your code you can call “piDuino.h”. piDuino.h has already all the headers of the Piduino library included so you don’t need to type Wire.h or SPI.h like as if you use Arduino.h.&lt;/li&gt;
+  &lt;li&gt;If you want to include main() in your code you can call “piDuino.h”. piDuino.h has already all the headers of the Piduino library included so you don’t need to include Wire.h or SPI.h like as if you use Arduino.h.&lt;/li&gt;
 &lt;/ul&gt;
 
 &lt;figure class=&quot;highlight&quot;&gt;&lt;pre&gt;&lt;code class=&quot;language-c&quot; data-lang=&quot;c&quot;&gt;&lt;span class=&quot;cp&quot;&gt;#include &quot;piDuino.h&quot;
@@ -129,7 +129,7 @@ See which pin is GPIO4 in your board in the &lt;a href=&quot;/PiDuino_Library/RP
 &lt;span class=&quot;p&quot;&gt;}&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/figure&gt;
 
 &lt;ul&gt;
-  &lt;li&gt;This library will turn off and set as INPUT all pins that are configured using &lt;a href=&quot;/PiDuino_Library/function/2000/02/02/pinMode.html&quot;&gt;pinMode(pin, mode)&lt;/a&gt; when the program closes. This to prevent leaving LEDs or Motors running if a program crashes or not behaves well. If you want to do something at exit or prevent pins to be turned off then you can assign an exit function to the variable &lt;em&gt;ARDUINO_EXIT_FUNC&lt;/em&gt;. By adding &lt;strong&gt;exit(1)&lt;/strong&gt; in your exit function the configured pins will not be turned off.&lt;/li&gt;
+  &lt;li&gt;When the program exits this library will turn off and set as INPUT all pins that were configured using &lt;a href=&quot;/PiDuino_Library/function/2000/02/02/pinMode.html&quot;&gt;pinMode(pin, mode)&lt;/a&gt;. This to prevent leaving LEDs or Motors running if a program crashes or not behaves well. If you want to do something at exit or prevent pins to be turned off then you can assign an exit function to the variable &lt;em&gt;ARDUINO_EXIT_FUNC&lt;/em&gt;. By adding &lt;strong&gt;exit(1)&lt;/strong&gt; in your exit function the configured pins will not be turned off.&lt;/li&gt;
 &lt;/ul&gt;
 
 &lt;figure class=&quot;highlight&quot;&gt;&lt;pre&gt;&lt;code class=&quot;language-c&quot; data-lang=&quot;c&quot;&gt;&lt;span class=&quot;cp&quot;&gt;#include &quot;Arduino.h&quot;
@@ -273,7 +273,7 @@ g++ -lpiduino test.cpp -o test
 
 
 Now connect an LED with its proper resistor (e.g. 220 ohms) to RPi GPIO4.
-See which pin is GPIO4 in your board in the RPi Pinout tab.
+You can check which pin is GPIO4 in your board in the RPi Pinout tab.
 
 
 
@@ -300,7 +300,7 @@ g++ -lpiduino -x c++ test.ino -o test
 
 
 
-  If you want to include main() in your code you can call “piDuino.h”. piDuino.h has already all the headers of the Piduino library included so you don’t need to type Wire.h or SPI.h like as if you use Arduino.h.
+  If you want to include main() in your code you can call “piDuino.h”. piDuino.h has already all the headers of the Piduino library included so you don’t need to include Wire.h or SPI.h like as if you use Arduino.h.
 
 
 #include &quot;piDuino.h&quot;
@@ -329,7 +329,7 @@ int main () {
 }
 
 
-  This library will turn off and set as INPUT all pins that are configured using pinMode(pin, mode) when the program closes. This to prevent leaving LEDs or Motors running if a program crashes or not behaves well. If you want to do something at exit or prevent pins to be turned off then you can assign an exit function to the variable ARDUINO_EXIT_FUNC. By adding exit(1) in your exit function the configured pins will not be turned off.
+  When the program exits this library will turn off and set as INPUT all pins that were configured using pinMode(pin, mode). This to prevent leaving LEDs or Motors running if a program crashes or not behaves well. If you want to do something at exit or prevent pins to be turned off then you can assign an exit function to the variable ARDUINO_EXIT_FUNC. By adding exit(1) in your exit function the configured pins will not be turned off.
 
 
 #include &quot;Arduino.h&quot;
