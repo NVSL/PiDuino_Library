@@ -1,5 +1,9 @@
 # [PiDuino Library](http://nvsl.github.io/PiDuino_Library/)
 
+```diff
+- NOTE: PiDuino Library will soon be depreciated, insted use Linuxduino: https://github.com/NVSL/Linuxduino 
+```
+
 PiDuino Library is a C++ library that lets you write programs for Raspberry Pi as if you were writing an Arduino program. 
 
 This library **does not support Analog to Digital Conversion (or ADC)** functions as the Raspberry Pi hardware does not have an integrated ADC and we don´t want to create hardware dependant code. If you need ADC is recomended to use external libraries. 
