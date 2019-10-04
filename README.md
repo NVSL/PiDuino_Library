@@ -1,7 +1,7 @@
 # [PiDuino Library](http://nvsl.github.io/PiDuino_Library/)
 
 ```diff
-- NOTE: PiDuino Library will soon be depreciated, insted use Linuxduino: https://github.com/NVSL/Linuxduino 
+- NOTE: You can check the javascript version: https://github.com/NVSL/Linuxduino 
 ```
 
 PiDuino Library is a C++ library that lets you write programs for Raspberry Pi as if you were writing an Arduino program. 
